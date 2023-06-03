@@ -1,0 +1,32 @@
+<div class="saludo">
+  <p>Real time products:</p>
+  {{#if products}}
+    <div class="products">
+      {{#each products}}
+        <div>
+          <h2>{{this.title}}</h2>
+          <p>{{this.description}}</p>
+          <h4>${{this.price}}</h4>
+          <h5>Stock disponible: {{this.stock}}</h5>
+        </div>
+      {{/each}}
+    </div>
+  {{else}}
+    <h3>No existen productos...</h3>
+  {{/if}}
+</div>
+
+
+
+<form>
+  <h2>Eliminar producto</h2>
+  <input
+    id="deleteID"
+    type="number"
+    placeholder="Por favor ingresa el ID del producto que deseas eliminar"
+  />
+  <button id="deleteBtn" type="submit"> Eliminar producto </button>
+</form>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>

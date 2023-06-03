@@ -1,0 +1,84 @@
+<center>
+    <h1>Real Time Products Page</h1>
+</center>
+
+
+<h4>Add product</h4>
+
+<form id="addProductsFrom" method="post" name="products">
+    <table border="1">
+        <tr>
+            <td>
+            <p>Title</p>
+            <input type="text" name="title">
+            </td>
+            <td>
+            <p>Description</p>
+            <input type="text" name="description">
+            </td>
+            <td>
+            <p>Price</p>
+            <input type="number" name="price">
+            </td>
+        </tr>
+        <tr>
+            <td>
+            <p>Code</p>
+            <input type="text" name="code">
+            </td>
+            <td>
+            <p>Stock</p>
+            <input type="number" name="stock">
+            </td>
+            <td>
+            <p>Category</p>
+            <input type="text" name="category">
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="Añadir Producto">
+</form>
+
+<br>
+
+<h4>Delete Product By Id:</h4>
+
+
+<form id="deleteForm" method="post" name="products">
+    <div>
+    <input type="number" name="id">
+    </div>
+    <input type="submit" value="Delete">
+</form>
+
+
+<h2>Products</h2>
+<table border="5" style="text-align: center; padding: 10px; ">
+    <tr> 
+        <th>ID</th>
+        <th>Title</th>
+        <th>Description</th> 
+        <th>Price</th> 
+        <th>Code</th> 
+        <th>Stock</th> 
+        <th>Category</th> 
+        <th>Status</th> 
+    </tr>
+    <tbody id="updatePrNow">
+        {{#each products}}
+            <tr>
+                <td>{{this.id}}</td>
+                <td>{{this.title}}</td>
+                <td>{{this.description}}</td>
+                <td>{{this.price}}</td>
+                <td>{{this.code}}</td>
+                <td>{{this.stock}}</td>
+                <td>{{this.category}}</td>
+                <td>{{this.status}}</td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/main.js"></script>

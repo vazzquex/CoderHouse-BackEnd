@@ -1,0 +1,90 @@
+[
+	{
+		"id": 1,
+		"title": "Producto 1",
+		"description": "Descripcion producto 1",
+		"code": "abc123",
+		"price": 800,
+		"status": "true",
+		"stock": 10,
+		"category": "Comida",
+		"thumbnails": []
+	},
+	{
+		"id": 2,
+		"title": "Producto 2",
+		"description": "Descripcion producto 2",
+		"code": "bbc123",
+		"price": 800,
+		"status": "true",
+		"stock": 10,
+		"category": "Comida",
+		"thumbnails": []
+	},
+	{
+		"id": 3,
+		"title": "Producto 3",
+		"description": "Descripcion producto 3",
+		"code": "cbc123",
+		"price": 6000,
+		"status": "true",
+		"stock": 20,
+		"category": "Tecnologia",
+		"thumbnails": []
+	},
+	{
+		"id": 5,
+		"title": "Producto 5",
+		"description": "Descripcion producto 5",
+		"code": "dcb123",
+		"price": 32000,
+		"status": "true",
+		"stock": 43,
+		"category": "Tecnologia",
+		"thumbnails": []
+	},
+	{
+		"id": 4,
+		"title": "Producto 4",
+		"description": "Descripcion producto 4",
+		"code": "ebc123",
+		"price": 5000,
+		"status": "true",
+		"stock": 30,
+		"category": "Tecnologia",
+		"thumbnails": []
+	},
+	{
+		"id": 5,
+		"title": "Producto 5",
+		"description": "Descripcion producto 5",
+		"code": "fbc123",
+		"price": 3000,
+		"status": "true",
+		"stock": 30,
+		"category": "Tecnologia",
+		"thumbnails": []
+	},
+	{
+		"id": 6,
+		"title": "Producto 6",
+		"description": "Descripcion producto 6",
+		"code": "fcb123",
+		"price": 12000,
+		"status": "true",
+		"stock": 40,
+		"category": "Tecnologia",
+		"thumbnails": []
+	},
+	{
+		"id": 7,
+		"title": "Producto 7",
+		"description": "Descripcion producto 7",
+		"code": "gcb123",
+		"price": 12000,
+		"status": "true",
+		"stock": 40,
+		"category": "Tecnologia",
+		"thumbnails": []
+	}
+]
