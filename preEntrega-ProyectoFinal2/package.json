@@ -1,0 +1,23 @@
+{
+  "name": "desafio-entregable-clase-9",
+  "version": "1.0.0",
+  "description": "**Objetivos generales** - Contarás con Mongo como sistema de persistencia principal - Tendrás definidos todos los endpoints para poder trabajar con productos y carritos.",
+  "main": "src/app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node .",
+    "dev": "nodemon .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-handlebars": "^7.0.7",
+    "express-session": "^1.17.3",
+    "mongoose": "^7.2.3",
+    "mongoose-paginate-v2": "^1.7.1",
+    "socket.io": "^4.6.2"
+  }
+}
