@@ -39,7 +39,7 @@ const MongoUrl = "mongodb://localhost:27017/ecommerce"
 
 mongoose.set("strictQuery", false);
 try {
-    await mongoose.connect("mongodb://localhost:27017/students");
+    await mongoose.connect(MongoUrl);
 } catch {
     console.error(`Database connection failed: ${error}`);
 };
