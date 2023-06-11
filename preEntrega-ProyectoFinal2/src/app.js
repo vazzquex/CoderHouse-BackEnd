@@ -4,8 +4,14 @@ import express from 'express';
 import { Server } from 'socket.io';
 import handlebars from 'express-handlebars';
 import productManager from './dao/manager/ProductManager.js';
-// Routes
 
+//data
+// import dataProducts from './data/products.json' assert {type: 'json'};
+
+
+import productModel from './dao/models/products.model.js';
+
+// Routes
 import viewsRouter from './routes/views.router.js';
 import viewsCartsRouter from './routes/views.cart.router.js'
 import productsRouter from './routes/products.router.js';
@@ -37,12 +43,21 @@ app.use("/api/carts", cartsRouter);
 
 const MongoUrl = "mongodb://localhost:27017/ecommerce"
 
+
 mongoose.set("strictQuery", false);
 try {
     await mongoose.connect(MongoUrl);
 } catch {
     console.error(`Database connection failed: ${error}`);
 };
+
+//insert product data if necessary
+// try {
+//     await productModel.insertMany(dataProducts);
+// } catch (err) {
+//     console.log(`error al insertar data: ${err} `);
+// }
+
 
 const httpServer = app.listen(port, () => {
     console.log(`Escuchando por el puerto ${port}`);
