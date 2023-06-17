@@ -6,7 +6,7 @@ import handlebars from 'express-handlebars';
 import productManager from './dao/manager/ProductManager.js';
 
 //data
-// import dataProducts from './data/products.json' assert {type: 'json'};
+//import dataProducts from './data/products.json' assert {type: 'json'};
 
 
 import productModel from './dao/models/products.model.js';
