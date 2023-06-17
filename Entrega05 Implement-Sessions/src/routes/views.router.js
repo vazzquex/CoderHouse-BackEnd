@@ -1,9 +1,9 @@
 import { Router } from 'express';
-const router = Router();
+const viewsRouter = Router();
 import productManager from '../dao/manager/ProductManager.js';
 
 // Get
-router.get('/', async (req, res) => {
+viewsRouter.get('/', async (req, res) => {
     try {
         const {limit, page, sort, query} = req.query;
         const products = await productManager.getProducts(limit, page, sort, query);
@@ -32,7 +32,7 @@ router.get('/', async (req, res) => {
 });
 
 // Get by ID
-router.get('/:pid', async (req, res) => {
+viewsRouter.get('/:pid', async (req, res) => {
     const productId = req.params.pid;
 
     try {
@@ -49,4 +49,4 @@ router.get('/:pid', async (req, res) => {
 });
 
 
-export default router;
+export default viewsRouter;

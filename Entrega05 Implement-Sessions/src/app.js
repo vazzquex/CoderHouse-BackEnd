@@ -4,6 +4,9 @@ import express from 'express';
 import { Server } from 'socket.io';
 import handlebars from 'express-handlebars';
 import productManager from './dao/manager/ProductManager.js';
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
+import cookieParser from 'cookie-parser';
 
 //data
 //import dataProducts from './data/products.json' assert {type: 'json'};
@@ -18,31 +21,48 @@ import productsRouter from './routes/products.router.js';
 import realTimeProductsRouter from './routes/realTimeProducts.router.js';
 import chatRouter from './routes/chat.router.js';
 import cartsRouter from './routes/carts.router.js';
+import usersRouter from './routes/user.router.js';
+import profileRouters from './routes/profile.router.js';
 // Config
 
 const app = express();
+
 const port = 8080;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.use(express.static('./src/public'));
+
 // Handlebars
 app.engine('handlebars', handlebars.engine());
 app.set('views', './src/views');
 app.set('view engine', 'handlebars');
 
 
-app.get('/', (req, res) => {
-    res.redirect('/products');
-})
+// app.get('/', (req, res) => {
+//     res.redirect('/products');
+// })
 
-// api
-app.use("/api/products", productsRouter);
-app.use("/api/carts", cartsRouter);
+app.use(cookieParser('9843f78efyh'));
 
-
+// Session
+app.use(
+	session({
+		store: MongoStore.create({
+			mongoUrl:
+				'mongodb://localhost:27017/ecommerce',
+			mongoOptions: {
+				useNewUrlParser: true,
+			},
+			ttl: 6000,
+		}),
+		secret: '9843f78efyh',
+		resave: true,
+		saveUninitialized: true,
+	})
+);
 const MongoUrl = "mongodb://localhost:27017/ecommerce"
-
 
 mongoose.set("strictQuery", false);
 try {
@@ -50,6 +70,15 @@ try {
 } catch {
     console.error(`Database connection failed: ${error}`);
 };
+
+app.use("/", profileRouters);
+
+// api
+app.use("/api/users", usersRouter)
+app.use("/api/products", productsRouter);
+app.use("/api/carts", cartsRouter);
+
+//app.use(express.static('public'));
 
 //insert product data if necessary
 // try {
@@ -65,7 +94,7 @@ const httpServer = app.listen(port, () => {
 const socketServer = new Server(httpServer);
 
 //Routers
-app.use("/products", viewsRouter);
+app.use("/products", profileRouters);
 app.use("/carts", viewsCartsRouter);
 app.use('/realTimeProducts', realTimeProductsRouter(socketServer));
 app.use("/chat", chatRouter(socketServer));
