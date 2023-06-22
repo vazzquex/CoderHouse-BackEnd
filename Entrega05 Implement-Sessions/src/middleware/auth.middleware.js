@@ -6,6 +6,15 @@ export function isAuth(req, res, next) {
 	}
 }
 
+export function isAdmin(req, res, next) {
+	if(req.session.admin) {
+		next()
+	}else {
+		res.redirect('/');
+	}
+
+}
+
 export function isGuest(req, res, next) {
 	if (!req.session.user) {
 		next();
