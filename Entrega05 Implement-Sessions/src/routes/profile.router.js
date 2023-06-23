@@ -10,7 +10,7 @@ profileRouters.get('/', isAuth, (req, res) => {
     delete user.password;
     res.render('index', {
         title: 'Perfil de Usuario',
-        user,
+        user
     });
 });
 

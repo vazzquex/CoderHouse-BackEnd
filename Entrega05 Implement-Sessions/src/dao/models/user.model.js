@@ -9,6 +9,10 @@ const userSchema = new mongoose.Schema({
 		required: true,
 		index: true,
 	},
+	rol: {
+		type: String,
+		default: "user"
+	},
 	password: String,
 	img: String,
 });
