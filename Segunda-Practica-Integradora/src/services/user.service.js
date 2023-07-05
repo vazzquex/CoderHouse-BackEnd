@@ -21,6 +21,10 @@ class UserService {
 		return await this.model.findById(id)
 	}
 
+	async getByAge(age) {
+		return await this.model.findOne({ age: age });
+	}
+
 }
 
 const userService = new UserService();

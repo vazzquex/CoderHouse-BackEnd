@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
 		required: true,
 		index: true,
 	},
+	age: Number,
 	rol: {
 		type: String,
 		default: "user"
