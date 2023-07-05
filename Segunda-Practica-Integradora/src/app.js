@@ -33,6 +33,7 @@ import profileRouters from './routes/profile.router.js';
 
 // Config
 
+
 const mongodb_server = process.env.mongodb
 
 const app = express();
@@ -52,6 +53,8 @@ app.set('view engine', 'handlebars');
 // app.get('/', (req, res) => {
 //     res.redirect('/products');
 // })
+
+
 
 app.use(cookieParser('9843f78efyh'));
 
@@ -104,6 +107,8 @@ const httpServer = app.listen(port, () => {
     console.log(`Escuchando por el puerto ${port}`);
 });
 const socketServer = new Server(httpServer);
+
+
 
 //Routers
 app.use("/products", profileRouters);

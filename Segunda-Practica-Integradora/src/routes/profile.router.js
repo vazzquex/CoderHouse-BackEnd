@@ -6,6 +6,8 @@ import productManager from '../dao/manager/ProductManager.js';
 const profileRouters = Router();
 
 profileRouters.get('/', isAuth, (req, res) => {
+
+
     const { user } = req.session;
     delete user.password;
     

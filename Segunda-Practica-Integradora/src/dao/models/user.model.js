@@ -14,6 +14,10 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		default: "user"
 	},
+	cart: [{
+		productId: String,
+		quantity: Number,
+	}],
 	password: String,
 	img: String,
 });

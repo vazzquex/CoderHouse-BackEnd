@@ -1,5 +1,6 @@
 import userModel from '../dao/models/user.model.js';
 
+
 class UserService {
 	constructor() {
 		this.model = userModel;
@@ -17,9 +18,13 @@ class UserService {
 		return await this.model.create(userData);
 	}
 	
+	async getUserById(userId){
+		return await this.model.findOne({_id: userId});
+	}
 	async getById(id) {
 		return await this.model.findById(id)
 	}
+
 
 	async getByAge(age) {
 		return await this.model.findOne({ age: age });
