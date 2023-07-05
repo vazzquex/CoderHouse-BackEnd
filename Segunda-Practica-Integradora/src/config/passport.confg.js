@@ -1,7 +1,10 @@
 import passport from 'passport';
 import GitHubStrategy from 'passport-github2';
 import userServices from '../services/user.service.js';
-import { clientID, clientSecret } from '../../keys.variable.js';
+import 'dotenv/config';
+
+const clientID = process.env.clientID;
+const clientSecret = process.env.clientSecret;
 
 const incializePassport = () => {
 	passport.use(
@@ -20,8 +23,6 @@ const incializePassport = () => {
 					let user = await userServices.getByEmail(
 						profile._json.email
 					);
-
-					console.log(profile._json.email);
 
 					if (!user) {
 						let newUser = {

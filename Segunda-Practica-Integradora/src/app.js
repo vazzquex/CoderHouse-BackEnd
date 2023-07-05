@@ -8,18 +8,20 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import cookieParser from 'cookie-parser';
 
+//environment variables
+import 'dotenv/config'
+
+//passport
 import incializePassport from './config/passport.confg.js';
+
 //data
 //import dataProducts from './data/products.json' assert {type: 'json'};
 
-//keys
-import { mongodb } from '../keys.variable.js';
-
+//model
 import productModel from './dao/models/products.model.js';
 
-// Routes
+//routes
 import sessionsRouter from './routes/sessions.router.js';
-
 import viewsRouter from './routes/views.router.js';
 import viewsCartsRouter from './routes/views.cart.router.js'
 import productsRouter from './routes/products.router.js';
@@ -28,10 +30,12 @@ import chatRouter from './routes/chat.router.js';
 import cartsRouter from './routes/carts.router.js';
 import usersRouter from './routes/user.router.js';
 import profileRouters from './routes/profile.router.js';
+
 // Config
 
-const app = express();
+const mongodb_server = process.env.mongodb
 
+const app = express();
 const port = 8080;
 
 app.use(express.json());
@@ -56,7 +60,7 @@ app.use(
 	session({
 		store: MongoStore.create({
 			mongoUrl:
-				mongodb,
+				mongodb_server,
 			mongoOptions: {
 				useNewUrlParser: true,
 			},
@@ -70,7 +74,7 @@ app.use(
 
 mongoose.set("strictQuery", false);
 try {
-    await mongoose.connect(mongodb);
+    await mongoose.connect(mongodb_server);
 } catch {
     console.error(`Database connection failed: ${error}`);
 };
