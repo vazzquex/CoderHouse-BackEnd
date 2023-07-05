@@ -8,6 +8,7 @@ const profileRouters = Router();
 profileRouters.get('/', isAuth, (req, res) => {
     const { user } = req.session;
     delete user.password;
+    
     res.render('index', {
         title: 'Perfil de Usuario',
         user

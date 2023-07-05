@@ -1,10 +1,11 @@
 import { Router } from 'express';
 import userService from '../services/user.service.js';
+import { encriptPass, comparePass } from '../tools/encrypt.js';
 
 const usersRouter = Router();
 
 usersRouter.post('/', async (req, res) => {
-	const userData = req.body;
+	const userData = { ...req.body, password: encriptPass(req.body.password) };
 	try {
 		const newUser = await userService.createUser(userData);
 		res.status(201).json(newUser);
@@ -26,8 +27,8 @@ usersRouter.post('/auth', async (req, res) => {
 		if (email !== admin.email || password !== admin.password) {
 		
 			if (!user) throw new Error('Invalid data'); // Comprobo si existe el usuario
-			if (user.password !== password) throw new Error('Invalid password'); // Comprobo si la contraseña coincide
-
+			if (!comparePass(user, password)) throw new Error('Invalid data'); // Comprobo si la contraseña coincide
+	
 			// Guardo la session
 			req.session.user = user;
 
