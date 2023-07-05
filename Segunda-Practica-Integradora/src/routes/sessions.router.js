@@ -4,6 +4,14 @@ import { isAuth, isGuest } from '../middleware/auth.middleware.js';
 
 const sessionsRouter = Router();
 
+sessionsRouter.get('/current', (req, res) => {
+	if(req.session.user){
+		res.json(req.session.user);
+	} else {
+		res.status(401).json({ messsage: 'No se encontro el usuario autenticado'});
+	}
+});
+
 sessionsRouter.get(
 	'/github',
 	passport.authenticate('github', { scope: ['user:email'] }),
