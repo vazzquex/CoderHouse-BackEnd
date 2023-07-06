@@ -49,12 +49,9 @@ app.engine('handlebars', handlebars.engine());
 app.set('views', './src/views');
 app.set('view engine', 'handlebars');
 
-
 // app.get('/', (req, res) => {
 //     res.redirect('/products');
 // })
-
-
 
 app.use(cookieParser('9843f78efyh'));
 
@@ -95,7 +92,7 @@ app.use("/api/carts", cartsRouter);
 
 //app.use(express.static('public'));
 
-//insert product data if necessary
+//insert product data if necessary1
 // try {
 //     await productModel.insertMany(dataProducts);
 // } catch (err) {
@@ -115,6 +112,3 @@ app.use("/products", profileRouters);
 app.use("/carts", viewsCartsRouter);
 app.use('/realTimeProducts', realTimeProductsRouter(socketServer));
 app.use("/chat", chatRouter(socketServer));
-
-
-

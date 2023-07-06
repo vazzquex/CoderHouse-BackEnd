@@ -2,24 +2,20 @@ import { Router } from 'express';
 const router = Router();
 
 import cartsManager from '../dao/manager/CartsManager.js';
+import userService from '../services/user.service.js';
 
 // Cart view
-router.get('/:cid', async (req, res) => {
-    const cartId = req.params.cid;
-
-    try{
-        const cart = await cartsManager.getCartById(cartId);
-        
-        res.status(200).render('cart', {
-            script: "cart",
-            style: "cart",
-            title: "Carrito",
-            cart: cart
-        });
-    }catch(error){
-        res.status(500).send(`Error trying to fetch cart data: ${error}`);
+router.post('/:userId', async (req, res) => {
+    const { userId } = req.params;
+    try {
+      const cart = await userService.getCartUser(userId);
+      res.status(200).json({ cart });
+      
+    } catch (error) {
+      console.error(`Error trying to get cart: ${error}`);
+      res.status(500).send(`Internal server error trying to get cart: ${error}`);
     };
-});
-
+  });
+  
 
 export default router;
