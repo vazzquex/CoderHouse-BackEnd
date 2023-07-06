@@ -14,17 +14,17 @@ class UserService {
 		return await this.model.findOne({ email: email });
 	}
 
+	async updateUser(user) {
+		return await this.model.findByIdAndUpdate(user._id, user, { new: true });
+	  }
+
 	async createUser(userData) {
 		return await this.model.create(userData);
 	}
 	
-	async getUserById(userId){
-		return await this.model.findOne({_id: userId});
-	}
 	async getById(id) {
 		return await this.model.findById(id)
 	}
-
 
 	async getByAge(age) {
 		return await this.model.findOne({ age: age });

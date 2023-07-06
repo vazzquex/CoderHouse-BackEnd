@@ -19,13 +19,26 @@ router.get('/', async (req, res) => {
 // Get by ID
 router.get("/:pid", async (req, res) => {
   const pid = req.params.pid;
+
+
   try {
     const product = await productManager.getProductById(pid);
-    res.status(200).send(product);
-  } catch (error) {
+    const { user } = req.session;
+    delete user.password;
+
+    res.status(200).render('product', {
+        style: 'index',
+        title: `${product.title}`,
+        product: product.toObject(),
+        user
+    
+    });
+
+} catch (error) {
     res.status(500).send(`Error trying to fetch product by id: ${error}`);
-  };
+};
 });
+
 
 // Create
 router.post("/", async (req, res) => {
@@ -45,7 +58,6 @@ router.put("/:pid", async (req, res) => {
   if(!req.body) return;
 
   const pid = req.params.pid;
-
   try {
     const currentProduct = await productManager.updateProduct(pid, req.body);
     res.status(201).send({currentProduct});

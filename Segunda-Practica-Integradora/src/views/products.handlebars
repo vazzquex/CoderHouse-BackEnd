@@ -22,6 +22,7 @@
     </haeder>
 
     <div id="products-container">
+        <div>
         {{#each products.docs}}
         <div class="card mb-3">
             <div class="row g-0">
@@ -33,27 +34,27 @@
                         <p class="card-text">ID: {{this._id}}</p>
                         <p class="card-text">Categoria: {{this.category}}</p>
                         <p class="card-text">Stock: {{this.stock}}</p>
-                        <a href="http://localhost:8080/products/{{this._id}}"><button type="button"
+                        <p class="card-text">Nombre usuario: {{user.name}}</p>
+                        <a href="http://localhost:8080/api/products/{{this._id}}"><button type="button"
                                 class="btn btn-primary">Ver más</button></a>
                         <form action="http://localhost:8080/api/carts/648654bd423a51a741ff13ce/products/{{this._id}}"
                             method="post">
                             <input type="submit" class="btn btn-dark" value="Agregar al carrito">
                         </form>
 
-                       {{#if userId}}
-                        <form action="/api/users/{{user.email}}/cart" method="post">
+                        <form action="/api/carts/{{../user.email}}/cart" method="post">
                             <input type="hidden" name="productId" value="{{this._id}}">
                             <input type="hidden" name="quantity" value="1">
-                            <button type="submit">Añadir al carrito</button>
+                            <button type="submit">Añadir al carrito xd</button>
                         </form>
-                        {{/if}}
 
                     </div>
                 </div>
             </div>
         </div>
+        <p>Username: {{../user.email}}</p>
         {{/each}}
-
+        </div>
 
         <ul class="pagination">
             <li class="page-item">

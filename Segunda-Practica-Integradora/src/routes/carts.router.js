@@ -1,6 +1,7 @@
 import { Router } from "express";
 const router = Router();
 import cartsManager from '../dao/manager/CartsManager.js';
+import userService from "../services/user.service.js";
 
 // Get carts
 router.get('/', async (req, res) => {
@@ -48,6 +49,27 @@ router.post('/:cid/products/:pid', async (req, res) => {
     console.error(`Error trying to add a product to cart: ${error}`);
     res.status(500).send(`Internal server error trying to add a product to cart: ${error}`);
   };
+});
+
+// add product to cart 2
+router.post('/:userEmail/cart', async (req, res) => {
+  const { userEmail } = req.params;
+  const { productId, quantity } = req.body;
+
+  try {
+      const user = await userService.getByEmail(userEmail);
+      
+      if (!user) {
+          return res.status(404).json({ error: 'User not found' });
+      }
+
+      user.cart.push({ productId, quantity });
+      user.markModified('cart');
+      const updatedUser = await userService.updateUser(user);
+      res.status(200).json(updatedUser);
+  } catch (error) {
+      res.status(400).json({ error: error.message });
+  }
 });
 
 // Update all products of cart

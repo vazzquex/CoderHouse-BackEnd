@@ -26,26 +26,35 @@ const admin = {
 
 
 
-usersRouter.post('/:userEmail/cart', async (req, res) => {
-    const { userEmail } = req.params;
-    const { productId, quantity } = req.body;
+usersRouter.post('/:userId/cart', async (req, res) => {
+	const userId = req.params.userId;
+	const productId = req.body.productId;
 
-    try {
-        const user = await userService.getByEmail(userEmail);
-        
-        if (!user) {
-            return res.status(404).json({ error: 'User not found' });
-        }
+	console.log(userId);
+	res.render('user', { userId });
 
-        user.cart.push({ productId, quantity });
-        user.markModified('cart');
-        const updatedUser = await userService.updateUser(user);
-        res.status(200).json(updatedUser);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-});
-
+  
+	try {
+	  // Buscar al usuario por su ID
+	  const user = await User.findById(userId);
+  
+	  if (!user) {
+		return res.status(404).json({ message: 'Usuario no encontrado' });
+	  }
+  
+	  // Añadir el producto al carrito del usuario
+	  user.cart.push(productId);
+  
+	  // Guardar los cambios en la base de datos
+	  await user.save();
+  
+	  return res.status(200).json({ message: 'Producto añadido al carrito correctamente' });
+	} catch (error) {
+	  console.error('Error al añadir producto al carrito:', error);
+	  return res.status(500).json({ message: 'Error interno del servidor' });
+	}
+  });
+  
 
 
 
