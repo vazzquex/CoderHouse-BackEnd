@@ -4,39 +4,40 @@
 
 
     <div id="products-container">
-        {{#each cart.products}}
+        {{#each products.docs}}
         <div class="card mb-3">
             <div class="row g-0">
                 <div class="col-md-8">
                     <div class="card-body">
-                        <h5 class="card-title">{{this.product.title}}</h5>
+                        {{!-- <h5 class="card-title">{{this.product.title}}</h5>
                         <p class="card-text">{{this.product.description}}</p>
                         <p class="card-text">${{this.product.price}}</p>
                         <p class="card-text">ID: {{this.product._id}}</p>
                         <p class="card-text">Categoria: {{this.product.category}}</p>
-                        <p class="card-text">Stock: {{this.product.stock}}</p>
+                        <p class="card-text">Stock: {{this.product.stock}}</p> --}}
+
+
+                        <h5 class="card-title">{{this.title}}</h5>
+                        <p class="card-text">{{this.description}}</p>
+                        <p class="card-text">${{this.price}}</p>
+                        <p class="card-text">ID: {{this._id}}</p>
+                        <p class="card-text">Categoria: {{this.category}}</p>
+                        <p class="card-text">Stock: {{this.stock}}</p>
+                        <p class="card-text">Nombre usuario: {{user.name}}</p>
 
                         <table>
                             <tr>
                                 <td>
-                                    <a href="http://localhost:8080/products/{{this.product._id}}"><button type="button"
+                                    <a href="http://localhost:8080/products/{{this._id}}"><button type="button"
                                             class="btn btn-primary">Ver más</button></a>
-
                                 </td>
 
                                 <td>
-                                    <form
-                                        action="http://localhost:8080/api/carts/648654bd423a51a741ff13ce/products/delete/{{this.product._id}}"
-                                        method="post">
-                                        <input type="submit" class="btn btn-dark" value="Eliminar de carrito">
-                                    </form>
-
                                     <form
                                         action="/{{../user.email}}/cart/delete"
                                         method="post">
                                         <input type="submit" class="btn btn-dark" value="Eliminar de carrito">
                                     </form>
-                                    
                                 </td>
                             </tr>
                         </table>
@@ -48,5 +49,8 @@
         {{/each}}
     </div>
 </section>
+
+
+
 
 <script src="/js/cart.js"></script>
