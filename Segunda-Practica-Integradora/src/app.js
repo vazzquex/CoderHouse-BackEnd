@@ -44,7 +44,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('./src/public'));
 
-// Handlebars
+//Handlebars
 app.engine('handlebars', handlebars.engine());
 app.set('views', './src/views');
 app.set('view engine', 'handlebars');

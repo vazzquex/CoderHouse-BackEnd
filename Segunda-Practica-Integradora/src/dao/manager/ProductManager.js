@@ -28,7 +28,7 @@ class ProductManager {
 
   getProductById = async (id) => {
     try {
-      const product = await productModel.findById(id).exec();
+      const product = await productModel.findById(id).lean().exec();
       return product;
     } catch (error) {
       console.error(`Error trying to fetch product by id: ${error}`);
