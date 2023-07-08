@@ -29,7 +29,7 @@ router.get("/:pid", async (req, res) => {
     res.status(200).render('product', {
         style: 'index',
         title: `${product.title}`,
-        product: product.toObject(),
+        product,
         user
     
     });

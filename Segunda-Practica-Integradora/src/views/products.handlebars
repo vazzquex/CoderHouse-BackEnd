@@ -48,10 +48,10 @@
                             <input type="submit" class="btn btn-dark" value="Agregar al carrito">
                         </form> --}}
 
-                        <form action="/api/carts/{{../user.email}}/cart" method="post">
+                        <form action="/api/carts/{{../user._id}}/cart" method="post">
                             <input type="hidden" name="productId" value="{{this._id}}">
                             <input type="hidden" name="quantity" value="1">
-                            <button type="submit" class="btn btn-dark">Añadir al carrito</button>
+                            <button type="submit" class="btn btn-dark" onclick="addProductAlert()">Añadir al carrito</button>
                         </form>
 
                     </div>
@@ -92,3 +92,7 @@
         </ul>
     </div>
 </section>
+
+<script src="/js/products.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

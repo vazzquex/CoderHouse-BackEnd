@@ -16,7 +16,6 @@ router.get('/:userId/cart', async (req, res) => {
 });
 
 
-
 router.get('/:userId', async (req, res) => {
   const { user } = req.params.user;
   delete user.password;
@@ -34,13 +33,13 @@ router.get('/:userId', async (req, res) => {
 });
 
 
-// add product to cart 2
-router.post('/:userEmail/cart', async (req, res) => {
-  const { userEmail } = req.params;
+// add product to cart
+router.post('/:userId/cart', async (req, res) => {
+  const { userId } = req.params;
   const { productId, quantity } = req.body;
 
   try {
-    const user = await userService.getByEmail(userEmail);
+    const user = await userService.getById(userId);
 
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
@@ -49,7 +48,14 @@ router.post('/:userEmail/cart', async (req, res) => {
     user.cart.push({ productId, quantity });
     user.markModified('cart');
     const updatedUser = await userService.updateUser(user);
-    res.status(200).json(updatedUser);
+
+
+    res.status(204).end();
+
+    //res.status(200).json(updatedUser);
+
+
+
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -71,30 +77,27 @@ router.put('/:cid', async (req, res) => {
 
 
 // delete product cart
-router.post('/:userEmail/cart/delete', async (req, res) => {
-  const { userEmail } = req.params;
-  const { productId } = req.body;
+router.post('/:userId/:productId', async (req, res) => {
+  const { userId, productId } = req.params;
 
   try {
-    const user = await userService.getByEmail(userEmail);
+      // Encuentra al usuario por su ID
+      const user = await userService.getById(userId);
 
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
+      // Filtra los productos en el carrito para excluir el producto que deseas eliminar
+      user.cart = user.cart.filter(item => item.productId.toString() !== productId);
 
-    // Utilizar reduce para eliminar el producto del carrito
-    user.cart = user.cart.reduce((result, item) => {
-      if (item.productId !== productId) {
-        result.push(item);
-      }
-      return result;
-    }, []);
+      // Guarda el usuario con el carrito actualizado
+      await user.save();
 
-    user.markModified('cart');
-    const updatedUser = await userService.updateUser(user);
-    res.status(200).json(updatedUser);
+      res.status(204).end();
+
+
+      //res.status(200).redirect('/products')
+
   } catch (error) {
-    res.status(400).json({ error: error.message });
+      console.error(`Error removing product from cart: ${error}`);
+      res.status(500).send(`Internal server error removing product from cart: ${error}`);
   }
 });
 

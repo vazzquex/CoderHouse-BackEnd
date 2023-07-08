@@ -35,7 +35,7 @@ class UserService {
 	}
 
 	async getById(id) {
-		return await this.model.findById(id)
+		return await this.model.findById(id);
 	}
 
 	async getByAge(age) {
