@@ -5,7 +5,7 @@ En esta entrega, hemos profundizado en el uso de las variables de entorno (.env)
 Durante este proceso, hemos adquirido valiosas buenas prácticas que nos permitirán mantener nuestro código eficiente y legible. También hemos explorado patrones de diseño, aprendiendo no solo a implementarlos, sino también a reconocerlos, lo que nos permitirá entender y colaborar en proyectos más complejos con mayor facilidad. 🎓
 ## 📝 Variables de Entorno
 
-El archivo ejemplo del `.env` contiene:
+Archivo ejemplo del `.env` contiene:
 
 ```bash
 MONGO_URL='mongodb://localhost:8080/test' 🌐
