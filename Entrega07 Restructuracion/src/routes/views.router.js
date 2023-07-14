@@ -1,12 +1,14 @@
 import { Router } from 'express';
+import productController from '../controllers/product.controller.js';
+
 const viewsRouter = Router();
-import productManager from '../dao/manager/ProductManager.js';
+
 
 // Get
 viewsRouter.get('/', async (req, res) => {
     try {
         const {limit, page, sort, query} = req.query;
-        const products = await productManager.getProducts(limit, page, sort, query);
+        const products = await productController.getProducts(limit, page, sort, query);
 
         products.prevLink = products.hasPrevPage ? `/products?page=${products.prevPage}` : null;
         products.nextLink = products.hasNextPage ? `/products?page=${products.nextPage}` : null;
@@ -36,7 +38,7 @@ viewsRouter.get('/:pid', async (req, res) => {
     const productId = req.params.pid;
 
     try {
-        const product = await productManager.getProductById(productId);
+        const product = await productController.getProductById(productId);
   
         res.status(200).render('product', {
             style: 'index',

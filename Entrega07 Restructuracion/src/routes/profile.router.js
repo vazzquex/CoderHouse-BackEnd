@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { isAuth, isGuest } from '../middleware/auth.middleware.js';
-import productManager from '../dao/manager/ProductManager.js';
+
+import productController from '../controllers/product.controller.js';
 
 
 const profileRouters = Router();
@@ -36,7 +37,7 @@ profileRouters.get('/login', isGuest, (req, res) => {
 profileRouters.get('/products', isAuth, async (req, res) => {
     try {
         const { limit, page, sort, query } = req.query;
-        const products =  await productManager.getProducts(limit, page, sort, query);
+        const products =  await productController.getProducts(limit, page, sort, query);
 
         const { user } = req.session;
         delete user.password;

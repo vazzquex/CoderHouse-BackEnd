@@ -9,5 +9,4 @@ export default {
 
     adminUser: process.env.ADMIN_USER,
     adminPassword: process.env.ADMIN_PASSWORD,
-
 }

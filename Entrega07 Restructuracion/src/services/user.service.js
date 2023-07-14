@@ -10,7 +10,6 @@ class UserService {
 		return await this.model.findById(userId).populate('cart.productId').lean();
 	  };
 
-
 	async updateUser(user) {
 		user.markModified('cart');
 		await user.save();

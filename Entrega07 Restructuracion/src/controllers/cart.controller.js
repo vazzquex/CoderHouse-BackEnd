@@ -1,6 +1,7 @@
-import cartsModel from "../models/carts.model.js";
+import cartsModel from "../dao/models/carts.model.js"
 
-class CartsManager {
+
+class CartController {
   // Get
   getCarts = async () => {
     try{
@@ -134,6 +135,6 @@ class CartsManager {
 
 };
 
-const cartsManager = new CartsManager();
+const cartController = new CartController();
 
-export default cartsManager;
+export default cartController;

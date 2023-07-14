@@ -3,13 +3,12 @@ import mongoose from 'mongoose';
 import express from 'express';
 import { Server } from 'socket.io';
 import handlebars from 'express-handlebars';
-import productManager from './dao/manager/ProductManager.js';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import cookieParser from 'cookie-parser';
 
-//environment variables
-import 'dotenv/config'
+import productController from './controllers/product.controller.js';
+
 
 //passport
 import incializePassport from './config/passport.confg.js';

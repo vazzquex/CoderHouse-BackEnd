@@ -1,13 +1,14 @@
 import { Router } from "express";
-const router = Router();
-import cartsManager from '../dao/manager/CartsManager.js';
+
+import cartController from "../controllers/cart.controller.js";
 import userService from "../services/user.service.js";
 
+const router = Router();
 
 // Get carts
 router.get('/:userId/cart', async (req, res) => {
   try {
-    const carts = await cartsManager.getCarts();
+    const carts = await cartController.getCarts();
     res.status(200).json({ carts });
   } catch (error) {
     console.error(`Error trying to get carts: ${error}`);
@@ -23,7 +24,7 @@ router.get('/:userId', async (req, res) => {
   try {
     const cid = req.params.cid;
     const pid = req.params.pid;
-    const currentCart = await cartsManager.deleteProductOfCart(cid, pid);
+    const currentCart = await cartController.deleteProductOfCart(cid, pid);
     res.status(202).json(currentCart);
   } catch (error) {
     console.error(`Error trying to add a product to cart: ${error}`);
@@ -66,7 +67,7 @@ router.put('/:cid', async (req, res) => {
   try {
     const cid = req.params.cid;
     const updatedProducts = req.body;
-    const currentCart = await cartsManager.updateAllProducts(cid, updatedProducts);
+    const currentCart = await cartController.updateAllProducts(cid, updatedProducts);
     res.status(202).json(currentCart);
   } catch (error) {
     console.error(`Error trying to add a product to cart: ${error}`);
@@ -81,19 +82,20 @@ router.post('/:userId/:productId', async (req, res) => {
   const { userId, productId } = req.params;
 
   try {
-      // Encuentra al usuario por su ID
       const user = await userService.getById(userId);
 
       // Filtra los productos en el carrito para excluir el producto que deseas eliminar
       user.cart = user.cart.filter(item => item.productId.toString() !== productId);
 
-      // Guarda el usuario con el carrito actualizado
+      // save user
       await user.save();
 
-      res.status(204).end();
+      const populateUser = await userService.populateProductCart(userId);
 
+      res.status(200).json(populateUser)
 
-      //res.status(200).redirect('/products')
+      //res.status(204).end();
+
 
   } catch (error) {
       console.error(`Error removing product from cart: ${error}`);
@@ -107,7 +109,7 @@ router.post('/:cid/products/delete/:pid', async (req, res) => {
   try {
     const cid = req.params.cid;
     const pid = req.params.pid;
-    const currentCart = await cartsManager.deleteProductOfCart(cid, pid);
+    const currentCart = await cartController.deleteProductOfCart(cid, pid);
     res.status(202).json(currentCart);
   } catch (error) {
     console.error(`Error trying to add a product to cart: ${error}`);

@@ -1,6 +1,5 @@
-import messagesModel from "../models/messages.model.js";
-
-class MessagesManager {
+import messagesModel from "../dao/models/messages.model.js";
+class MessagesController {
   getMessages = async () => {
     try {
       const messages = await messagesModel.find().lean().exec();
@@ -28,6 +27,6 @@ class MessagesManager {
   };
 };
 
-const messagesManager = new MessagesManager();
+const messagesController = new MessagesController();
 
-export default messagesManager;
+export default messagesController;

@@ -1,7 +1,7 @@
-import productModel from '../models/products.model.js';
+import productModel from '../dao/models/products.model.js';
 import mongoose from 'mongoose';
 
-class ProductManager {
+class ProductController {
 
   // Read
   getProducts = async (limit, page, sort, query) => {
@@ -110,6 +110,6 @@ class ProductManager {
   };
 }
 
-const productManager = new ProductManager();
+const productController = new ProductController();
 
-export default productManager;
+export default productController;

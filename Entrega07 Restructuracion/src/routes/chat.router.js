@@ -1,5 +1,5 @@
 import { Router } from "express";
-import messagesManager from '../dao/manager/MessagesManager.js';
+import messagesController from "../controllers/message.controller.js";
 
 const router = Router();
 
@@ -9,7 +9,7 @@ const chatMessagesRouter = (socketServer) => {
 
     // Bring chat history on connection
     try{
-      const history = await messagesManager.getMessages();
+      const history = await messagesController.getMessages();
       // Send history
       socketServer.emit('history', history);
     } catch (error) {
@@ -19,7 +19,7 @@ const chatMessagesRouter = (socketServer) => {
     // Send message
     socket.on('message', async (msg) => {
         try{
-          const newMessage = await messagesManager.addMessage(msg);
+          const newMessage = await messagesController.addMessage(msg);
           // Send last message
           socketServer.emit('currentMessage', newMessage);
         } catch (error) {
