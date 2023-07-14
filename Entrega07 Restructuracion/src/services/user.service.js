@@ -7,18 +7,15 @@ class UserService {
 	}
 
 	async populateProductCart(userId){
-		return await this.model.findById(userId).populate('cart.productId');
+		return await this.model.findById(userId).populate('cart.productId').lean();
 	  };
 
 
 	async updateUser(user) {
-		// Mark the cart as modified
 		user.markModified('cart');
-	  
-		// Save the user
 		await user.save();
 	  
-		// Now we populate the user cart after saving
+		//populate the user cart after saving
 		return await this.populateProductCart(user._id);
 	  }
 
@@ -43,11 +40,6 @@ class UserService {
 	async getByEmail(email) {
 		return await this.model.findOne({ email: email });
 	}
-
-
-	// async updateUser(user) {
-	// 	return await this.model.findByIdAndUpdate(user._id, user, { new: true });
-	// }
 
 	async createUser(userData) {
 		return await this.model.create(userData);

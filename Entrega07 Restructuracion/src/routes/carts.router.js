@@ -46,10 +46,14 @@ router.post('/:userId/cart', async (req, res) => {
     }
 
     user.cart.push({ productId, quantity });
+    user.markModified('cart');
 
-    const updatedUser = await userService.updateUser(user);
+    await userService.updateUser(user);
 
-    res.status(200).json(updatedUser);
+    const populatedUser = await userService.populateProductCart(userId);
+
+    // Respond with the populated user.
+    res.status(200).json(populatedUser);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
