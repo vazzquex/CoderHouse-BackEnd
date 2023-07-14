@@ -10,6 +10,7 @@ Archivo ejemplo del `.env` contiene:
 ```bash
 MONGO_URL='mongodb://localhost:8080/test' 🌐
 
+# Las siguientes variables son para la autenticación con GitHub usando Passport
 CLIENT_ID='Iv1.a1b2c3a1b2c3' 🔑
 CLIENT_SECRET='12345123451234512345123451' 🔒
 
