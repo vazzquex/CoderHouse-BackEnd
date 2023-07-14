@@ -32,6 +32,7 @@ import usersRouter from './routes/user.router.js';
 import profileRouters from './routes/profile.router.js';
 
 // Config
+import config from './tools/config.js';
 
 
 const mongodb_server = process.env.mongodb
@@ -49,10 +50,7 @@ app.engine('handlebars', handlebars.engine());
 app.set('views', './src/views');
 app.set('view engine', 'handlebars');
 
-// app.get('/', (req, res) => {
-//     res.redirect('/products');
-// })
-
+//Coockies
 app.use(cookieParser('9843f78efyh'));
 
 // Session
@@ -60,7 +58,7 @@ app.use(
 	session({
 		store: MongoStore.create({
 			mongoUrl:
-				mongodb_server,
+				config.mongoUrl,
 			mongoOptions: {
 				useNewUrlParser: true,
 			},
@@ -74,7 +72,7 @@ app.use(
 
 mongoose.set("strictQuery", false);
 try {
-    await mongoose.connect(mongodb_server);
+    await mongoose.connect(config.mongoUrl);
 } catch {
     console.error(`Database connection failed: ${error}`);
 };
@@ -104,8 +102,6 @@ const httpServer = app.listen(port, () => {
     console.log(`Escuchando por el puerto ${port}`);
 });
 const socketServer = new Server(httpServer);
-
-
 
 //Routers
 app.use("/products", profileRouters);

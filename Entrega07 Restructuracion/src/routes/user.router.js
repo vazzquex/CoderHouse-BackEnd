@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import userService from '../services/user.service.js';
 import { encriptPass, comparePass } from '../tools/encrypt.js';
+import config from '../tools/config.js';
 
 const usersRouter = Router();
 
@@ -20,8 +21,8 @@ usersRouter.post('/', async (req, res) => {
 });
 
 const admin = {
-	email: 'adminCoder@coder.com',
-	password: 'adminCod3r123'
+	email: config.adminUser,
+	password: config.adminPassword
 }
 
 

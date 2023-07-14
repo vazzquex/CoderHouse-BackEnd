@@ -1,10 +1,13 @@
 import passport from 'passport';
 import GitHubStrategy from 'passport-github2';
 import userServices from '../services/user.service.js';
-import 'dotenv/config';
+import config from '../tools/config.js';
 
-const clientID = process.env.clientID;
-const clientSecret = process.env.clientSecret;
+
+
+
+const clientID = config.clientId;
+const clientSecret = config.clientSecret;
 
 const incializePassport = () => {
 	passport.use(
