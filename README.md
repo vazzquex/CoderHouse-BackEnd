@@ -1,18 +1,56 @@
 # CoderHouse-BackEnd
 
-Este repositorio contiene las entregas de proyectos para la academia online CoderHouse.
+Este repositorio contiene las entregas de proyectos para el curso de Backend en la academia online CoderHouse. A lo largo del curso, hemos adquirido una serie de habilidades y conocimientos que se reflejan en los proyectos contenidos en este repositorio.
 
 ## Tabla de Contenidos
 
+- [Habilidades Adquiridas](#habilidades-adquiridas)
 - [Instalación](#instalación)
 - [Uso](#uso)
 - [Contribución](#contribución)
 
-## Proyectos
-Cada carpeta en este repositorio representa una entrega por separado.
+## Habilidades Adquiridas
 
+A lo largo del curso, hemos adquirido habilidades en varias áreas, incluyendo:
 
-(Puedes reemplazar "Proyecto 1", "Proyecto 2", etc., con los nombres reales de tus proyectos y proporcionar una breve descripción de cada uno)
+### Mongo Avanzado
+
+- Comprender el uso de una referencia por ObjectId
+- Saber definir referencias en un schema de mongoose
+- Comprender el uso de populations
+- Aplicar una population en mongoose entre dos esquemas con una referencia
+- Comprender la necesidad de la utilización de paginaciones
+- Aplicar paginaciones en consultas con mongoose-paginatev2
+
+### Cookies
+
+- Entender el funcionamiento de una cookie
+- Saber setear una cookie 
+- Saber configurar el tiempo de vida de una cookie
+- Saber limpiar una cookie
+- Comprender la conexión de una cookie con jwt
+
+### Autenticación y Autorización
+
+- Comprender la lógica de registro de un usuario
+- Comprender el concepto de autenticación y la lógica de login de un usuario
+- Comprender la diferencia entre autenticación y autorización
+- Construir middlewares de autorización y control de códigos de estado 401 y 403
+- Manejo de políticas
+
+### Passport
+
+- Comprender el uso de una estrategia
+- Comprender la lógica de una estrategia local y sus configuraciones
+- Comprender la lógica de una estrategia por terceros y sus configuraciones
+- Comprender la lógica de una estrategia de tokenización y su configuración
+
+### JsonWebToken
+
+- Comprender la diferencia entre una sesión y una tokenización
+- Firmar información en un token
+- Guardar tokens en cookies HTTP - Only
+- Utilizar Passport-jwt
 
 ## Instalación
 
@@ -24,11 +62,8 @@ cd CoderHouse-BackEnd
 cd [nombre del proyecto]
 npm install
 ```
-## Uso
-```bash
-npm start
-```
-## Contribución
-Las contribuciones son siempre bienvenidas. Si tienes alguna idea de cómo mejorar algun el proyecto, no dudes en hacer un fork del repositorio y proponer tus cambios.
+
+
+
 
 
