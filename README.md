@@ -6,8 +6,6 @@ Este repositorio contiene las entregas de proyectos para el curso de Backend en 
 
 - [Habilidades Adquiridas](#habilidades-adquiridas)
 - [Instalación](#instalación)
-- [Uso](#uso)
-- [Contribución](#contribución)
 
 ## 💡 Habilidades Adquiridas
 
