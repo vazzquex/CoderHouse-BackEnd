@@ -1,15 +1,15 @@
-# CoderHouse-BackEnd
+# 🎓 CoderHouse-BackEnd
 
 Este repositorio contiene las entregas de proyectos para el curso de Backend en la academia online CoderHouse. A lo largo del curso, hemos adquirido una serie de habilidades y conocimientos que se reflejan en los proyectos contenidos en este repositorio.
 
-## Tabla de Contenidos
+## 📚 Tabla de Contenidos
 
 - [Habilidades Adquiridas](#habilidades-adquiridas)
 - [Instalación](#instalación)
 - [Uso](#uso)
 - [Contribución](#contribución)
 
-## Habilidades Adquiridas
+## 💡 Habilidades Adquiridas
 
 A lo largo del curso, hemos adquirido habilidades en varias áreas, incluyendo:
 
@@ -52,7 +52,7 @@ A lo largo del curso, hemos adquirido habilidades en varias áreas, incluyendo:
 - Guardar tokens en cookies HTTP - Only
 - Utilizar Passport-jwt
 
-## Instalación
+## 💻 Instalación
 
 Para instalar y ejecutar estos proyectos, necesitarás [Node.js](https://nodejs.org/en/download/) y [npm](https://www.npmjs.com/get-npm) instalados en tu computadora. Después de eso, puedes clonar el repositorio y ejecutar los siguientes comandos:
 
