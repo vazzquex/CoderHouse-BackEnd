@@ -4,19 +4,13 @@ Este repositorio contiene las entregas de proyectos para la academia online Code
 
 ## Tabla de Contenidos
 
-- [Proyectos](#proyectos)
 - [Instalación](#instalación)
 - [Uso](#uso)
 - [Contribución](#contribución)
 
 ## Proyectos
+Cada carpeta en este repositorio representa una entrega por separado.
 
-Cada carpeta en este repositorio representa un proyecto separado. Aquí hay una descripción general de cada uno:
-
-1. **Proyecto 1**: Breve descripción del Proyecto 1.
-2. **Proyecto 2**: Breve descripción del Proyecto 2.
-3. **Proyecto 3**: Breve descripción del Proyecto 3.
-4. **Proyecto 4**: Breve descripción del Proyecto 4.
 
 (Puedes reemplazar "Proyecto 1", "Proyecto 2", etc., con los nombres reales de tus proyectos y proporcionar una breve descripción de cada uno)
 
