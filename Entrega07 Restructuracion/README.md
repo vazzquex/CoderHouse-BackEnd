@@ -8,14 +8,14 @@ Durante este proceso, hemos adquirido valiosas buenas prácticas que nos permiti
 Archivo ejemplo del `.env` contiene:
 
 ```bash
-MONGO_URL='mongodb://localhost:8080/test' 🌐
+MONGO_URL='mongodb://localhost:8080/test'
 
 # Las siguientes variables son para la autenticación con GitHub usando Passport
-CLIENT_ID='Iv1.a1b2c3a1b2c3' 🔑
-CLIENT_SECRET='12345123451234512345123451' 🔒
+CLIENT_ID='Iv1.a1b2c3a1b2c3'
+CLIENT_SECRET='12345123451234512345123451'
 
-ADMIN_USER='prueba@adminuser.com' 📧
-ADMIN_PASSWORD='contraseña' 🔐
+ADMIN_USER='prueba@adminuser.com'
+ADMIN_PASSWORD='contraseña'
 ```
 ## 🚀 Cómo usar este proyecto
 
