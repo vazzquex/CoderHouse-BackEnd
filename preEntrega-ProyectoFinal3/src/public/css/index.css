@@ -23,6 +23,7 @@ input, textarea, button{
 
 
 
+
 /* Botones para agregar al carrito en cantidad */
 .counter {
     font-size: 1.4em;
@@ -48,7 +49,7 @@ input, textarea, button{
     background-color: #0056b3; 
 }
 
-#counterDisplay {
+.counterDisplay {
     margin: 0 20px;
 }
 

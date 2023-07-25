@@ -37,7 +37,7 @@
                         <p class="card-text">${{this.price}}</p>
                         <p class="card-text">ID: {{this._id}}</p>
                         <p class="card-text">Categoria: {{this.category}}</p>
-                        <p class="card-text">Stock: {{this.stock}}</p>
+                        <p class="card-text stock" data-stock="{{this.stock}}">Stock: {{this.stock}}</p>
 
 
                         <div class="container">
@@ -54,9 +54,9 @@
 
                                 <div class="col">
                                     <div class="counter d-flex justify-content-center align-items-center">
-                                        <button id="decrementButton" class="btn btn-counter">-</button>
-                                        <p id="counterDisplay" class="mx-3">0</p>
-                                        <button id="incrementButton" class="btn btn-counter">+</button>
+                                        <button class="decrementButton btn btn-counter">-</button>
+                                        <p class="counterDisplay mx-3" data-counter="0">0</p>
+                                        <button class="incrementButton btn btn-counter">+</button>
                                     </div>
                                 </div>
 
@@ -66,7 +66,8 @@
                                             <input type="hidden" name="productId" value="{{this._id}}">
                                             <input type="hidden" name="quantity" value="1">
                                             <button type="submit" class="btn btn-dark"
-                                                onclick="addProductAlert()">Añadir al carrito</button>
+                                                onclick="addProductAlert()">Añadir al
+                                                carrito</button>
                                         </form>
                                     </div>
                                 </div>
@@ -76,48 +77,85 @@
 
                         </div>
                     </div>
-
-
-
                 </div>
-
-
             </div>
+        </div>
+        {{/each}}
+
+
+        <ul class="pagination">
+            <li class="page-item">
+                {{#if products.hasPrevPage}}
+                <a class="page-link" href={{products.prevLink}} aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+                {{else}}
+                <a class="page-link disabled" href="" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+                {{/if}}
+            </li>
+
+            {{#each products.totalPagesArray}}
+            <li class="page-item"><a class="page-link" href="/products?page={{this}}">{{this}}</a></li>
             {{/each}}
 
-
-            <ul class="pagination">
-                <li class="page-item">
-                    {{#if products.hasPrevPage}}
-                    <a class="page-link" href={{products.prevLink}} aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                    {{else}}
-                    <a class="page-link disabled" href="" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                    {{/if}}
-                </li>
-
-                {{#each products.totalPagesArray}}
-                <li class="page-item"><a class="page-link" href="/products?page={{this}}">{{this}}</a></li>
-                {{/each}}
-
-                <li class="page-item">
-                    {{#if products.hasNextPage}}
-                    <a class="page-link" href={{products.nextLink}} aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                    {{else}}
-                    <a class="page-link disabled" href="" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                    {{/if}}
-                </li>
-            </ul>
-        </div>
+            <li class="page-item">
+                {{#if products.hasNextPage}}
+                <a class="page-link" href={{products.nextLink}} aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+                {{else}}
+                <a class="page-link disabled" href="" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+                {{/if}}
+            </li>
+        </ul>
+    </div>
 </section>
 
-<script src="/js/products.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/js/products.js"></script>
+
+<script>
+    document.querySelectorAll('.counter').forEach(function(counterContainer) {
+        var counterDisplay = counterContainer.querySelector('.counterDisplay');
+        var incrementButton = counterContainer.querySelector('.incrementButton');
+        var decrementButton = counterContainer.querySelector('.decrementButton');
+
+        var counter = parseInt(counterDisplay.getAttribute('data-counter'));
+        var stockElement = counterContainer.closest('.card-body').querySelector('.stock');
+        var limit = parseInt(stockElement.getAttribute('data-stock'));
+        
+        var originalLimit = limit;  //fix logic error :D
+
+        incrementButton.addEventListener('click', function() {
+            if (counter < originalLimit) { 
+                counter++;
+                limit--;
+                stockElement.textContent = 'Stock: ' + limit;
+                stockElement.setAttribute('data-stock', limit);
+            } else {
+                alert('El contador ha alcanzado su límite máximo de ' + originalLimit);
+            }
+            counterDisplay.textContent = counter;
+            counterDisplay.setAttribute('data-counter', counter);
+        });
+
+        decrementButton.addEventListener('click', function() {
+            if (counter > 0) {
+                counter--;
+                limit++;
+                stockElement.textContent = 'Stock: ' + limit;
+                stockElement.setAttribute('data-stock', limit);
+            } else {
+                alert('El contador ya está en su límite mínimo de 0');
+            }
+            counterDisplay.textContent = counter;
+            counterDisplay.setAttribute('data-counter', counter);
+        });
+    });
+</script>
+
