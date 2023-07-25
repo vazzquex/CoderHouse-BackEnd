@@ -38,58 +38,84 @@
                         <p class="card-text">ID: {{this._id}}</p>
                         <p class="card-text">Categoria: {{this.category}}</p>
                         <p class="card-text">Stock: {{this.stock}}</p>
-                        <a href="http://localhost:8080/api/products/{{this._id}}"><button type="button"
-                                class="btn btn-primary">Ver más</button></a>
 
-                        {{!-- <form
-                            action="http://localhost:8080/api/carts/648654bd423a51a741ff13ce/products/{{this._id}}"
-                            method="post">
-                            <input type="submit" class="btn btn-dark" value="Agregar al carrito">
-                        </form> --}}
 
-                        <form action="/api/carts/{{../user._id}}/cart" method="post">
-                            <input type="hidden" name="productId" value="{{this._id}}">
-                            <input type="hidden" name="quantity" value="1">
-                            <button type="submit" class="btn btn-dark" onclick="addProductAlert()">Añadir al carrito</button>
-                        </form>
+                        <div class="container">
 
+                            <div class="row align-items-center">
+
+                                <div class="col d-flex justify-content-center">
+                                    <div class="d-flex flex-column justify-content-center align-items-center">
+                                        <a href="http://localhost:8080/api/products/{{this._id}}">
+                                            <button type="button" class="btn btn-primary">Ver más</button>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="col">
+                                    <div class="counter d-flex justify-content-center align-items-center">
+                                        <button id="decrementButton" class="btn btn-counter">-</button>
+                                        <p id="counterDisplay" class="mx-3">0</p>
+                                        <button id="incrementButton" class="btn btn-counter">+</button>
+                                    </div>
+                                </div>
+
+                                <div class="col d-flex justify-content-center">
+                                    <div class="d-flex flex-column justify-content-center align-items-center">
+                                        <form action="/api/carts/{{../user._id}}/cart" method="post">
+                                            <input type="hidden" name="productId" value="{{this._id}}">
+                                            <input type="hidden" name="quantity" value="1">
+                                            <button type="submit" class="btn btn-dark"
+                                                onclick="addProductAlert()">Añadir al carrito</button>
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
                     </div>
+
+
+
                 </div>
+
+
             </div>
-        </div>
-        {{/each}}
-
-
-        <ul class="pagination">
-            <li class="page-item">
-                {{#if products.hasPrevPage}}
-                <a class="page-link" href={{products.prevLink}} aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-                {{else}}
-                <a class="page-link disabled" href="" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-                {{/if}}
-            </li>
-
-            {{#each products.totalPagesArray}}
-            <li class="page-item"><a class="page-link" href="/products?page={{this}}">{{this}}</a></li>
             {{/each}}
 
-            <li class="page-item">
-                {{#if products.hasNextPage}}
-                <a class="page-link" href={{products.nextLink}} aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-                {{else}}
-                <a class="page-link disabled" href="" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-                {{/if}}
-            </li>
-        </ul>
-    </div>
+
+            <ul class="pagination">
+                <li class="page-item">
+                    {{#if products.hasPrevPage}}
+                    <a class="page-link" href={{products.prevLink}} aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                    {{else}}
+                    <a class="page-link disabled" href="" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                    {{/if}}
+                </li>
+
+                {{#each products.totalPagesArray}}
+                <li class="page-item"><a class="page-link" href="/products?page={{this}}">{{this}}</a></li>
+                {{/each}}
+
+                <li class="page-item">
+                    {{#if products.hasNextPage}}
+                    <a class="page-link" href={{products.nextLink}} aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                    {{else}}
+                    <a class="page-link disabled" href="" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                    {{/if}}
+                </li>
+            </ul>
+        </div>
 </section>
 
 <script src="/js/products.js"></script>
