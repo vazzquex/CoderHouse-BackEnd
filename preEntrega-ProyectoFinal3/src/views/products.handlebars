@@ -124,6 +124,8 @@
         let counterDisplay = counterContainer.querySelector('.counterDisplay');
         let incrementButton = counterContainer.querySelector('.incrementButton');
         let decrementButton = counterContainer.querySelector('.decrementButton');
+        let addToCartButton = counterContainer.closest('.card-body').querySelector('form button[type=submit]');
+
 
         decrementButton.disabled = true;
 
@@ -137,16 +139,14 @@
             if (counter < originalLimit) {
                 counter++;
                 limit--;
-                stockElement.textContent = 'Stock: ' + limit;
-                stockElement.setAttribute('data-stock', limit);
+
                 if (counter == originalLimit) {
-                    incrementButton.disabled = true; // Disable the button
+                    incrementButton.disabled = true;
                 }
                 if (counter > 0) {
-                    decrementButton.disabled = false; // Enable the decrement button
+                    decrementButton.disabled = false;
                 }
             } else {
-                // alert('El contador ha alcanzado su límite máximo de ' + originalLimit);
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
@@ -161,13 +161,12 @@
             if (counter > 1) {
                 counter--;
                 limit++;
-                stockElement.textContent = 'Stock: ' + limit;
-                stockElement.setAttribute('data-stock', limit);
+
                 if (incrementButton.disabled == true) { // If the incrementButton is disabled
-                    incrementButton.disabled = false; // Enable the button
+                    incrementButton.disabled = false; // enable the button
                 }
                 if (counter == 1) {
-                    decrementButton.disabled = true; // Disable the decrement button
+                    decrementButton.disabled = true; // disable the decrement button
                 }
             } else {
                 Swal.fire({
@@ -178,6 +177,14 @@
             }
             counterDisplay.textContent = counter;
             counterDisplay.setAttribute('data-counter', counter);
+        });
+
+        addToCartButton.addEventListener('click', function () {
+            let quantityInput = counterContainer.closest('.card-body').querySelector('form input[name=quantity]');
+            quantityInput.value = counter;
+
+            addToCartButton.disabled = false;
+
         });
     });
 </script>
