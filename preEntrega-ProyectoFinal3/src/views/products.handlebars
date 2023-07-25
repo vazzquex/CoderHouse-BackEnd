@@ -55,7 +55,7 @@
                                 <div class="col">
                                     <div class="counter d-flex justify-content-center align-items-center">
                                         <button class="decrementButton btn btn-counter">-</button>
-                                        <p class="counterDisplay mx-3" data-counter="0">0</p>
+                                        <p class="counterDisplay mx-3" data-counter="1">1</p>
                                         <button class="incrementButton btn btn-counter">+</button>
                                     </div>
                                 </div>
@@ -120,42 +120,64 @@
 <script src="/js/products.js"></script>
 
 <script>
-    document.querySelectorAll('.counter').forEach(function(counterContainer) {
-        var counterDisplay = counterContainer.querySelector('.counterDisplay');
-        var incrementButton = counterContainer.querySelector('.incrementButton');
-        var decrementButton = counterContainer.querySelector('.decrementButton');
+    document.querySelectorAll('.counter').forEach(function (counterContainer) {
+        let counterDisplay = counterContainer.querySelector('.counterDisplay');
+        let incrementButton = counterContainer.querySelector('.incrementButton');
+        let decrementButton = counterContainer.querySelector('.decrementButton');
 
-        var counter = parseInt(counterDisplay.getAttribute('data-counter'));
-        var stockElement = counterContainer.closest('.card-body').querySelector('.stock');
-        var limit = parseInt(stockElement.getAttribute('data-stock'));
-        
-        var originalLimit = limit;  //fix logic error :D
+        decrementButton.disabled = true;
 
-        incrementButton.addEventListener('click', function() {
-            if (counter < originalLimit) { 
+        let counter = parseInt(counterDisplay.getAttribute('data-counter'));
+        let stockElement = counterContainer.closest('.card-body').querySelector('.stock');
+        let limit = parseInt(stockElement.getAttribute('data-stock'));
+
+        let originalLimit = limit;  //fix logic error :D
+
+        incrementButton.addEventListener('click', function () {
+            if (counter < originalLimit) {
                 counter++;
                 limit--;
                 stockElement.textContent = 'Stock: ' + limit;
                 stockElement.setAttribute('data-stock', limit);
+                if (counter == originalLimit) {
+                    incrementButton.disabled = true; // Disable the button
+                }
+                if (counter > 0) {
+                    decrementButton.disabled = false; // Enable the decrement button
+                }
             } else {
-                alert('El contador ha alcanzado su límite máximo de ' + originalLimit);
+                // alert('El contador ha alcanzado su límite máximo de ' + originalLimit);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'El contador ha alcanzado su límite máximo de stock ' + originalLimit,
+                })
             }
             counterDisplay.textContent = counter;
             counterDisplay.setAttribute('data-counter', counter);
         });
 
-        decrementButton.addEventListener('click', function() {
-            if (counter > 0) {
+        decrementButton.addEventListener('click', function () {
+            if (counter > 1) {
                 counter--;
                 limit++;
                 stockElement.textContent = 'Stock: ' + limit;
                 stockElement.setAttribute('data-stock', limit);
+                if (incrementButton.disabled == true) { // If the incrementButton is disabled
+                    incrementButton.disabled = false; // Enable the button
+                }
+                if (counter == 1) {
+                    decrementButton.disabled = true; // Disable the decrement button
+                }
             } else {
-                alert('El contador ya está en su límite mínimo de 0');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'El contador ya está en su límite mínimo de stock 1',
+                })
             }
             counterDisplay.textContent = counter;
             counterDisplay.setAttribute('data-counter', counter);
         });
     });
 </script>
-
