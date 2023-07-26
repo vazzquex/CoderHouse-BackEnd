@@ -10,6 +10,9 @@ import cookieParser from 'cookie-parser';
 import productController from './controllers/product.controller.js';
 
 
+//middleware
+import { isAdmin } from './middleware/auth.middleware.js';
+
 //passport
 import incializePassport from './config/passport.confg.js';
 
@@ -32,9 +35,6 @@ import profileRouters from './routes/profile.router.js';
 
 // Config
 import config from './tools/config.js';
-
-
-const mongodb_server = process.env.mongodb
 
 const app = express();
 const port = 8080;

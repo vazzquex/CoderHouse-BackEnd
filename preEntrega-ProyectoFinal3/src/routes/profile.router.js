@@ -28,10 +28,6 @@ profileRouters.get('/login', isGuest, (req, res) => {
     });
 });
 
-// profileRouters.get('/products', isGuest , (req, res) => {
-//     res.send('Debes registrarte o logearte')
-
-// });
 
 
 profileRouters.get('/products', isAuth, async (req, res) => {

@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import passport from 'passport';
-import { isAuth, isGuest } from '../middleware/auth.middleware.js';
 
 const sessionsRouter = Router();
 
