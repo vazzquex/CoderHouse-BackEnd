@@ -5,6 +5,44 @@ import userService from "../services/user.service.js";
 
 const router = Router();
 
+
+//finish purchase
+
+router.get('/:cid/purchase/:userId', async (req, res) => {
+  const { cid } = req.params.cid;
+  const { userId } = req.params;
+
+
+  try {
+    const { user: sessionUser } = req.session;
+    delete sessionUser.password;
+
+
+    const populatedUser = await userService.populateProductCart(userId);
+
+    //verify user exists
+    if (!populatedUser) {
+      return res.status(404).render('error', {
+        title: "Error",
+        message: "User not found"
+      });
+    }
+
+
+    res.status(201).render('cart', {
+      title: "Cart",
+      products: populatedUser.cart,
+      user: sessionUser
+    })
+
+  } catch (err) {
+
+  }
+
+
+})
+
+
 // Get carts
 router.get('/:userId/cart', async (req, res) => {
   try {
@@ -55,7 +93,7 @@ router.post('/:userId/cart', async (req, res) => {
 
     // Respond with the populated user.
     res.status(200)
-      //.json(populatedUser);
+    //.json(populatedUser);
 
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -84,24 +122,24 @@ router.post('/:userId/:productId', async (req, res) => {
   const { userId, productId } = req.params;
 
   try {
-      const user = await userService.getById(userId);
+    const user = await userService.getById(userId);
 
-      // Filtra los productos en el carrito para excluir el producto que deseas eliminar
-      user.cart = user.cart.filter(item => item.productId.toString() !== productId);
+    // Filtra los productos en el carrito para excluir el producto que deseas eliminar
+    user.cart = user.cart.filter(item => item.productId.toString() !== productId);
 
-      // save user
-      await user.save();
+    // save user
+    await user.save();
 
-      const populateUser = await userService.populateProductCart(userId);
+    const populateUser = await userService.populateProductCart(userId);
 
-      res.status(200).json(populateUser)
+    res.status(200).json(populateUser)
 
-      //res.status(204).end();
+    //res.status(204).end();
 
 
   } catch (error) {
-      console.error(`Error removing product from cart: ${error}`);
-      res.status(500).send(`Internal server error removing product from cart: ${error}`);
+    console.error(`Error removing product from cart: ${error}`);
+    res.status(500).send(`Internal server error removing product from cart: ${error}`);
   }
 });
 

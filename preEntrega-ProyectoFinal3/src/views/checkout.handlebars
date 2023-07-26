@@ -1,0 +1,37 @@
+<section id="order-confirmation" class="container mt-5">
+    <h1 class="text-center">Gracias por tu compra</h1>
+    <hr>
+    <div id="order-details">
+        {{#each products}}
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <h5>{{this.productId.title}}</h5>
+                <p>{{this.productId.description}}</p>
+            </div>
+            <div class="col-md-2 text-end">
+                <p>Cantidad: {{this.quantity}}</p>
+            </div>
+            <div class="col-md-2 text-end">
+                <p>Precio: ${{this.productId.price}}</p>
+            </div>
+            <div class="col-md-2 text-end">
+                <p>Subtotal: ${{this.subtotal}}</p>
+            </div>
+        </div>
+        {{/each}}
+        <hr>
+        <div class="row">
+            <div class="col-md-9">
+                <h4>Total:</h4>
+            </div>
+            <div class="col-md-3 text-end">
+                <h4>${{total}}</h4>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <a href="/products" class="btn btn-primary">Continuar comprando</a>
+        </div>
+    </div>
+</section>

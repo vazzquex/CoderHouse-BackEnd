@@ -35,7 +35,7 @@
                         <h5 class="card-title">{{this.title}}</h5>
                         <p class="card-text">{{this.description}}</p>
                         <p class="card-text">${{this.price}}</p>
-                        <p class="card-text">ID: {{this._id}}</p>
+                        <p class="card-text pid" data-pid="{{this._id}}">ID: {{this._id}}</p>
                         <p class="card-text">Categoria: {{this.category}}</p>
                         <p class="card-text stock" data-stock="{{this.stock}}">Stock: {{this.stock}}</p>
 
@@ -120,6 +120,7 @@
 <script src="/js/products.js"></script>
 
 <script>
+
     document.querySelectorAll('.counter').forEach(function (counterContainer) {
         let counterDisplay = counterContainer.querySelector('.counterDisplay');
         let incrementButton = counterContainer.querySelector('.incrementButton');
@@ -142,6 +143,7 @@
 
                 if (counter == originalLimit) {
                     incrementButton.disabled = true;
+
                 }
                 if (counter > 0) {
                     decrementButton.disabled = false;
@@ -180,11 +182,13 @@
         });
 
         addToCartButton.addEventListener('click', function () {
+
             let quantityInput = counterContainer.closest('.card-body').querySelector('form input[name=quantity]');
             quantityInput.value = counter;
 
-            addToCartButton.disabled = false;
-
         });
+
     });
+
+
 </script>
