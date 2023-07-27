@@ -82,10 +82,19 @@
 
                 <div class="col-md-4">
                     <div class="image-container">
-                        {{!-- <img class="image-product img-fluid"
-                            src="https://i.pinimg.com/736x/35/3a/d9/353ad9619623b527859c9ce2d07dbcac.jpg" alt=""> --}}
-                        
-                        <img src={{this.thumbnail}} alt="">
+
+                        {{#if this.thumbnail}}
+                        <img class="image-product img-fluid" src={{this.thumbnail}} alt="">
+
+
+                        {{else}}
+                        <img class="image-product img-fluid"
+                            src="https://camarasal.com/wp-content/uploads/2020/08/default-image-5-1.jpg" alt="">
+
+
+                        {{/if}}
+
+
                     </div>
                 </div>
 
