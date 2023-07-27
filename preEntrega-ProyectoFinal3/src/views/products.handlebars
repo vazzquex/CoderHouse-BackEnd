@@ -30,7 +30,7 @@
         {{#each products.docs}}
         <div class="card mb-3">
             <div class="row g-0">
-                <div class="col-md-10">
+                <div class="col-md-8">
                     <div class="card-body">
                         <h5 class="card-title">{{this.title}}</h5>
                         <p class="card-text">{{this.description}}</p>
@@ -72,12 +72,24 @@
                                     </div>
                                 </div>
 
+
                             </div>
 
 
                         </div>
                     </div>
                 </div>
+
+                <div class="col-md-4">
+                    <div class="image-container">
+                        {{!-- <img class="image-product img-fluid"
+                            src="https://i.pinimg.com/736x/35/3a/d9/353ad9619623b527859c9ce2d07dbcac.jpg" alt=""> --}}
+                        
+                        <img src={{this.thumbnail}} alt="">
+                    </div>
+                </div>
+
+
             </div>
         </div>
         {{/each}}

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 const router = Router();
 import productController from '../controllers/product.controller.js';
-import { isAdmin, isAuth } from '../middleware/auth.middleware.js';
+import { isAdmin } from '../middleware/auth.middleware.js';
 
 const realTimeProductsRouter = (socketServer) => {
 

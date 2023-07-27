@@ -21,8 +21,27 @@ input, textarea, button{
 }
 
 
+/* Agrega estilos para el contenedor de la imagen */
+.image-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Establece el tamaño de la imagen para llenar el contenedor sin distorsionar */
+  .image-container img {
+    float: right;
+    width: 80%;
+    height: 100%;
+    object-fit: cover; /* Ajusta la imagen para cubrir el contenedor */
+}
 
-
+@media (max-width: 1268px) {
+    .image-product  {
+      display: none;
+    }
+  }
 
 /* Botones para agregar al carrito en cantidad */
 .counter {
