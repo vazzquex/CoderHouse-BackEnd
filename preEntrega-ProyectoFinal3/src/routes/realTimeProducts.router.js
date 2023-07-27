@@ -39,7 +39,7 @@ const realTimeProductsRouter = (socketServer) => {
     });
 
     // Render view
-    router.get('/', (req, res) => {
+    router.get('/', isAdmin, (req, res) => {
 
         res.status(200).render('realTimeProducts', {
             script: 'realTimeProducts',
@@ -48,11 +48,8 @@ const realTimeProductsRouter = (socketServer) => {
             
         });
 
-
-        // } catch (error) {
-        //     res.send("insufficient permissions", error)
-        // }
     });
+
 
     return router;
 };

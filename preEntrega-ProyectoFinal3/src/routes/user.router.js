@@ -45,8 +45,12 @@ usersRouter.post('/auth', async (req, res) => {
 
 
 		} else {
+			const user = admin.email
+
 			// Guardo la session
-			req.session.admin = true;
+			req.session.user = user
+			req.session.admin = true
+
 			res.redirect('/');
 		}
 

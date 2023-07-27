@@ -88,7 +88,6 @@ app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 
 //app.use(express.static('public'));
-
 //insert product data if necessary1
 // try {
 //     await productModel.insertMany(dataProducts);
