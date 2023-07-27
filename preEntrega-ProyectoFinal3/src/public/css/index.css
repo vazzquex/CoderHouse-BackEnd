@@ -2,11 +2,13 @@ body {
     background-color: rgb(187, 219, 235);
 }
 
-input, textarea, button{
+input,
+textarea,
+button {
     margin: 10px;
 }
 
-#submitInput{
+#submitInput {
     padding: 10px;
     font-weight: 400;
     cursor: pointer;
@@ -14,7 +16,7 @@ input, textarea, button{
     background-color: #0d6efd;
 }
 
-#deleteInput{
+#deleteInput {
     margin-top: 10px;
     background-color: #ff3232;
     padding: 16px;
@@ -22,26 +24,32 @@ input, textarea, button{
 
 
 /* Agrega estilos para el contenedor de la imagen */
-.image-container {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-  }
-  
-  /* Establece el tamaño de la imagen para llenar el contenedor sin distorsionar */
-  .image-container img {
-    float: right;
-    width: 80%;
-    height: 100%;
-    object-fit: cover; /* Ajusta la imagen para cubrir el contenedor */
+
+.image-product {
+    width: 100%; /* o puedes especificar una anchura fija, como '300px' */
+    height: 300px; /* puedes ajustar este valor a la altura deseada */
+    background-size: cover;
+    background-position: center;
 }
 
-@media (max-width: 1268px) {
-    .image-product  {
-      display: none;
+
+/* .image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    
+}  */
+
+
+
+/* @media (max-width: 1268px) {
+    .image-product {
+        display: none;
     }
-  }
+} */
+
+
+
 
 /* Botones para agregar al carrito en cantidad */
 .counter {
@@ -53,23 +61,21 @@ input, textarea, button{
     border: none;
     background-color: #007BFF;
     color: white;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%; 
-    font-size: 1.2em;
+    width: 20px;
+    height: 23px;
+    border-radius: 50%;
+    font-size: 0.8em;
     margin: 0 10px;
-    display: flex; 
+    display: flex;
     justify-content: center;
-    align-items: center; 
+    align-items: center;
     transition: 0.3s;
 }
 
 .btn-counter:hover {
-    background-color: #0056b3; 
+    background-color: #0056b3;
 }
 
 .counterDisplay {
     margin: 0 20px;
 }
-
-
