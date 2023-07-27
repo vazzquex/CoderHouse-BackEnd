@@ -39,13 +39,13 @@ const realTimeProductsRouter = (socketServer) => {
     });
 
     // Render view
-    router.get('/', isAdmin, (req, res) => {
+    router.get('/', (req, res) => {
 
         res.status(200).render('realTimeProducts', {
             script: 'realTimeProducts',
             style: 'index',
             title: 'Productos en tiempo real',
-            admin
+            
         });
 
 
