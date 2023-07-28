@@ -4,9 +4,8 @@ body {
 
 input,
 textarea,
-button {
-    margin: 10px;
-}
+
+
 
 #submitInput {
     padding: 10px;

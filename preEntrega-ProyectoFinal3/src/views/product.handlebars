@@ -44,7 +44,6 @@
                         </div>
 
                         <div class="mb-4">
-
                             <div class="col mb-3 d-flex justify-content-center">
                                 <div class="counter d-flex justify-content-center align-items-center">
                                     <button class="decrementButton btn btn-counter">-</button>
@@ -55,7 +54,6 @@
 
 
                             <div class="mt-auto d-flex justify-content-center align-items-center shop-btn">
-
                                 <a href="http://localhost:8080/carts/purchase/{{user._id}}">
                                     <button type="button" class="btn btn-primary shop-btn" style="width: 350px;">Comprar
                                         Ahora</button>
@@ -68,15 +66,13 @@
                                     <form action="/api/carts/{{user._id}}/cart" method="post">
                                         <input type="hidden" name="productId" value="{{product._id}}">
                                         <input type="hidden" name="quantity" value="1">
-                                        <button type="submit" class="btn btn-secondary" onclick="addProductAlert()" style="width: 350px;">Agregar al Carrito</button>
+                                        <button type="submit" name="addcart" class="btn btn-secondary" onclick="addProductAlert()"
+                                            style="width: 350px;">Agregar al Carrito</button>
                                     </form>
                                 </div>
                             </div>
-
-                        </div>  
-
+                        </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -85,7 +81,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/js/products.js"></script>
-
 
 <script>
 

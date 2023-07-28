@@ -2,46 +2,9 @@ import { Router } from "express";
 
 import cartController from "../controllers/cart.controller.js";
 import userService from "../services/user.service.js";
+import userModel from "../dao/models/user.model.js";
 
 const router = Router();
-
-
-//finish purchase
-
-router.get('/:cid/purchase/:userId', async (req, res) => {
-  const { cid } = req.params.cid;
-  const { userId } = req.params;
-
-
-  try {
-    const { user: sessionUser } = req.session;
-    delete sessionUser.password;
-
-
-    const populatedUser = await userService.populateProductCart(userId);
-
-    //verify user exists
-    if (!populatedUser) {
-      return res.status(404).render('error', {
-        title: "Error",
-        message: "User not found"
-      });
-    }
-
-
-    res.status(201).render('cart', {
-      title: "Cart",
-      products: populatedUser.cart,
-      user: sessionUser
-    })
-
-  } catch (err) {
-
-  }
-
-
-})
-
 
 // Get carts
 router.get('/:userId/cart', async (req, res) => {
@@ -78,7 +41,7 @@ router.post('/:userId/cart', async (req, res) => {
   const { productId, quantity } = req.body;
 
   try {
-    const user = await userService.getById(userId);
+    let user = await userService.getById(userId);
 
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
@@ -88,6 +51,9 @@ router.post('/:userId/cart', async (req, res) => {
     user.markModified('cart');
 
     await userService.updateUser(user);
+
+    user = await userModel.findById(userId).populate('cart.productId');
+
 
     const populatedUser = await userService.populateProductCart(userId);
 

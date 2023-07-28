@@ -2,7 +2,10 @@ import { Router } from 'express';
 import nodemailer from 'nodemailer';
 import twilio from 'twilio';
 
+import userService from '../services/user.service.js';
+
 import 'dotenv/config'
+import productService from '../services/products.service.js';
 
 //twilio info
 const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID
@@ -16,17 +19,50 @@ const mailingRoutes = Router();
 
 
 mailingRoutes.post("/mail", async (req, res) => {
-    const { userEmail, products, total } = req.body;
 
+    const { userEmail, products, total } = req.body;
     let productListHTML = '';
+
+    // Obtén el usuario por correo electrónico
+    const user = await userService.getByEmail(userEmail);
+
+    if (!user) {
+        // Si el usuario no existe, maneja el error
+        return res.status(404).json({ error: "User not found" });
+    }
 
     // Generar el HTML para cada producto y agregarlo a la lista de productos.
     for (const product of products) {
+        const id = product.productId.id;
         const title = product.productId.title;
         const quantity = product.quantity;
         const description = product.description
         const price = product.productId.price;
         const subtotal = product.subtotal;
+
+
+        // encontrar producto en db
+        let dbproduct = await productService.getById(id)
+        if (!dbproduct) {
+            console.error(`Product with ID ${id} not found.`);
+            return res.status(404).json({ error: `Product with ID ${id} not found.` });
+        } else {
+            console.log(`Product with ID ${id} is found`);
+        }
+
+        //restamos el stock que se comptro
+        dbproduct.stock -= quantity;
+
+        //si el stock es 0, false
+        if (dbproduct.stock === 0) {
+            dbproduct.status = false;
+        }
+
+        // Guarda el producto
+        dbproduct.markModified('stock');
+        dbproduct.markModified('status');
+        await dbproduct.save();
+
 
         productListHTML += `
             <div class="row mb-3">
@@ -46,6 +82,10 @@ mailingRoutes.post("/mail", async (req, res) => {
             </div>
         `;
     }
+
+    // Limpiar el carrito de compras del usuario
+    user.cart = [];
+    await user.save();
 
     // Generar el HTML completo del correo electrónico.
     const emailHTML = `
@@ -87,7 +127,7 @@ mailingRoutes.post("/mail", async (req, res) => {
         console.log('Correo electrónico enviado: ' + info.response);
     });
 
-    res.status(201).send('The details of the purchase have been sent to: ', userEmail);
+    res.status(201).json(`The details of the purchase have been sent to:  ${userEmail}`);
 });
 
 

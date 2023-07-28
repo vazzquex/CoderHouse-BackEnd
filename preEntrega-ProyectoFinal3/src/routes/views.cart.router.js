@@ -2,7 +2,6 @@ import { Router } from 'express';
 import userService from '../services/user.service.js';
 import productController from '../controllers/product.controller.js'
 const router = Router();
-
 //finish purchase
 
 router.get('/purchase/:userId', async (req, res) => {
@@ -24,7 +23,15 @@ router.get('/purchase/:userId', async (req, res) => {
         // Calcula el subtotal para cada producto y el total general
         let total = 0;
         populatedUser.cart = populatedUser.cart.map(item => {
+
+            if (!item.productId) {
+                // Maneja el caso en que el producto no existe
+                console.error(`Producto no encontrado en el carrito: ${item._id}`);
+                return item; // Aquí simplemente estamos omitiendo el producto
+            }
+
             const subtotal = item.productId.price * item.quantity;
+
             total += subtotal;
             return {
                 ...item,
@@ -33,7 +40,7 @@ router.get('/purchase/:userId', async (req, res) => {
             };
         });
 
- 
+
         res.status(201).render('checkout', {
             title: "Checkout",
             products: populatedUser.cart,
@@ -49,6 +56,7 @@ router.get('/purchase/:userId', async (req, res) => {
 
 
 })
+
 
 
 router.post('/:userId', async (req, res) => {

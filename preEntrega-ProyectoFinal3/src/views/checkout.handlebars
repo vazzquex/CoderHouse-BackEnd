@@ -29,7 +29,7 @@
             </div>
         </div>
     </div>
-  
+
 
 
 
@@ -43,16 +43,18 @@
                 <input type="hidden" name="userEmail" value="{{user.email}}">
 
                 {{#each products}}
+                <input type="hidden" name="products[{{@index}}][productId][id]" value="{{this.productId._id}}">
                 <input type="hidden" name="products[{{@index}}][productId][title]" value="{{this.productId.title}}">
                 <input type="hidden" name="products[{{@index}}][quantity]" value="{{this.quantity}}">
                 <input type="hidden" name="products[{{@index}}][productId][price]" value="{{this.productId.price}}">
                 <input type="hidden" name="products[{{@index}}][subtotal]" value="{{this.subtotal}}">
                 {{/each}}
 
+
                 <input type="hidden" name="total" value="{{total}}">
 
-                <button type="submit" class="btn btn-primary btn-lg mt-5" onclick="addProductAlert()"
-                    style="width: 350px;">Confirm Purchase</button>
+                <button type="submit" class="btn btn-primary btn-lg mt-5" style="width: 350px;">Confirm
+                    Purchase</button>
             </form>
 
 
