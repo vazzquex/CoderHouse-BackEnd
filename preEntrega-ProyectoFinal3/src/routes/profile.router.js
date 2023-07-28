@@ -18,12 +18,14 @@ profileRouters.get('/', isAuth, (req, res) => {
 
 profileRouters.get('/register', isGuest, (req, res) => {
     res.render('register', {
+        style: 'style',
         title: 'Registrar Nuevo Usuario',
     });
 });
 
 profileRouters.get('/login', isGuest, (req, res) => {
     res.render('login', {
+        style: 'style',
         title: 'Inicio de Sesión',
     });
 });

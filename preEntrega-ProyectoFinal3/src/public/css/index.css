@@ -23,11 +23,36 @@ button {
 }
 
 
+
+.list-group-item {
+    transition: all .2s;
+}
+
+.list-group-item:hover {
+    transform: scale(1.03);
+    border: 1px solid #373737; /* Aplicamos un borde a todos los lados del elemento */
+    background-color: #f5f5f5;
+}
+
+.custom-border {
+    border-color: #757575;
+    color: #757575;
+}
+
+.custom-border:hover {
+    color: #4b4b4b;
+}
+
+
+
+
 /* Agrega estilos para el contenedor de la imagen */
 
 .image-product {
-    width: 100%; /* o puedes especificar una anchura fija, como '300px' */
-    height: 300px; /* puedes ajustar este valor a la altura deseada */
+    width: 100%;
+    /* o puedes especificar una anchura fija, como '300px' */
+    height: 300px;
+    /* puedes ajustar este valor a la altura deseada */
     background-size: cover;
     background-position: center;
 }
@@ -50,12 +75,12 @@ button {
     clear: both;
 }
 
-.flex-row > div {
+.flex-row>div {
     display: flex;
     flex-direction: column;
 }
 
-.flex-row > div .card {
+.flex-row>div .card {
     height: 100%;
     display: flex;
     flex-direction: column;

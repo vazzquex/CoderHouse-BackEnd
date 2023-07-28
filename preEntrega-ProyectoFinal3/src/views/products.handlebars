@@ -4,24 +4,36 @@
 
     <haeder>
 
-        <h4>Ordenar por:</h4>
-        <ul>
-            <li><a id="linkDesc" href="">Mayor precio</a></li>
-            <li><a id="linkAsc" href="">Menor precio</a></li>
-        </ul>
 
-        <h4>Categorias:</h4>
-        <ul>
-            <li><a id="CPU" href="">Procesadores</a></li>
-            <li><a id="GPU" href="">Graficas</a></li>
-            <li><a id="todo" href="">Todo</a></li>
-        </ul>
 
-        <form action="/carts/{{user._id}}" method="post">
-            <input type="hidden" name="productId" value="{{this._id}}">
-            <input type="hidden" name="quantity" value="1">
-            <button type="submit" class="btn btn-primary">Ir al carrito</button>
-        </form>
+        <div class="container my-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 class="mb-3">Ordenar por:</h4>
+                    <div class="list-group">
+                        <a href="#" id="linkDesc" class="list-group-item list-group-item-action custom-border">Mayor
+                            precio</a>
+                        <a href="#" id="linkAsc" class="list-group-item list-group-item-action custom-border">Menor
+                            precio</a>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <h4 class="mb-3">Categorias:</h4>
+                    <div class="list-group">
+                        <a href="#" id="CPU"
+                            class="list-group-item list-group-item-action custom-border">Procesadores</a>
+                        <a href="#" id="GPU" class="list-group-item list-group-item-action custom-border">Gráficas</a>
+                        <a href="#" id="todo" class="list-group-item list-group-item-action custom-border">Todo</a>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+
 
 
     </haeder>
@@ -102,7 +114,7 @@
                     </div>
                 </div>
             </div>
-            
+
 
             {{/each}}
 

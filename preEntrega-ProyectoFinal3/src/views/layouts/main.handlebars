@@ -50,6 +50,13 @@
                         Cerrar Sesión
                     </button>
                 </form>
+                
+                <form action="/carts/{{user._id}}" method="post">
+                    <input type="hidden" name="productId" value="{{this._id}}">
+                    <input type="hidden" name="quantity" value="1">
+                    <button type="submit" class="btn btn-primary">Ir al carrito</button>
+                </form>
+
 
 
 
