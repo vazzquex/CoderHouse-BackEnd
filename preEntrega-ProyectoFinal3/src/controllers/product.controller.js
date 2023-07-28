@@ -5,7 +5,7 @@ class ProductController {
 
   // Read
   getProducts = async (limit, page, sort, query) => {
-    let formatLimit = limit ? Number(limit) : 3;
+    let formatLimit = limit ? Number(limit) : 4;
     let formatPage = page ? Number(page) : 1;
     let formatQuery = query ? { category: query } : {};
     

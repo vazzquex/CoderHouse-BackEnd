@@ -9,7 +9,7 @@ const profileRouters = Router();
 profileRouters.get('/', isAuth, (req, res) => {
     const { user } = req.session;
     delete user.password;
-    
+
     res.render('index', {
         title: 'Perfil de Usuario',
         user
@@ -33,7 +33,7 @@ profileRouters.get('/login', isGuest, (req, res) => {
 profileRouters.get('/products', isAuth, async (req, res) => {
     try {
         const { limit, page, sort, query } = req.query;
-        const products =  await productController.getProducts(limit, page, sort, query);
+        const products = await productController.getProducts(limit, page, sort, query);
 
         const { user } = req.session;
         delete user.password;
@@ -60,5 +60,30 @@ profileRouters.get('/products', isAuth, async (req, res) => {
     };
 
 });
+
+
+
+profileRouters.get('/products/:pid', async (req, res) => {
+    const pid = req.params.pid;
+
+
+    try {
+        const product = await productController.getProductById(pid);
+        const { user } = req.session;
+        delete user.password;
+
+        res.status(200).render('product', {
+            script: 'products',
+            style: 'product',
+            title: `${product.title}`,
+            product,
+            user
+
+        });
+
+    } catch (error) {
+        res.status(500).send(`Error trying to fetch product by id: ${error}`);
+    };
+})
 
 export default profileRouters;
