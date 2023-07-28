@@ -33,9 +33,9 @@ router.get('/purchase/:userId', async (req, res) => {
             };
         });
 
-
+ 
         res.status(201).render('checkout', {
-            title: "checkout",
+            title: "Checkout",
             products: populatedUser.cart,
             user: sessionUser,
             total,
@@ -43,8 +43,8 @@ router.get('/purchase/:userId', async (req, res) => {
 
 
     } catch (err) {
-        console.error(`Error trying to get checkout: ${error}`);
-        res.status(500).send(`Internal server error trying to get checkout: ${error}`);
+        console.error(`Error trying to get checkout: ${err}`);
+        res.status(500).send(`Internal server error trying to get checkout: ${err}`);
     }
 
 
