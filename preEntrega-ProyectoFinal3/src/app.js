@@ -35,6 +35,7 @@ import profileRouters from './routes/profile.router.js';
 
 // Config
 import config from './tools/config.js';
+import mailingRoutes from './routes/mailing.js';
 
 const app = express();
 const port = 8080;
@@ -106,3 +107,6 @@ app.use("/products", profileRouters);
 app.use("/carts", viewsCartsRouter);
 app.use('/realTimeProducts', realTimeProductsRouter(socketServer));
 app.use("/chat", chatRouter(socketServer));
+
+//mailing
+app.use('/api/sending', mailingRoutes)
