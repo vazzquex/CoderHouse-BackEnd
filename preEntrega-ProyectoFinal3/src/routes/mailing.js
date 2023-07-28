@@ -36,7 +36,7 @@ mailingRoutes.post("/mail", async (req, res) => {
         const id = product.productId.id;
         const title = product.productId.title;
         const quantity = product.quantity;
-        const description = product.description
+        const description = product.productId.description
         const price = product.productId.price;
         const subtotal = product.subtotal;
 
