@@ -5,8 +5,7 @@ const router = Router();
 
 //finish purchase
 
-router.get('/:cid/purchase/:userId', async (req, res) => {
-    const { cid } = req.params.cid;
+router.get('/purchase/:userId', async (req, res) => {
     const { userId } = req.params;
     try {
         const { user: sessionUser } = req.session;
@@ -34,12 +33,12 @@ router.get('/:cid/purchase/:userId', async (req, res) => {
             };
         });
 
+
         res.status(201).render('checkout', {
             title: "checkout",
             products: populatedUser.cart,
             user: sessionUser,
-            total
-            
+            total,
         })
 
 
