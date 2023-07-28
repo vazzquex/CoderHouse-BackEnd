@@ -47,7 +47,7 @@
                             <div class="col mb-3 d-flex justify-content-center">
                                 <div class="counter d-flex justify-content-center align-items-center">
                                     <button class="decrementButton btn btn-counter">-</button>
-                                    <p class="counterDisplay mx-3" data-counter="1">1</p>
+                                    <p class="counterDisplay mx-3" data-counter="0">0</p>
                                     <button class="incrementButton btn btn-counter">+</button>
                                 </div>
                             </div>
@@ -55,7 +55,8 @@
 
                             <div class="mt-auto d-flex justify-content-center align-items-center shop-btn">
                                 <a href="http://localhost:8080/carts/purchase/{{user._id}}">
-                                    <button type="button" class="btn btn-primary shop-btn" style="width: 350px;">Comprar
+                                    <button type="button" class="purchaseBtn btn btn-primary shop-btn"
+                                        style="width: 350px;">Comprar
                                         Ahora</button>
                                 </a>
                             </div>
@@ -66,8 +67,9 @@
                                     <form action="/api/carts/{{user._id}}/cart" method="post">
                                         <input type="hidden" name="productId" value="{{product._id}}">
                                         <input type="hidden" name="quantity" value="1">
-                                        <button type="submit" name="addcart" class="btn btn-secondary" onclick="addProductAlert()"
-                                            style="width: 350px;">Agregar al Carrito</button>
+                                        <button type="submit" name="addcart" class="btn btn-secondary"
+                                            onclick="addProductAlert()" style="width: 350px;">Agregar al
+                                            Carrito</button>
                                     </form>
                                 </div>
                             </div>
@@ -91,6 +93,18 @@
         let addToCartButton = counterContainer.closest('.col-md-4').querySelector('form button[type=submit]');
 
 
+        let purchaseLink = counterContainer.closest('.col-md-4').querySelector('.shop-btn a');
+
+        let purchaseBtn = counterContainer.closest('.col-md-4').querySelector('.purchaseBtn');
+        let addToCartBtn = counterContainer.closest('.col-md-4').querySelector('form button[type=submit]');
+
+        let originalHref = purchaseLink.getAttribute('href');
+        purchaseLink.setAttribute('href', '#');
+
+
+        purchaseBtn.disabled = true;
+        addToCartBtn.disabled = true;
+
         decrementButton.disabled = true;
 
         let counter = parseInt(counterDisplay.getAttribute('data-counter'));
@@ -110,6 +124,10 @@
                 }
                 if (counter > 0) {
                     decrementButton.disabled = false;
+                    purchaseBtn.disabled = false;
+                    addToCartBtn.disabled = false;
+                    purchaseLink.setAttribute('href', originalHref);
+
                 }
             } else {
                 Swal.fire({
@@ -123,15 +141,19 @@
         });
 
         decrementButton.addEventListener('click', function () {
-            if (counter > 1) {
+            if (counter > 0) {
                 counter--;
                 limit++;
 
                 if (incrementButton.disabled == true) { // If the incrementButton is disabled
                     incrementButton.disabled = false; // enable the button
                 }
-                if (counter == 1) {
+                if (counter == 0) {
                     decrementButton.disabled = true; // disable the decrement button
+                    purchaseBtn.disabled = true;
+                    addToCartBtn.disabled = true;
+                    purchaseLink.setAttribute('href', '#');
+
                 }
             } else {
                 Swal.fire({

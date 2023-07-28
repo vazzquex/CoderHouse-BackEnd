@@ -51,7 +51,17 @@ mailingRoutes.post("/mail", async (req, res) => {
         }
 
         //restamos el stock que se comptro
-        dbproduct.stock -= quantity;
+        if (dbproduct.stock == 0) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Not Enough Stock',
+                showConfirmButton: false,
+                timer: 1000
+            })
+
+        } else {
+            dbproduct.stock -= quantity;
+        }
 
         //si el stock es 0, false
         if (dbproduct.stock === 0) {
