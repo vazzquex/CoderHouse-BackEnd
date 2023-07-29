@@ -17,7 +17,7 @@ import { isAdmin } from './middleware/auth.middleware.js';
 import incializePassport from './config/passport.confg.js';
 
 //data
-//import dataProducts from './data/products.json' assert {type: 'json'};
+// import dataProducts from './data/products.json' assert {type: 'json'};
 
 //model
 import productModel from './dao/models/products.model.js';
@@ -89,7 +89,9 @@ app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 
 //app.use(express.static('public'));
+
 //insert product data if necessary1
+
 // try {
 //     await productModel.insertMany(dataProducts);
 // } catch (err) {

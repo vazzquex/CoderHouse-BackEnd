@@ -39,7 +39,7 @@
 
 
             <form action="/api/sending/mail" method="post">
-                <!-- Otros campos del formulario... -->
+
                 <input type="hidden" name="userEmail" value="{{user.email}}">
 
                 {{#each products}}
@@ -57,40 +57,6 @@
                 <button type="submit" class="btn btn-primary btn-lg mt-5" style="width: 350px;">Confirm
                     Purchase</button>
             </form>
-
-
-            {{!-- <form action="/api/sending/mail" method="post">
-                <input type="hidden" name="userEmail" value="{{user.email}}">
-
-                {{#each products}}
-                <input type="hidden" name="products[][productId][title]" value="{{this.productId.title}}">
-                <input type="hidden" name="products[][quantity]" value="{{this.quantity}}">
-                <input type="hidden" name="products[][productId][price]" value="{{this.productId.price}}">
-                <input type="hidden" name="products[][subtotal]" value="{{this.subtotal}}">
-                {{/each}}
-
-                <input type="hidden" name="total" value="{{total}}">
-
-                <button type="submit" class="btn btn-secondary" onclick="addProductAlert()"
-                    style="width: 350px;">Agregar al Carrito</button>
-            </form> --}}
-
-
-            {{!-- <form action="/api/sending/mail" method="post">
-                <!-- Otros campos del formulario... -->
-                <input type="text" name="userEmail" value="vazquezgrillo.santiago@gmail.com">
-                <input type="hidden" name="products[0][productId][title]" value="Intel i5-11600K">
-                <input type="hidden" name="products[0][quantity]" value="1">
-                <input type="hidden" name="products[0][productId][price]" value="229">
-                <input type="hidden" name="products[0][subtotal]" value="229">
-                <input type="number" name="total" value="229">
-                <!-- Resto de campos del formulario... -->
-                <button type="submit">Enviar</button>
-            </form> --}}
-
-
-
-
 
 
 
