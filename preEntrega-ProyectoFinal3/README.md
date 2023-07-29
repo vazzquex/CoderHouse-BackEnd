@@ -2,6 +2,7 @@
 
 En esta entrega, implementé que solo el admin pueda agregar productos. También agregué un middleware a la sesión actual para no mostrar información sensible. Añadí la posibilidad de terminar una compra y recibir los detalles en el correo una vez finalizada la compra. Además, ahora se resta el stock de los productos comprados en la base de datos.
 
+Agregué en la ruta /api/sessions/current, ahora oculté la información sensible a través de un middleware.
 
 ## 📝 Variables de Entorno
 
