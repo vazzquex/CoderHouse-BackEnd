@@ -51,7 +51,7 @@ app.set('views', './src/views');
 app.set('view engine', 'handlebars');
 
 //Coockies
-app.use(cookieParser('9843f78efyh'));
+app.use(cookieParser(config.secret));
 
 // Session
 app.use(
@@ -64,7 +64,7 @@ app.use(
 			},
 			ttl: 6000,
 		}),
-		secret: '9843f78efyh',
+		secret: config.secret,
 		resave: true,
 		saveUninitialized: true,
 	})
