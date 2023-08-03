@@ -54,7 +54,6 @@ router.post('/:userId/cart', async (req, res) => {
 
     user = await userModel.findById(userId).populate('cart.productId');
 
-
     const populatedUser = await userService.populateProductCart(userId);
 
     // Respond with the populated user.

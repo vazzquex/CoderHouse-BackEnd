@@ -7,7 +7,7 @@ export default {
     clientId: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
 
-    secret: process.env.SECRET,
+    secret: process.env.SECRET_KEY,
 
     adminUser: process.env.ADMIN_USER,
     adminPassword: process.env.ADMIN_PASSWORD,
