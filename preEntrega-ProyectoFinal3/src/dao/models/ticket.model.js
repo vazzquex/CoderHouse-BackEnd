@@ -14,8 +14,11 @@ const ticketsSchema = new mongoose.Schema({
         },
         quantity: {
             type: Number
-        }
+        },
     }]
+}, 
+{
+    timestamps: true,
 });
 
 const ticketsModel = mongoose.model(ticketsCollection, ticketsSchema);
