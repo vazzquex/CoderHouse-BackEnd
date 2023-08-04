@@ -4,6 +4,8 @@ En esta entrega, implementé que solo el admin pueda agregar productos. También
 
 Actualicé la ruta /api/sessions/current para que ahora oculte la información sensible a través de un middleware.
 
+Además, incorporé un modelo de tickets para facilitar su almacenamiento en una colección de MongoDB. A este modelo le añadí un "service" y un "DTO", siguiendo el mismo procedimiento que realicé con "users", a los cuales también les añadí un "DTO".
+
 ## 📝 Variables de Entorno
 
 Archivo ejemplo del `.env` contiene:
