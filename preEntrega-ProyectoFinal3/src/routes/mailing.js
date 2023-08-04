@@ -3,6 +3,7 @@ import nodemailer from 'nodemailer';
 import twilio from 'twilio';
 
 import userService from '../services/user.service.js';
+import ticketService from '../services/tickets.service.js';
 
 import 'dotenv/config'
 import productService from '../services/products.service.js';
@@ -23,15 +24,12 @@ mailingRoutes.post("/mail", async (req, res) => {
     const { userEmail, products, total } = req.body;
     let productListHTML = '';
 
-    // Obtén el usuario por correo electrónico
     const user = await userService.getByEmail(userEmail);
 
     if (!user) {
-        // Si el usuario no existe, maneja el error
         return res.status(404).json({ error: "User not found" });
     }
 
-    // Generar el HTML para cada producto y agregarlo a la lista de productos.
     for (const product of products) {
         const id = product.productId.id;
         const title = product.productId.title;
@@ -93,7 +91,12 @@ mailingRoutes.post("/mail", async (req, res) => {
         `;
     }
 
-    // Limpiar el carrito de compras del usuario
+    //Guardar ticket y limpia el carrito
+
+    console.log(user._id)
+
+    ticketService.createTicket(user._id, user.cart)
+
     user.cart = [];
     await user.save();
 
@@ -147,7 +150,6 @@ const trasport = nodemailer.createTransport({
     auth: {
         user: `${email}`,
         pass: `${email_pass}`
-
     }
 });
 
