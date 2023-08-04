@@ -4,6 +4,7 @@ import twilio from 'twilio';
 
 import userService from '../services/user.service.js';
 import ticketService from '../services/tickets.service.js';
+import TicketDTO from '../services/dto/TicketsDto.js';
 
 import 'dotenv/config'
 import productService from '../services/products.service.js';
@@ -91,11 +92,10 @@ mailingRoutes.post("/mail", async (req, res) => {
         `;
     }
 
-    //Guardar ticket y limpia el carrito
-
-    console.log(user._id)
-
-    ticketService.createTicket(user._id, user.cart)
+    //guardar ticket y limpia el carrito
+    console.log(user.cart)
+    const ticketDto = new TicketDTO(user._id, user.cart);
+    await ticketService.createTicket(ticketDto);
 
     user.cart = [];
     await user.save();

@@ -1,19 +1,18 @@
 import ticketsModel from "../dao/models/ticket.model.js";
+import TicketDTO from "./dto/TicketsDto.js";
 
 class TicketService {
     constructor() {
         this.model = ticketsModel;
     }
 
-    async createTicket(userName, cart) {
-
-        let items = cart.map(item => ({
-            product: item.productId,
-            quantity: item.quantity,
-        }));
-
-        return await this.model.insertMany({ user: userName, items: items });
-    }
+    async createTicket(ticketDto) {
+        const ticket = new this.model({
+            user: ticketDto.user,
+            items: ticketDto.items,
+        });
+        return await ticket.save();
+    }    
 
     async getById(id) {
         return await this.model.findById(id);
