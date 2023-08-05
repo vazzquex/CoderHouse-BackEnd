@@ -1,6 +1,10 @@
 import productModel from '../dao/models/products.model.js';
 import mongoose from 'mongoose';
 
+import CustomErrors from '../tools/CustomErrors.js'
+import EErrors from '../tools/EErrors.js'
+import { ProductErrorInfo } from '../tools/EErrorInfo.js'
+
 class ProductController {
 
   // Read
@@ -65,7 +69,7 @@ class ProductController {
     } catch (error) {
       CustomErrors.createError(
         "error creating product",
-        ProductErrorInfo(error),
+        ProductErrorInfo(formattedProduct),
         EErrors.PRODUCT_ERROR
     );
       //console.error(`Error trying to create a new product: ${error}`);

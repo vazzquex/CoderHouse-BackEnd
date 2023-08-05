@@ -30,8 +30,7 @@ const realTimeProductsRouter = (socketServer) => {
             } catch (error) {
                 CustomErrors.createError(
                     "error creating products",
-                    ProductErrorInfo(error),
-                    "error creating products",
+                    ProductErrorInfo(newProduct),
                     EErrors.PRODUCT_ERROR
                 );
                 //console.error(`Error has been ocurred trying create a product: ${error}`);
@@ -55,7 +54,7 @@ const realTimeProductsRouter = (socketServer) => {
 
         res.status(200).render('realTimeProducts', {
             script: 'realTimeProducts',
-            style: 'index',
+            style: 'realtimeProducts',
             title: 'Productos en tiempo real',
             
         });

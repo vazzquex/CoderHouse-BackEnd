@@ -5,10 +5,6 @@
  */
 
 export const UserErrorInfo = (user) => {
-    if (!user || !user.name || !user.lastname || !user.email) {
-        throw new UserErrorInfo('Los detalles del usuario no están disponibles o son incorrectos', null);
-    }
-
     return `
     Error con el usuario
     Nombre > ${user.first_name} 
@@ -16,7 +12,6 @@ export const UserErrorInfo = (user) => {
     Correo electrónico > ${user.email}
     Rol > ${user.rol}
     `;
-    
 }
 
 
@@ -26,10 +21,6 @@ export const UserErrorInfo = (user) => {
  * @returns {string}
  */
 export const DatabaseErrorInfo = (error) => {
-    if (!error || !error.message) {
-        throw new Error('Los detalles del error de la base de datos no están disponibles o son incorrectos', null);
-    }
-
     return `Error con la base de datos: ${error.message}`;
 }
 
@@ -40,9 +31,6 @@ export const DatabaseErrorInfo = (error) => {
  * @returns {string}
  */
 export const RouteErrorInfo = (route) => {
-    if (!route) {
-        throw new RouteError('El nombre de la ruta no está disponible o es incorrecto', null);
-    }
 
     return `Error con la ruta: ${route}`;
 }
@@ -53,26 +41,21 @@ export const RouteErrorInfo = (route) => {
  * @returns {string} 
  */
 export const ProductErrorInfo = (product) => {
-    if (!product || !product.id || !product.title) {
-        throw new ProductErrorInfo('Los detalles del producto no están disponibles o son incorrectos', null);
-    }
-
     return `
     Error con el producto
-    ID > ${product.id} 
-    Nombre > ${product.name}`;
-}
-
+    Title > ${product.title}
+    Price > ${product.price}
+    Description > ${product.description}
+    Stock > ${product.stock}
+    Category > ${product.category}
+    `;
+  }
+  
 /**
  * Function to format ticket error information.
  * @param {Object} ticket
  * @returns {string}
  */
 export const TicketErrorInfo = (ticket) => {
-    if (!ticket || !ticket.items || !ticket.user) {
-        throw new TicketErrorInfo('Los detalles del ticket no están disponibles o son incorrectos', null);
-
-    }
-
-    return `Error con el ticket: ID > ${ticket.id}`;
+    return `Error con el ticket: > ${ticket}`;
 }

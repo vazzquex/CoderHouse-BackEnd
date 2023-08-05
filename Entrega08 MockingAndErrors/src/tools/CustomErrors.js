@@ -9,10 +9,10 @@ export default class CustomErrors extends Error {
      * @param {Object} [cause] - The cause of the error.
      * @param {number} [status=1] - The status code of the error.
      */
-    constructor(name = "Error", message, cause, status = 1) {
-        super(message);
-        this.name = name;
-        this.cause = cause;
-        this.status = status;
+    static createError(name = "Error", cause, message, status = 1) {
+        const error = new Error(message, { cause });
+        error.name = name;
+        error.code = status;
+        throw error;
     }
 }
