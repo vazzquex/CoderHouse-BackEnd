@@ -1,8 +1,11 @@
 # 📦 Entrega08: Mocking and Errors  🚀
 
-En esta entrega, he incluido mocking con Faker de Node. Además, he incorporado errores personalizados tanto en profile.router como en ticket.router. 
+En esta entrega, he incluido mocking con Faker de Node y he incorporado errores personalizados tanto en profile.router como en ticket.router.
 
-Como parte de estas mejoras, se implementó la visita al endpoint /mockingproducts, lo cual permite corroborar una respuesta de 50 productos generados siguiendo el formato de un producto real del proyecto.
+Tambien, he establecido un error personalizado en el proceso de registro y creación de productos como administrador. (Solo es posible crear un producto si te registras como administrador), poniendo los datos en el archivo .env. Por lo tanto, si te registras como administrador al intentar crear un producto si omites datos requeridos como el título o el precio, se activará un error personalizado proveniente del product controller. 
+
+Como parte de estas mejoras, también se implementó la visita al endpoint /mockingproducts, lo cual muestra productos generados con Faker siguiendo el formato de un producto real del proyecto.
+
 ## 📝 Variables de Entorno
 
 Archivo ejemplo del `.env` contiene:
