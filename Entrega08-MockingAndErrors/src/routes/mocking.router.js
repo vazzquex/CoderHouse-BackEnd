@@ -5,8 +5,9 @@ import { isAuth, isGuest } from '../middleware/auth.middleware.js';
 const mockingRouters = Router();
 
 // Función para generar los productos ficticios
-const generateProducts = (limit, page, sort, query) => {
-    let numOfProducts = faker.string.numeric({ min: 10, max: 50 });
+const generateProducts = () => {
+    //let numOfProducts = faker.string.numeric({ min: 20, max: 40});
+    let numOfProducts = Math.floor(Math.random() * (30 - 26 + 1)) + 10;
     let products = [];
     for (let i = 0; i < numOfProducts; i++) {
         products.push({
@@ -24,7 +25,7 @@ const generateProducts = (limit, page, sort, query) => {
 
 // Función para obtener los productos paginados y ordenados
 const getProducts = (limit, page, sort, query) => {
-    const allProducts = generateProducts(); // Obtiene todos los productos generados
+    const allProducts = generateProducts();
     const formatLimit = limit ? Number(limit) : 4;
     const formatPage = page ? Number(page) : 1;
 
@@ -64,26 +65,29 @@ mockingRouters.get('/', isAuth, async (req, res) => {
         const { limit, page, sort, query } = req.query;
 
         // Obtén los productos paginados utilizando la función getProducts
-        const products = getProducts(limit, page, sort, query);
+        const productsData = getProducts(limit, page, sort, query);
 
         const { user } = req.session;
         delete user.password;
 
-        products.prevLink = products.currentPage > 1 ? `/products?page=${products.currentPage - 1}` : null;
-        products.nextLink = products.currentPage < products.totalPages ? `/products?page=${products.currentPage + 1}` : null;
+        let products = productsData.products;
+        products.prevLink = productsData.currentPage > 1 ? `/mockingproducts?page=${productsData.currentPage - 1}` : null;
+        products.nextLink = productsData.currentPage < productsData.totalPages ? `/mockingproducts?page=${productsData.currentPage + 1}` : null;
+        products.hasNextPage = productsData.currentPage < productsData.totalPages;
+        products.hasPrevPage = productsData.currentPage > 1;
 
-        if (products.totalPages > 1) {
-            products.totalPagesArray = Array.from({ length: products.totalPages }, (_, i) => i + 1);
+        if (productsData.totalPages > 1) {
+            products.totalPagesArray = Array.from({ length: productsData.totalPages }, (_, i) => i + 1);
         }
 
         res.status(200).render('mockingproducts', {
             script: 'index',
             style: 'index',
             title: 'Productos',
-            products: products.products,
+            products,
             user,
-            currentPage: products.currentPage,
-            totalPages: products.totalPages,
+            currentPage: productsData.currentPage,
+            totalPages: productsData.totalPages,
             prevLink: products.prevLink,
             nextLink: products.nextLink,
             totalPagesArray: products.totalPagesArray,
