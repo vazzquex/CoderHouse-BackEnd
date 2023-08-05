@@ -63,7 +63,12 @@ class ProductController {
       await newProduct.save();
       return newProduct;
     } catch (error) {
-      console.error(`Error trying to create a new product: ${error}`);
+      CustomErrors.createError(
+        "error creating product",
+        ProductErrorInfo(error),
+        EErrors.PRODUCT_ERROR
+    );
+      //console.error(`Error trying to create a new product: ${error}`);
     };
   };
 
