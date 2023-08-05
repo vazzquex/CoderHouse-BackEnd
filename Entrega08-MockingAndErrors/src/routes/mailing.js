@@ -9,6 +9,11 @@ import TicketDTO from '../services/dto/TicketsDto.js';
 import 'dotenv/config'
 import productService from '../services/products.service.js';
 
+//custom errors
+import CustomErrors from '../tools/CustomErrors.js';
+import EErrors from '../tools/EErrors.js';
+import { TicketErrorInfo } from '../tools/EErrorInfo.js';
+
 //twilio info
 const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID
 const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN
@@ -94,7 +99,18 @@ mailingRoutes.post("/mail", async (req, res) => {
 
     //guardar ticket y limpia el carrito
     const ticketDto = new TicketDTO(user._id, user.cart);
-    await ticketService.createTicket(ticketDto);
+
+    try {
+        await ticketService.createTicket(ticketDto);
+    } catch (err) {
+        CustomErrors.createTicketError(
+            "error creating ticket",
+            TicketErrorInfo(ticketDto),
+            "error creating ticket",
+            EErrors.TICKET_ERROR
+        );
+    }
+
 
     user.cart = [];
     await user.save();
