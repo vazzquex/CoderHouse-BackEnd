@@ -1,7 +1,8 @@
 # 📦 Entrega08: Mocking and Errors  🚀
 
-En esta entrega, he incluido mocking con Faker de Node. Además, he incorporado errores personalizados tanto en profile.router como en ticket.router.
+En esta entrega, he incluido mocking con Faker de Node. Además, he incorporado errores personalizados tanto en profile.router como en ticket.router. 
 
+Como parte de estas mejoras, se implementó la visita al endpoint /mockingproducts, lo cual permite corroborar una respuesta de 50 productos generados siguiendo el formato de un producto real del proyecto.
 ## 📝 Variables de Entorno
 
 Archivo ejemplo del `.env` contiene:
