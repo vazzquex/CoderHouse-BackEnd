@@ -123,17 +123,6 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/js/products.js"></script>
 
-<script type="text/javascript">
-    document.querySelectorAll('.card.mb-3').forEach(item => {
-        item.addEventListener('click', event => {
-            // Extrae el id del producto desde el id del elemento
-            const productId = event.currentTarget.id.split('-')[1];
-            window.location.href = `http://localhost:8080/products/${productId}`;
-        })
-    })
-</script>
-
-
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
