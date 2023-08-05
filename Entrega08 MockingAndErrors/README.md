@@ -1,8 +1,6 @@
-# 📦 Entrega09: Mocking and Errors  🚀
+# 📦 Entrega08: Mocking and Errors  🚀
 
-En esta entrega, implementé que solo el admin pueda agregar productos. También agregué un middleware a la sesión actual para no mostrar información sensible. Añadí la posibilidad de terminar una compra y recibir los detalles en el correo una vez finalizada la compra. Además, ahora se resta el stock de los productos comprados en la base de datos.
-
-Actualicé la ruta /api/sessions/current para que ahora oculte la información sensible a través de un middleware.
+En esta entrega, he incluido mocking con Faker de Node. Además, he incorporado errores personalizados tanto en profile.router como en ticket.router.
 
 ## 📝 Variables de Entorno
 
@@ -14,6 +12,8 @@ MONGO_URL='mongodb://localhost:8080/test'
 # Las siguientes variables son para la autenticación con GitHub usando Passport
 CLIENT_ID='Iv1.a1b2c3a1b2c3'
 CLIENT_SECRET='12345123451234512345123451'
+
+SECRET_KEY='1234512345'
 
 ADMIN_USER='prueba@adminuser.com'
 ADMIN_PASSWORD='contraseña'
