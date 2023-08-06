@@ -49,7 +49,6 @@ mailingRoutes.post("/mail", async (req, res) => {
 
         // encontrar producto en db
         let dbproduct = await productService.getById(id)
-        console.log(dbproduct);
 
         if (!dbproduct) {
             console.error(`Product with ID ${id} not found.`);
