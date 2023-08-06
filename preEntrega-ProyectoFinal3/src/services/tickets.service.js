@@ -8,12 +8,13 @@ export class TicketService {
 
     async createTicket(ticketDto) {
         const ticketData = {
-            user: ticketDto.user,
+            purchaser: ticketDto.userEmail,
             amount: ticketDto.amount,
             items: ticketDto.items,
         };
         return await this.repository.create(ticketData);
     }
+
 
     async getById(id) {
         return await this.repository.getById(id);

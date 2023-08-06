@@ -18,8 +18,7 @@ const ticketsSchema = new mongoose.Schema({
     },
 
     purchaser: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "users.email"
+        type: String,
     },
 
     items: [{

@@ -103,8 +103,7 @@ mailingRoutes.post("/mail", async (req, res) => {
     }
 
     //guardar ticket y limpia el carrito
-    console.log(user.cart)
-    const ticketDto = new TicketDTO(user._id, subtotalTotal, user.cart);
+    const ticketDto = new TicketDTO(user.email, subtotalTotal, user.cart);
     await ticketService.createTicket(ticketDto);
 
     user.cart = [];
