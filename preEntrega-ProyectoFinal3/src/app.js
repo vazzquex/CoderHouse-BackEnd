@@ -20,7 +20,7 @@ import incializePassport from './config/passport.confg.js';
 // import dataProducts from './data/products.json' assert {type: 'json'};
 
 //model
-import productModel from './dao/models/products.model.js';
+import productModel from './DAOs/models/products.model.js';
 
 //routes
 import sessionsRouter from './routes/sessions.router.js';

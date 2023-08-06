@@ -1,24 +1,23 @@
-import ticketsModel from "../dao/models/ticket.model.js";
-import TicketDTO from "./dto/TicketsDto.js";
+import TicketRepository from '../repositories/tickets.repository.js';
+import TicketDTO from "../DTOs/TicketsDto.js";
 
-class TicketService {
+export class TicketService {
     constructor() {
-        this.model = ticketsModel;
+        this.repository = new TicketRepository();
     }
 
     async createTicket(ticketDto) {
-        const ticket = new this.model({
+        const ticketData = {
             user: ticketDto.user,
+            amount: ticketDto.amount,
             items: ticketDto.items,
-        });
-        return await ticket.save();
-    }    
-
-    async getById(id) {
-        return await this.model.findById(id);
+        };
+        return await this.repository.create(ticketData);
     }
 
-
+    async getById(id) {
+        return await this.repository.getById(id);
+    }
 }
 
 const ticketService = new TicketService();

@@ -4,10 +4,12 @@ import twilio from 'twilio';
 
 import userService from '../services/user.service.js';
 import ticketService from '../services/tickets.service.js';
-import TicketDTO from '../services/dto/TicketsDto.js';
+import TicketDTO from '../DTOs/TicketsDto.js'
+
 
 import 'dotenv/config'
 import productService from '../services/products.service.js';
+import { userRepository } from '../repositories/index.js';
 
 //twilio info
 const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID
@@ -25,11 +27,13 @@ mailingRoutes.post("/mail", async (req, res) => {
     const { userEmail, products, total } = req.body;
     let productListHTML = '';
 
-    const user = await userService.getByEmail(userEmail);
+    const user = await userRepository.getByEmail(userEmail);
 
     if (!user) {
         return res.status(404).json({ error: "User not found" });
     }
+
+    let subtotalTotal = 0;
 
     for (const product of products) {
         const id = product.productId.id;
@@ -39,9 +43,14 @@ mailingRoutes.post("/mail", async (req, res) => {
         const price = product.productId.price;
         const subtotal = product.subtotal;
 
+        const productSubtotal = price * quantity; // Calcula el subtotal para este producto
+
+        subtotalTotal += productSubtotal; // Suma al subtotal acumulado
 
         // encontrar producto en db
         let dbproduct = await productService.getById(id)
+        console.log(dbproduct);
+
         if (!dbproduct) {
             console.error(`Product with ID ${id} not found.`);
             return res.status(404).json({ error: `Product with ID ${id} not found.` });
@@ -68,8 +77,9 @@ mailingRoutes.post("/mail", async (req, res) => {
         }
 
         // Guarda el producto
-        dbproduct.markModified('stock');
-        dbproduct.markModified('status');
+
+        // dbproduct.markModified('stock');
+        // dbproduct.markModified('status');
         await dbproduct.save();
 
 
@@ -94,7 +104,7 @@ mailingRoutes.post("/mail", async (req, res) => {
 
     //guardar ticket y limpia el carrito
     console.log(user.cart)
-    const ticketDto = new TicketDTO(user._id, user.cart);
+    const ticketDto = new TicketDTO(user._id, subtotalTotal, user.cart);
     await ticketService.createTicket(ticketDto);
 
     user.cart = [];
