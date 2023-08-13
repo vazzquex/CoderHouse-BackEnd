@@ -38,6 +38,8 @@ const logFormat = winston.format.combine(
           format: logFormat,
           transports: [
               new winston.transports.Console({ level: 'debug' }),
+              new winston.transports.File({ filename: 'errors.log', level: 'error' }),
+
           ],
       });
   }
