@@ -1,16 +1,16 @@
-# 📦 Entrega08: Mocking and Errors  🚀
+# 📦 Entrega09: Logging  🚀
 
-En esta entrega, he incluido mocking con Faker de Node y he incorporado errores personalizados tanto en profile.router como en ticket.router.
-
-Tambien, he establecido un error personalizado en el proceso de registro y creación de productos como administrador. (Solo es posible crear un producto si te registras como administrador), poniendo los datos en el archivo .env. Por lo tanto, si te registras como administrador al intentar crear un producto si omites datos requeridos como el título o el precio, se activará un error personalizado proveniente del product controller. 
-
-Como parte de estas mejoras, también se implementó la visita al endpoint /mockingproducts, lo cual muestra productos generados con Faker siguiendo el formato de un producto real del proyecto.
+En esta entrega, he incluido loggers personalizados con Winston
 
 ## 📝 Variables de Entorno
 
 Archivo ejemplo del `.env` contiene:
 
 ```bash
+# La variable "ENVIROMENT" puede ser "dev" para entorno de desarrollo y "prod" para un ejemplo de produccion 
+ENVIROMENT="dev"
+
+
 MONGO_URL='mongodb://localhost:8080/test' 
 
 # Las siguientes variables son para la autenticación con GitHub usando Passport
