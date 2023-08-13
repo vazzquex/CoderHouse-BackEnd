@@ -12,6 +12,7 @@ import productController from './controllers/product.controller.js';
 
 //middleware
 import { isAdmin } from './middleware/auth.middleware.js';
+import { loggerMiddleware } from './middleware/logger.middleware.js';
 
 //passport
 import incializePassport from './config/passport.confg.js';
@@ -34,12 +35,17 @@ import usersRouter from './routes/user.router.js';
 import profileRouters from './routes/profile.router.js';
 import mockingRouters from './routes/mocking.router.js';
 
+import loggerTest from './routes/logger.test.router.js'
+
 // Config
 import config from './tools/config.js';
 import mailingRoutes from './routes/mailing.js';
 
 const app = express();
 const port = 8080;
+
+app.use(loggerMiddleware);
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -112,6 +118,7 @@ app.use('/realTimeProducts', realTimeProductsRouter(socketServer));
 app.use("/chat", chatRouter(socketServer));
 app.use("/mockingproducts", mockingRouters);
 
+app.use("/loggerTest", loggerTest)
 
 
 //mailing
