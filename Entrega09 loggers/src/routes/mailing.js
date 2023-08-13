@@ -9,7 +9,7 @@ import TicketDTO from '../DTOs/TicketsDto.js'
 
 import 'dotenv/config'
 import productService from '../services/products.service.js';
-import { userRepository } from '../repositories/index.js';
+import { productRepository, userRepository } from '../repositories/index.js';
 
 //twilio info
 const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID
@@ -51,14 +51,14 @@ mailingRoutes.post("/mail", async (req, res) => {
         subtotalTotal += productSubtotal; // Suma al subtotal acumulado
 
         // encontrar producto en db
-        let dbproduct = await productService.getById(id)
+        let dbproduct = await productRepository.getById(id)
+
 
         if (!dbproduct) {
             req.logger.error(`Product with ID ${id} not found)`);
             return res.status(404).json({ error: `Product with ID ${id} not found.` });
         } else {
             req.logger.debug(`Product with ID ${id} is found`);
-            console.log(`Product with ID ${id} is found`);
         }
 
         //restamos el stock que se comptro

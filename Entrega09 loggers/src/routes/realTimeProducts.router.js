@@ -8,17 +8,19 @@ import CustomErrors from '../tools/CustomErrors.js';
 import EErrors from '../tools/EErrors.js';
 import { ProductErrorInfo } from '../tools/EErrorInfo.js';
 
+//logger
+import logger from '../middleware/logger.middleware.js';
 
 const realTimeProductsRouter = (socketServer) => {
 
     socketServer.on('connection', async (socket) => {
-        req.logger.debug(`New connection: ${socket.id}`);
+        logger.debug(`New connection: ${socket.id}`);
         // Load products
         try {
             const products = await productController.getProducts();
             await socketServer.emit('products', products);
         } catch (error) {
-            req.logger.error(`Error has been occurred trying to load the products: ${error}`);
+            logger.error(`Error has been occurred trying to load the products: ${error}`);
         };
 
         // Create Products
@@ -33,7 +35,7 @@ const realTimeProductsRouter = (socketServer) => {
                     ProductErrorInfo(newProduct),
                     EErrors.PRODUCT_ERROR
                 );
-                req.logger.error(`Error has been occurred trying to create a product: ${error}`);
+                logger.error(`Error has been occurred trying to create a product: ${error}`);
             };
         });
 
@@ -44,7 +46,7 @@ const realTimeProductsRouter = (socketServer) => {
                 const products = await productController.getProducts();
                 await socketServer.emit('products', products);
             } catch (error) {
-                req.logger.error(`Error has been occurred trying to delete a product: ${error}`);
+                logger.error(`Error has been occurred trying to delete a product: ${error}`);
             };
         });
     });

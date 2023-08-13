@@ -58,3 +58,5 @@ export const loggerMiddleware = (req, res, next) => {
     logger.info(`${req.method} - ${req.url} - [${req.ip}] - ${req.get('user-agent')} - ${new Date().toISOString()}`);
     next();
 }
+
+export default logger
