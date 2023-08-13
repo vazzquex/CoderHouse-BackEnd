@@ -6,7 +6,7 @@ const router = Router();
 
 const chatMessagesRouter = (socketServer) => {
   socketServer.on('connection', async (socket) => {
-    console.log(`New connection: ${socket.id}`);
+    req.logger.debug(`New connection: ${socket.id}`);
 
     // Bring chat history on connection
     try{
@@ -14,7 +14,7 @@ const chatMessagesRouter = (socketServer) => {
       // Send history
       socketServer.emit('history', history);
     } catch (error) {
-      console.error(`Error al conseguir mensajes: ${error}`);
+      req.logger.error(`Error al conseguir mensajes: ${error}`)
     };
 
     // Send message
@@ -24,7 +24,7 @@ const chatMessagesRouter = (socketServer) => {
           // Send last message
           socketServer.emit('currentMessage', newMessage);
         } catch (error) {
-          console.error(`Error al conseguir mensajes: ${error}`);
+          req.logger.error(`Error al conseguir mensajes: ${error}`)
         };
     });
   });

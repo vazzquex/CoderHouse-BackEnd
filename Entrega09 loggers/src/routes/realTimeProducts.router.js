@@ -12,13 +12,13 @@ import { ProductErrorInfo } from '../tools/EErrorInfo.js';
 const realTimeProductsRouter = (socketServer) => {
 
     socketServer.on('connection', async (socket) => {
-        //console.log(`New connection: ${socket.id}`);
+        req.logger.debug(`New connection: ${socket.id}`);
         // Load products
         try {
             const products = await productController.getProducts();
             await socketServer.emit('products', products);
         } catch (error) {
-            console.error(`Error has been ocurred trying to load the products: ${error}`);
+            req.logger.error(`Error has been occurred trying to load the products: ${error}`);
         };
 
         // Create Products
@@ -33,7 +33,7 @@ const realTimeProductsRouter = (socketServer) => {
                     ProductErrorInfo(newProduct),
                     EErrors.PRODUCT_ERROR
                 );
-                //console.error(`Error has been ocurred trying create a product: ${error}`);
+                req.logger.error(`Error has been occurred trying to create a product: ${error}`);
             };
         });
 
@@ -44,7 +44,7 @@ const realTimeProductsRouter = (socketServer) => {
                 const products = await productController.getProducts();
                 await socketServer.emit('products', products);
             } catch (error) {
-                console.error(`Error has been ocurred trying delete a product: ${error}`);
+                req.logger.error(`Error has been occurred trying to delete a product: ${error}`);
             };
         });
     });

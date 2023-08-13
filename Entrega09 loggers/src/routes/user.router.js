@@ -13,10 +13,15 @@ usersRouter.post('/', async (req, res) => {
 		cart: [],
 	};
 	try {
-		
+		req.logger.info('Creating new user');
+
 		const newUser = await userRepository.createUser(userData);
+
+		req.logger.info('User created successfully');
+
 		res.status(201).json(newUser);
 	} catch (error) {
+		req.logger.error(`Error creating user: ${error.message}`);
 		res.status(400).json({ error: error.message });
 	}
 });
@@ -32,6 +37,8 @@ const admin = {
 usersRouter.post('/auth', async (req, res) => {
 	const { email, password } = req.body;
 	try {
+		req.logger.info('Authenticating user');
+
 		const user = await userRepository.getByEmail(email);
 
 		if (email !== admin.email || password !== admin.password) {
@@ -39,6 +46,8 @@ usersRouter.post('/auth', async (req, res) => {
 			if (!user) throw new Error('Invalid data'); // Comprobo si existe el usuario
 			if (!comparePass(user, password)) throw new Error('Invalid data'); // Comprobo si la contraseña coincide
 	
+			req.logger.info('User authenticated successfully');
+
 			// Guardo la session
 			req.session.user = user;
 
@@ -46,6 +55,9 @@ usersRouter.post('/auth', async (req, res) => {
 
 
 		} else {
+
+			req.logger.info('Admin authenticated successfully');
+
 			const user = admin.email
 
 			// Guardo la session
@@ -57,11 +69,14 @@ usersRouter.post('/auth', async (req, res) => {
 
 
 	} catch (error) {
+		req.logger.error(`Authentication failed: ${error.message}`);
 		res.status(400).json({ error: error.message });
 	}
 });
 
 usersRouter.post('/logout', (req, res) => {
+	req.logger.info('User logged out');
+
 	req.session.destroy();
 
 	res.redirect('/login');

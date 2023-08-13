@@ -6,7 +6,8 @@ const levels = {
     error: 1,
     warning: 2,
     info: 3,
-    debug: 4,
+    http: 4,
+    debug: 5,
 };
 
 const colors = {
@@ -14,6 +15,7 @@ const colors = {
     error: 'red',
     warning: 'yellow',
     info: 'green',
+    http: 'blue',
     debug: 'blue',
     
 };
