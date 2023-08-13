@@ -1,6 +1,15 @@
 # 📦 Entrega09: Logging  🚀
 
-En esta entrega, he incluido loggers personalizados con Winston
+En esta entrega, he incluido loggers personalizados con Winston. Las siguientes tareas se han completado:
+
+**Definido un sistema de niveles** con la siguiente prioridad (de menor a mayor): debug, http, info, warning, error, fatal.
+
+
+**Implementado un logger para desarrollo** y un logger para producción. El logger de desarrollo loggeará a partir del nivel debug, y el de produccion apartir del nivel de info, cada tipo de loger se puede cambiar desde el .env como explico mas abajo.
+
+**El logger enviará en un transporte de archivos** a partir del nivel de "error" en un archivo llamado “errors.log”.
+
+**Agregar loggers** Cambie los console.log por los loggers en los puentos mas importates del servidor
 
 ## 📝 Variables de Entorno
 
