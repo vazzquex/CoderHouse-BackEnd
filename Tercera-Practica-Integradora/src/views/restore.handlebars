@@ -1,5 +1,7 @@
 <h1>Restore Password</h1>
-<form action='/restore' method='get'>
+
+
+<form action='/api/sending/sendVerification' method='post'>
     <div class='row'>
         <div id='email-section'>
             <input type='email' class='form-control form-control-lg' placeholder='Email' aria-label='Email'
@@ -31,10 +33,16 @@
     var tiempoRestante = 60; // Tiempo en segundos
     var timer;
 
+    var verificationCode;
+    var expirationTime;
+
     document.querySelector('.email-button').addEventListener('click', enviarCorreo);
     document.querySelector('.resend-button').addEventListener('click', enviarCorreo);
 
     function enviarCorreo(e) {
+        var emailInput = document.querySelector("input[name='email']");
+        var email = emailInput.value;
+
         var emailInput = document.querySelector("input[name='email']");
         var email = emailInput.value;
 
@@ -47,6 +55,13 @@
             alert("El correo introducido no es válido.");
             return;
         }
+
+        verificationCode = generarCodigo();
+        expirationTime = new Date();
+        expirationTime.setHours(expirationTime.getHours() + 1); // Establece la fecha de vencimiento en 1 hora a partir de ahora
+
+        alert("El correo se ha enviado correctamente. Código: " + verificationCode); // Solo para propósitos de demostración
+
 
         alert("El correo se ha enviado correctamente.");
 
@@ -62,6 +77,28 @@
         timer = setInterval(cuentaRegresiva, 1000);
         tiempoRestante = 60; // Restablecer el tiempo
     }
+
+    function generarCodigo() {
+        return Math.floor(100000 + Math.random() * 900000);
+    }
+    document.querySelector('.code-button').addEventListener('click', function (e) {
+        var codeInput = document.querySelector("input[name='code']");
+        var code = codeInput.value;
+
+        if (code !== verificationCode.toString()) {
+            alert("El código introducido no es correcto.");
+            e.preventDefault();
+            return;
+        }
+
+        if (new Date() > expirationTime) {
+            alert("El código ha expirado. Por favor, vuelve a enviar el correo.");
+            e.preventDefault();
+            return;
+        }
+
+        alert("El código se ha verificado correctamente.");
+    });
 
     function validarCorreo(correo) {
         var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
