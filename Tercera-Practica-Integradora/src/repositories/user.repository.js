@@ -10,6 +10,10 @@ export default class UserRepository {
         return await user.save();
     }
 
+    async findTokenAndExpiraton (token) {
+        return await userModel.findOne({ resetPasswordToken: token, resetPasswordExpires: { $gt: Date.now() } })
+    }
+
     async getAll() {
         return await userModel.find();
     }

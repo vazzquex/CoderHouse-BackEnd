@@ -1,119 +1,16 @@
 <h1>Restore Password</h1>
 
-
-<form action='/api/sending/sendVerification' method='post'>
-    <div class='row'>
-        <div id='email-section'>
-            <input type='email' class='form-control form-control-lg' placeholder='Email' aria-label='Email'
-                name='email' />
-            <button type='button' class='btn btn-secondary col-6 btn-block email-button'
-                style='background: #333; color: #fff; margin-top: 10px; font-size: 20px;'>
-                Send Email Verification
-            </button>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h3>Restablecer Contraseña</h3>
+            <p>Por favor, ingrese su dirección de correo electrónico para recibir el enlace de restablecimiento.</p>
+            <form action="/restore/forgot-password" method="post">
+                <div class="form-group">
+                    <label for="email">Correo Electrónico</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
         </div>
-        <div id='code-section' style='display:none;'>
-            <input type='text' class='form-control form-control-lg' placeholder='Verification Code' aria-label='Code'
-                name='code' />
-            <button type='submit' class='btn btn-secondary col-6 btn-block code-button'
-                style='background: #333; color: #fff; margin-top: 10px; font-size: 20px;'>
-                Verify Code
-            </button>
-        </div>
-        <div id='resend-section' style='display:none; margin-top: 10px;'>
-            <button type='button' class='btn btn-secondary col-6 btn-block resend-button' disabled
-                style='background: #333; color: #fff; font-size: 20px;'>
-                Resend Email Verification
-            </button>
-        </div>
-        <div id='timer' style='margin-top: 10px;'></div>
     </div>
-</form>
-
-<script>
-    var tiempoRestante = 60; // Tiempo en segundos
-    var timer;
-
-    var verificationCode;
-    var expirationTime;
-
-    document.querySelector('.email-button').addEventListener('click', enviarCorreo);
-    document.querySelector('.resend-button').addEventListener('click', enviarCorreo);
-
-    function enviarCorreo(e) {
-        var emailInput = document.querySelector("input[name='email']");
-        var email = emailInput.value;
-
-        var emailInput = document.querySelector("input[name='email']");
-        var email = emailInput.value;
-
-        if (email === "") {
-            alert("Por favor, introduce un correo.");
-            return;
-        }
-
-        if (!validarCorreo(email)) {
-            alert("El correo introducido no es válido.");
-            return;
-        }
-
-        verificationCode = generarCodigo();
-        expirationTime = new Date();
-        expirationTime.setHours(expirationTime.getHours() + 1); // Establece la fecha de vencimiento en 1 hora a partir de ahora
-
-        alert("El correo se ha enviado correctamente. Código: " + verificationCode); // Solo para propósitos de demostración
-
-
-        alert("El correo se ha enviado correctamente.");
-
-        // Esconder la sección de correo y mostrar la sección de código
-        document.getElementById('email-section').style.display = 'none';
-        document.getElementById('code-section').style.display = 'block';
-
-        document.querySelector('.resend-button').disabled = true; // Deshabilitar el botón de reenvío
-
-
-        // Comenzar la cuenta regresiva
-        document.getElementById('timer').textContent = "Puedes enviar otro correo en " + tiempoRestante + " segundos.";
-        timer = setInterval(cuentaRegresiva, 1000);
-        tiempoRestante = 60; // Restablecer el tiempo
-    }
-
-    function generarCodigo() {
-        return Math.floor(100000 + Math.random() * 900000);
-    }
-    document.querySelector('.code-button').addEventListener('click', function (e) {
-        var codeInput = document.querySelector("input[name='code']");
-        var code = codeInput.value;
-
-        if (code !== verificationCode.toString()) {
-            alert("El código introducido no es correcto.");
-            e.preventDefault();
-            return;
-        }
-
-        if (new Date() > expirationTime) {
-            alert("El código ha expirado. Por favor, vuelve a enviar el correo.");
-            e.preventDefault();
-            return;
-        }
-
-        alert("El código se ha verificado correctamente.");
-    });
-
-    function validarCorreo(correo) {
-        var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        return regex.test(correo);
-    }
-
-    function cuentaRegresiva() {
-        if (tiempoRestante <= 0) {
-            clearInterval(timer);
-            document.getElementById('timer').textContent = ""; // Limpiar la cuenta regresiva
-            document.getElementById('resend-section').style.display = 'block'; // Mostrar el botón de reenviar
-            document.querySelector('.resend-button').disabled = false; // Habilitar el botón de reenvío
-        } else {
-            document.getElementById('timer').textContent = "Puedes enviar otro correo en " + tiempoRestante + " segundos.";
-            tiempoRestante--;
-        }
-    }
-</script>

@@ -23,40 +23,6 @@ const mailingRoutes = Router();
 
 
 
-mailingRoutes.post("/sendVerification", async (req, res) => {
-    const { email } = req.body;
-
-    const user = await userRepository.getByEmail(email);
-    
-    if (!user) {
-        req.logger.error(`User ${email} does not exist`);
-        return res.status(404).json({ error: "User not found" });
-    }
-
-    // Generamos un código de 6 dígitos
-    const verificationCode = Math.floor(100000 + Math.random() * 900000);
-    
-    // Configuramos las opciones del correo
-    let mailOptions = {
-        from: `Coder Test <${email}>`,
-        to: userEmail,
-        subject: 'Email Verification Code',
-        text: `Your verification code is: ${verificationCode}`,
-    };
-
-    // Enviamos el correo
-    trasport.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            console.error(error);
-            return res.status(500).json({ error: 'Could not send the email' });
-        }
-        console.log('Verification email sent: ' + info.response);
-        res.status(200).json({ message: `Verification code sent to: ${userEmail}` });
-    });
-});
-
-
-
 mailingRoutes.post("/mail", async (req, res) => {
 
     const { userEmail, products, total } = req.body;
