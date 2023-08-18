@@ -24,6 +24,8 @@
 
                     </div>
 
+                    <input type="hidden">
+
                     <!-- Segunda columna para las especificaciones -->
                     <div class="col-md-4 d-flex flex-column">
                         <div class="card-body">
@@ -32,10 +34,13 @@
                             <h3 class="card-text">${{product.price}} USD</h3>
                             <br>
                             <p class="card-text">{{product.description}}</p>
-                            <p class="card-text pid" data-pid="{{product._id}}">ID: {{product._id}}</p>
-                            <p class="card-text stock" data-stock="{{product.stock}}">Stock: {{product.stock}}</p>
-                            <p class="card-text">Categoria: {{product.category}}</p>
+                            <input type="hidden" class="card-text pid" data-pid="{{product._id}}">
+                            <!-- <p class="card-text pid" data-pid="{{product._id}}">ID: {{product._id}}</p> -->
 
+                            <p class="card-text stock" data-stock="{{product.stock}}">Stock: {{product.stock}}</p>
+                            
+                            <p class="card-text">Categoria: {{product.category}}</p>
+    
 
                         </div>
 

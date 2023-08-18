@@ -146,13 +146,13 @@ mailingRoutes.post("/mail", async (req, res) => {
         //attachments: []
     });
 
-    trasport.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            console.error(error);
-            res.send('No se puedo enviar el correo electrónico' + error);
-        }
-        console.log('Correo electrónico enviado: ' + info.response);
-    });
+    // trasport.sendMail(mailOptions, (error, info) => {
+    //     if (error) {
+    //         console.error(error);
+    //         res.send('No se puedo enviar el correo electrónico' + error);
+    //     }
+    //     console.log('Correo electrónico enviado: ' + info.response);
+    // });
 
     res.status(201).json(`The details of the purchase have been sent to:  ${userEmail}`);
 });

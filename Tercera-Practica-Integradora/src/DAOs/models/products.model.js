@@ -11,12 +11,6 @@ const productSchema = new mongoose.Schema({
     type: String, 
     required: true
   },
-
-  // code:{
-  //   type: String,
-  //   unique: true
-  // },
-
   price:{ 
     type: Number,
     required: true 
@@ -33,7 +27,20 @@ const productSchema = new mongoose.Schema({
   thumbnail: {
     type: String,
     //required: true
+  },
+  owner: {
+    type: String,
+    default: 'admin'
   }
+
+
+
+
+
+ // code:{
+  //   type: String,
+  //   unique: true
+  // },
 });
 
 productSchema.plugin(mongoosePaginate);
