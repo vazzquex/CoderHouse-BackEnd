@@ -21,7 +21,7 @@ restoreRouter.post('/forgot-password', async (req, res) => {
         const { email } = req.body;
 
         req.logger.info(`Solicitud de restablecimiento de contraseña para ${email}`);
-        const user = await userRepository.getByEmail(email); // Modificación aquí
+        const user = await userRepository.getByEmail(email);
         if (!user) {
             req.logger.warning(`Usuario no encontrado: ${email}`);
             return res.status(400).send('Usuario no encontrado');
@@ -29,7 +29,10 @@ restoreRouter.post('/forgot-password', async (req, res) => {
 
         // Generar token
         const token = crypto.randomBytes(20).toString('hex');
-        const expires = Date.now() + 3600000;
+
+        //const expires = Date.now() + 10000;   // 10 segundos test
+
+        const expires = Date.now() + 3600000; //Expira en 1 hora
 
         user.resetPasswordToken = token;
         user.resetPasswordExpires = expires;
@@ -75,10 +78,19 @@ restoreRouter.post('/reset-password/:token', async (req, res) => {
         const { password } = req.body;
 
         req.logger.info(`Solicitud para cambiar la contraseña con el token: ${token}`);
+
         const user = await userRepository.findTokenAndExpiraton(token);
-        if (!user) {
-            req.logger.warning('Token inválido o expirado');
-            return res.status(400).send('Token inválido o expirado');
+        const now = Date.now();
+        if (!user || user.resetPasswordExpires < now) {
+            req.logger.warning('Invalid or expired token');
+            return res.status(400).json({ success: false, message: 'Invalid or expired token' });
+        }
+
+
+        // La contraseña nueva no puede ser igual a la del usuario
+
+        if (await bcrypt.compare(password, user.password)) {
+            return res.status(400).json({ success: false, message: 'The new password cannot match the current one' });
         }
 
         user.password = bcrypt.hashSync(password, 10);
@@ -86,10 +98,11 @@ restoreRouter.post('/reset-password/:token', async (req, res) => {
         user.resetPasswordExpires = undefined;
         await user.save();
 
-        req.logger.info('Contraseña actualizada exitosamente');
-        res.send('Contraseña actualizada exitosamente');
+        req.logger.info('Password updated successfully');
+
+        res.json({ success: true, message: 'Password updated successfully' });
     } catch (error) {
-        req.logger.error(`Error al actualizar la contraseña: ${error.message}`);
+        req.logger.error(`Failed to update password: ${error.message}`);
         res.status(500).send(error.message);
     }
 });
