@@ -3,3 +3,45 @@
 2023-08-18T14:25:16.182Z [31merror[39m: Authentication failed: Invalid data
 2023-08-18T15:10:31.908Z [31merror[39m: Error al actualizar la contraseña: alert is not defined
 2023-08-18T15:14:41.508Z [31merror[39m: Error al actualizar la contraseña: newPassword is not defined
+2023-08-18T22:09:05.571Z [31merror[39m: Error updating user rol: uid is not defined
+2023-08-18T22:10:45.290Z [31merror[39m: Error updating user rol: Cannot access 'uid' before initialization
+2023-08-18T22:11:39.838Z [31merror[39m: Error updating user rol: Cannot access 'uid' before initialization
+2023-08-18T22:12:54.761Z [31merror[39m: Error updating user rol: Cannot access 'uid' before initialization
+2023-08-18T22:14:33.824Z [31merror[39m: Error updating user rol: Cannot access 'uid' before initialization
+2023-08-18T22:14:44.959Z [31merror[39m: Error updating user rol: Cannot access 'uid' before initialization
+2023-08-18T22:15:00.733Z [31merror[39m: Error updating user rol: Cannot access 'uid' before initialization
+2023-08-18T22:19:13.403Z [31merror[39m: Error updating user rol: Cannot access 'uid' before initialization
+2023-08-18T23:15:19.346Z [31merror[39m: Authentication failed: Invalid data
+2023-08-19T00:59:19.329Z [31merror[39m: Error has been occurred trying to load the products: TypeError: Cannot read properties of undefined (reading 'email')
+2023-08-19T01:02:32.330Z [31merror[39m: Error has been occurred trying to load the products: TypeError: Cannot read properties of undefined (reading 'email')
+2023-08-19T01:02:34.336Z [31merror[39m: Error has been occurred trying to load the products: TypeError: Cannot read properties of undefined (reading 'email')
+2023-08-19T01:02:36.949Z [31merror[39m: Error has been occurred trying to load the products: TypeError: Cannot read properties of undefined (reading 'email')
+2023-08-19T01:13:28.090Z [31merror[39m: Error has been occurred trying to create a product: TypeError: Cannot read properties of undefined (reading 'email')
+2023-08-19T01:24:35.940Z [31merror[39m: Authentication failed: Invalid data
+2023-08-19T01:28:09.217Z [31merror[39m: Error has been occurred trying to delete a product: ReferenceError: pid is not defined
+2023-08-19T01:30:02.793Z [31merror[39m: Error has been occurred trying to delete a product: ReferenceError: user is not defined
+2023-08-19T01:30:32.277Z [31merror[39m: Error has been occurred trying to delete a product: ReferenceError: req is not defined
+2023-08-19T01:32:38.400Z [31merror[39m: Error has been occurred trying to delete a product: ReferenceError: user is not defined
+2023-08-19T01:35:58.958Z [31merror[39m: Error has been occurred trying to delete a product: ReferenceError: user is not defined
+2023-08-19T01:37:15.524Z [31merror[39m: Error has been occurred trying to delete a product: ReferenceError: user is not defined
+2023-08-19T01:37:45.271Z [31merror[39m: Error has been occurred trying to delete a product: TypeError: Spread syntax requires ...iterable[Symbol.iterator] to be a function
+2023-08-19T01:37:45.952Z [31merror[39m: Error has been occurred trying to delete a product: TypeError: Spread syntax requires ...iterable[Symbol.iterator] to be a function
+2023-08-19T01:37:56.344Z [31merror[39m: Error has been occurred trying to delete a product: ReferenceError: user is not defined
+2023-08-19T01:40:55.878Z [31merror[39m: Error has been occurred trying to delete a product: ReferenceError: user is not defined
+2023-08-19T01:40:56.929Z [31merror[39m: Error has been occurred trying to delete a product: TypeError: Cannot read properties of undefined (reading 'owner')
+2023-08-19T01:41:00.865Z [31merror[39m: Error has been occurred trying to delete a product: TypeError: Cannot read properties of undefined (reading 'owner')
+2023-08-19T01:41:39.141Z [31merror[39m: Error has been occurred trying to delete a product: ReferenceError: user is not defined
+2023-08-19T01:43:30.615Z [31merror[39m: Error has been occurred trying to delete a product: TypeError: logger.waring is not a function
+2023-08-19T01:43:49.090Z [31merror[39m: insufficient permissions
+2023-08-19T01:44:39.550Z [31merror[39m: insufficient permissions
+2023-08-19T01:46:18.009Z [31merror[39m: insufficient permissions
+2023-08-19T01:47:18.705Z [31merror[39m: insufficient permissions
+2023-08-19T01:47:23.337Z [31merror[39m: insufficient permissions
+2023-08-19T01:47:48.230Z [31merror[39m: insufficient permissions
+2023-08-19T01:50:53.248Z [31merror[39m: insufficient permissions
+2023-08-19T01:51:27.543Z [31merror[39m: insufficient permissions
+2023-08-19T01:57:45.565Z [31merror[39m: Insufficient Permissions
+2023-08-19T01:58:18.713Z [31merror[39m: Insufficient Permissions
+2023-08-19T01:58:24.494Z [31merror[39m: Insufficient Permissions
+2023-08-19T01:58:59.863Z [31merror[39m: Insufficient Permissions
+2023-08-19T01:59:19.693Z [31merror[39m: Insufficient Permissions

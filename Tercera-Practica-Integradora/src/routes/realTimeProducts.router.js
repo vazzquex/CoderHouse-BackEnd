@@ -1,7 +1,7 @@
 import { Router } from 'express';
 const router = Router();
 import productController from '../controllers/product.controller.js';
-import { isAdmin } from '../middleware/auth.middleware.js';
+import { isAdmin, isPremium } from '../middleware/auth.middleware.js';
 
 // custom errors
 import CustomErrors from '../tools/CustomErrors.js';
@@ -30,21 +30,48 @@ const realTimeProductsRouter = (socketServer) => {
                 const products = await productController.getProducts();
                 await socketServer.emit('products', products);
             } catch (error) {
+                logger.error(`Error has been occurred trying to create a product: ${error}`);
+
                 CustomErrors.createError(
                     "error creating products",
                     ProductErrorInfo(newProduct),
                     EErrors.PRODUCT_ERROR
                 );
-                logger.error(`Error has been occurred trying to create a product: ${error}`);
             };
         });
 
         // Delete Product 
         socket.on('deleteProduct', async (productToDelete) => {
             try {
-                await productController.deleteProduct(productToDelete);
+                const { id, email } = productToDelete; // Extraemos el id y el email del objeto recibido
+
+                let product = await productController.getProductById(id); // Utilizamos el id para obtener el producto
+
+                // console.log(productToDelete);
+                // console.log(product.owner);
+                // console.log(email)
+
+                if (product.owner === email) {
+                    await productController.deleteProduct(id);
+                    socket.emit('deleteResult', { success: true, message: 'Product deleted' });
+
+                    logger.info("Product deleted");
+                } else if (!email){
+                    await productController.deleteProduct(id);
+                    socket.emit('deleteResult', { success: true, message: 'Product deleted' });
+
+                    logger.info("Product deleted");
+
+                }  else {
+                    socket.emit('deleteResult', { success: false, message: 'Insufficient Permissions' });
+
+                    logger.error("Insufficient Permissions")
+                }
+
+                //await productController.deleteProduct(productToDelete);
                 const products = await productController.getProducts();
                 await socketServer.emit('products', products);
+
             } catch (error) {
                 logger.error(`Error has been occurred trying to delete a product: ${error}`);
             };
@@ -52,13 +79,16 @@ const realTimeProductsRouter = (socketServer) => {
     });
 
     // Render view
-    router.get('/', isAdmin, (req, res) => {
+    router.get('/', isPremium, (req, res) => {
+        const { user } = req.session;
+        delete user.password;
 
         res.status(200).render('realTimeProducts', {
             script: 'realTimeProducts',
             style: 'realtimeProducts',
             title: 'Productos en tiempo real',
-            
+            user
+
         });
 
     });

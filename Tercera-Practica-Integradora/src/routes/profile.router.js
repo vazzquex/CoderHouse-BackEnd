@@ -18,7 +18,7 @@ profileRouters.get('/', isAuth, (req, res) => {
 
         res.render('index', {
             title: 'Perfil de Usuario',
-            user
+            user,
         });
     } catch {
         CustomErrors.createError(

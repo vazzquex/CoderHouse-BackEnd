@@ -14,6 +14,13 @@ export default class UserRepository {
         return await userModel.findOne({ resetPasswordToken: token, resetPasswordExpires: { $gt: Date.now() } })
     }
 
+    async updateRolToPremium(uid) {
+        return await userModel.updateOne({ _id: uid }, { $set: { rol: 'premium' }});
+    }
+    async updateRolToUser (uid) {
+        return await userModel.updateOne({ _id: uid }, { $set: { rol: 'user' }});
+    } 
+
     async getAll() {
         return await userModel.find();
     }

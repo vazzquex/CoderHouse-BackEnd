@@ -30,17 +30,10 @@ const productSchema = new mongoose.Schema({
   },
   owner: {
     type: String,
+    ref: 'users',
     default: 'admin'
   }
 
-
-
-
-
- // code:{
-  //   type: String,
-  //   unique: true
-  // },
 });
 
 productSchema.plugin(mongoosePaginate);
