@@ -45,3 +45,22 @@
 2023-08-19T01:58:24.494Z [31merror[39m: Insufficient Permissions
 2023-08-19T01:58:59.863Z [31merror[39m: Insufficient Permissions
 2023-08-19T01:59:19.693Z [31merror[39m: Insufficient Permissions
+2023-08-19T22:56:37.401Z [31merror[39m: Insufficient Permissions
+2023-08-19T22:57:10.186Z [31merror[39m: Insufficient Permissions
+2023-08-19T23:05:40.126Z [31merror[39m: this.repository.getById is not a function
+2023-08-19T23:44:58.638Z [31merror[39m: Cannot read properties of null (reading 'owner')
+2023-08-19T23:45:52.822Z [31merror[39m: Cannot read properties of null (reading 'owner')
+2023-08-19T23:47:15.660Z [31merror[39m: Cannot read properties of null (reading 'owner')
+2023-08-19T23:47:30.975Z [31merror[39m: Cannot read properties of null (reading 'owner')
+2023-08-19T23:48:22.256Z [31merror[39m: Cannot read properties of null (reading 'owner')
+2023-08-19T23:48:31.359Z [31merror[39m: Cannot read properties of null (reading 'owner')
+2023-08-19T23:50:18.881Z [31merror[39m: Cannot read properties of null (reading 'owner')
+2023-08-19T23:50:35.139Z [31merror[39m: Cannot read properties of null (reading 'owner')
+2023-08-19T23:51:02.214Z [31merror[39m: Cannot read properties of null (reading 'owner')
+2023-08-19T23:51:09.826Z [31merror[39m: Cannot read properties of null (reading 'owner')
+2023-08-19T23:51:46.105Z [31merror[39m: Cannot read properties of null (reading 'owner')
+2023-08-20T00:01:42.737Z [31merror[39m: document is not defined
+2023-08-20T00:16:59.129Z [31merror[39m: Cast to ObjectId failed for value "" (type string) at path "_id" for model "products"
+2023-08-20T00:38:13.826Z [31merror[39m: Insufficient Permissions
+2023-08-20T00:38:17.342Z [31merror[39m: Insufficient Permissions
+2023-08-20T00:38:20.154Z [31merror[39m: Insufficient Permissions
