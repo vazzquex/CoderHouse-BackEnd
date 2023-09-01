@@ -75,15 +75,18 @@ class ProductController {
 
     fieldsToUpdate.forEach((field) => {
       let formattedValue = data[field];
-
+    
       if (field === 'precio' || field === 'stock') {
         formattedValue = Number(formattedValue);
       } else if (field === 'status'){
         formattedValue = Boolean(formattedValue);
       } else {
-        formattedValue = formattedValue.trim();
-      };
-
+        // Agregar una comprobación adicional aquí
+        if (typeof formattedValue === 'string') {
+          formattedValue = formattedValue.trim();
+        }
+      }
+    
       // Eliminar valores vacíos ("")
       if (formattedValue !== "") {
         formattedValues[field] = formattedValue;

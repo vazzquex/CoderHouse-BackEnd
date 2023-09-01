@@ -29,6 +29,8 @@ const realTimeProductsRouter = (socketServer) => {
                 await productController.addProduct(newProduct);
                 const products = await productController.getProducts();
                 await socketServer.emit('products', products);
+                logger.debug(`New product: ${newProduct}`)
+                socket.emit('createdResoult', { success: true, message: 'Product Created' });
             } catch (error) {
                 logger.error(`Error has been occurred trying to create a product: ${error}`);
 
@@ -47,24 +49,22 @@ const realTimeProductsRouter = (socketServer) => {
 
                 let product = await productController.getProductById(id); // Utilizamos el id para obtener el producto
 
-                // console.log(productToDelete);
-                // console.log(product.owner);
-                // console.log(email)
+
+                logger.debug(productToDelete)
+                logger.debug(product.owner)
+                logger.debug(email)
+
 
                 if (product.owner === email) {
                     await productController.deleteProduct(id);
                     socket.emit('deleteResult', { success: true, message: 'Product deleted' });
-
                     logger.info("Product deleted");
                 } else if (!email){
                     await productController.deleteProduct(id);
                     socket.emit('deleteResult', { success: true, message: 'Product deleted' });
-
                     logger.info("Product deleted");
-
                 }  else {
                     socket.emit('deleteResult', { success: false, message: 'Insufficient Permissions' });
-
                     logger.error("Insufficient Permissions")
                 }
 

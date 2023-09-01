@@ -69,16 +69,21 @@ router.post("/", async (req, res) => {
 
 // Update 
 router.put("/:pid", async (req, res) => {
-  if (!req.body) return;
+  if (!req.body) {
+    return res.status(400).send("Request body is missing");
+  }
 
   const pid = req.params.pid;
   try {
-    const currentProduct = await productController.updateProduct(pid, req.body);
-    res.status(201).send({ currentProduct });
+    const updatedProduct = await productController.updateProduct(pid, req.body);
+    if (!updatedProduct) {
+      return res.status(404).send("Product not found");
+    }
+    res.status(200).send({ updatedProduct });
   } catch (error) {
     req.logger.error(`Error trying to update a product: ${error}`);
-    res.status(500).send(`Error trying to create a product: ${error}`);
-  };
+    res.status(500).send(`Error trying to update a product: ${error}`);
+  }
 });
 
 // Delete

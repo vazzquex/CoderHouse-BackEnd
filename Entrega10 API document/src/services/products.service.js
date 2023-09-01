@@ -7,7 +7,7 @@ class ProductService {
 
 	async getById(id) {
 		const product = await this.repository.getById(id);
-		return product; // Este será un objeto de tipo ProductDto
+		return product;
 	}
 
 	

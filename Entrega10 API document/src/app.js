@@ -7,6 +7,9 @@ import handlebars from 'express-handlebars';
 import exphbs from 'express-handlebars';
 import Handlebars from 'handlebars';
 
+import swaggerJsDocs from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
+
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import cookieParser from 'cookie-parser';
@@ -71,6 +74,20 @@ app.engine('handlebars', handlebars.engine());
 app.set('views', './src/views');
 app.set('view engine', 'handlebars');
 
+// Swagger Options for API
+const swaggerOptions = {
+    definition: {
+        openapi: '3.0.1',
+        info: {
+            title: 'CoderShop API',
+            version: '1.0.0',
+            description: 'CoderShop API documentation'
+        }
+    },
+    apis: ['./docs/**/*.yaml']
+}
+const spects = swaggerJsDocs(swaggerOptions)
+
 
 //Coockies
 app.use(cookieParser(config.secret));
@@ -101,14 +118,7 @@ try {
 
 incializePassport();
 
-// app.use((req, res, next) => {
-// 	req.user = { rol: 'premium' }; // Valor ficticio
-// 	next();
-//   });
-
-
-
-
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(spects))
 app.use("/", profileRouters);
 
 // api
