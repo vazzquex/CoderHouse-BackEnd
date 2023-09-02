@@ -4,6 +4,8 @@
 
 Ahora están documentadas las API de "Products" y "Cart" solo el admin puede acceder a la ruta /docs para ver la documentación de la API
 
+Las APIs se documentaron usando swagger
+
 ## 📝 Variables de Entorno
 
 Archivo ejemplo del `.env` contiene:
