@@ -10,6 +10,8 @@ import Handlebars from 'handlebars';
 import swaggerJsDocs from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 
+import cors from 'cors';
+
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import cookieParser from 'cookie-parser';
@@ -18,7 +20,7 @@ import productController from './controllers/product.controller.js';
 
 
 //middleware
-import { isAdmin } from './middleware/auth.middleware.js';
+import { isAdmin, isAuth } from './middleware/auth.middleware.js';
 import { loggerMiddleware } from './middleware/logger.middleware.js';
 
 //passport
@@ -51,6 +53,13 @@ import mailingRoutes from './routes/mailing.js';
 
 const app = express();
 const port = 8080;
+
+const corsOptions = {
+	origin: 'http://localhost:3000',  // Reemplaza con la IP y puerto de tu servidor
+	optionsSuccessStatus: 204,
+  };
+
+app.use(cors(corsOptions));
 
 app.use(loggerMiddleware);
 
@@ -118,7 +127,7 @@ try {
 
 incializePassport();
 
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(spects))
+app.use('/docs', isAdmin,swaggerUi.serve, swaggerUi.setup(spects))
 app.use("/", profileRouters);
 
 // api

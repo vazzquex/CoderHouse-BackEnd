@@ -7,8 +7,7 @@ paths:
   /api/products/:
     get:
       summary: Get all products
-      security:
-        - bearerAuth: []
+
       tags:
         - Products
       responses:
@@ -49,14 +48,14 @@ paths:
       summary: Get products by id
       tags:
         - Products
-
       parameters:
-        - in: path
-          name: uid
+        - name: pid
+          in: path
           required: true
           description: product id
           schema:
             type: string
+        
 
       responses:
         200:
@@ -145,7 +144,7 @@ components:
         - category
 
       example:
-        _id: ObjectId('64c530d4febf9c7cb0afa10c')
+        _id: ObjectId('64f3ca252f075416a2dcfcf3')
         title: Example Product
         description: This is a description of the example product
         price: 100
@@ -153,3 +152,4 @@ components:
         category: test
         thumbnail: examplethumbnail.png
         owner: admin
+

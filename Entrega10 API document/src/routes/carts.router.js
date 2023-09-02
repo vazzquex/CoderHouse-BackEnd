@@ -11,7 +11,10 @@ const router = Router();
 // Get carts
 router.get('/:userId/cart', async (req, res) => {
   try {
-    const carts = await cartController.getCarts();
+    const { userId } = req.params;
+
+    const carts = await cartController.getCartUserById(userId);
+    
     res.status(200).json({ carts });
   } catch (error) {
     req.logger.error(`Error trying to get carts: ${error}`);
@@ -43,15 +46,24 @@ router.post('/:userId/cart', async (req, res) => {
   const { productId, quantity } = req.body;
 
   try {
+
+    req.logger.debug("Enter in try")
+
     let user = await userRepository.getById(userId);
     let product = await productRepository.getById(productId);
 
+    req.logger.debug("Check user")
     if (!user) {
       req.logger.error(`User ${userId} does not exist`);
       return res.status(404).send({ error: 'User not found' });
     }
-    console.log(product.owner)
 
+    req.logger.debug("Check product owner")
+    req.logger.debug(product)
+    req.logger.debug(user)
+
+
+    req.logger.debug("Check user email and product owner")
     if(user.email === product.owner) {
       req.logger.warning("You cannot add your own product to the cart!")
       return res.status(400)
@@ -60,14 +72,17 @@ router.post('/:userId/cart', async (req, res) => {
     user.cart.push({ productId, quantity });
     user.markModified('cart');
 
+    req.logger.debug("updateUser");
     await userService.updateUser(user);
 
+    req.logger.debug("populate user");
     user = await userModel.findById(userId).populate('cart.productId');
 
     const populatedUser = await userService.populateProductCart(userId);
 
+    req.logger.debug("respond status")
     // Respond with the populated user.
-    return res.status(200)
+    return res.status(200).send({ message: `Product added successfully: ${product}`});
 
 
   } catch (error) {

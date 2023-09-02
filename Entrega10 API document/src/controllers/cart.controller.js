@@ -1,5 +1,6 @@
 import cartsModel from "../DAOs/models/carts.model.js"
 import CartDto from "../DTOs/CartDto.js";
+import { userRepository } from "../repositories/index.js";
 
 class CartController {
   // Get
@@ -21,6 +22,24 @@ class CartController {
       console.error(`Error trying to bring cart by id: ${error}`);
     };
   };
+
+  getCartUserById = async (id) => {
+    try {
+      const user = await userRepository.findById(id)
+      if (user) {
+        delete user.password;
+        delete user.age;
+        delete user.img;
+        delete user.rol;
+        delete user.first_name;
+        delete user.last_name;
+      }
+      return user
+
+    } catch (error) {
+      console.error(`Error trying to bring cart by id: ${error}`);
+    }
+  }
 
   // Create cart
   addCart = async (cart) => {

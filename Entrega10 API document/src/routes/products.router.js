@@ -24,10 +24,14 @@ router.get('/', async (req, res) => {
 // Get by ID
 router.get("/:pid", async (req, res) => {
   const pid = req.params.pid;
-
+  
+  req.logger.debug(`Product id: ${pid}`)
 
   try {
+    req.logger.debug(`Entro en el try`)
+
     const product = await productController.getProductById(pid);
+    req.logger.debug(product)
     const { user } = req.session;
     delete user.password;
 

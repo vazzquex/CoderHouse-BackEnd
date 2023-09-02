@@ -1,5 +1,6 @@
 import productModel from '../DAOs/models/products.model.js';
 import mongoose from 'mongoose';
+import { productRepository } from '../repositories/index.js';
 
 class ProductController {
 
@@ -29,6 +30,8 @@ class ProductController {
   getProductById = async (id) => {
     try {
       const product = await productModel.findById(id).lean().exec();
+      //const product = await productRepository.getById(id);
+
       return product;
     } catch (error) {
       console.error(`Error trying to fetch product by id: ${error}`);
