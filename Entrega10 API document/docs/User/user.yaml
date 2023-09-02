@@ -103,53 +103,33 @@ paths:
 
 components:
   schemas:
-    Products:
+    User:
       type: object
       properties:
-        _id:
-          type: ObjectId
-          description: Id generado con mongo (autogenerado por mongo)
-        title:
+        first_name:
           type: string
-          description: The title of the item
-        description:
+        last_name:
           type: string
-          description: The description of the item
-        price:
-          type: number
-          format: float
-          description: The price of the item
-        status:
-          type: boolean
-          default: true
-          description: The status of the item
-        stock:
-          type: number
-          description: The stock quantity of the item
-        category:
+        email:
           type: string
-          description: The category of the item
-        thumbnail:
+        age:
+          type: integer
+        rol:
           type: string
-          description: The thumbnail URL of the item
-        owner:
-          type: string
-          default: "admin"
-          description: The owner of the item
-
+        cart:
+          type: array
+          items:
+            type: object
+            properties:
+              productId:
+                type: string
+              quantity:
+                type: integer
+        password:
+          type: String
+      
       required:
-        - title
-        - description
-        - price
-        - stock
-        - category
-
-      example:
-        _id: ObjectId('64c530d4febf9c7cb0afa10c')
-        title: Example Product
-        description: This is a description of the example product
-        price: 100
-        stock: 15
-        category: test
-        thumbnail: examplethumbnail.png
-        owner: admin
+        - first_name
+        - last_name
+        - email
+        - password
