@@ -1,5 +1,5 @@
 {
-  "name": "entrega10-api-document",
+  "name": "entrega11-testing",
   "version": "1.0.0",
   "description": "## Actualizaciones y Mejoras",
   "type": "module",
@@ -35,9 +35,12 @@
     "winston": "^3.10.0"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "chai": "^4.3.8",
+    "mocha": "^10.2.0",
+    "nodemon": "^3.0.1",
+    "supertest": "^6.3.3"
   },
   "directories": {
-    "test": "test"
+    "doc": "docs"
   }
 }

@@ -18,7 +18,6 @@ import cookieParser from 'cookie-parser';
 
 import productController from './controllers/product.controller.js';
 
-
 //middleware
 import { isAdmin, isAuth } from './middleware/auth.middleware.js';
 import { loggerMiddleware } from './middleware/logger.middleware.js';
