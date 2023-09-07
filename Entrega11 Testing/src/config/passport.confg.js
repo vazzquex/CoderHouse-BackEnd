@@ -20,7 +20,7 @@ const incializePassport = () => {
 			async (accessToken, refreshToken, profile, done) => {
 				try {
 					//console.log(profile);
-					let user = await userRepository.getByEmail(
+					let user = await userService.getByEmail(
 						profile._json.email
 					);
 

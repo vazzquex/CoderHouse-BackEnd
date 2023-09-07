@@ -54,7 +54,7 @@ const app = express();
 const port = 8080;
 
 const corsOptions = {
-	origin: 'http://localhost:3000',  // Reemplaza con la IP y puerto de tu servidor
+	origin: 'http://localhost:8080',  // Reemplaza con la IP y puerto de tu servidor
 	optionsSuccessStatus: 204,
   };
 

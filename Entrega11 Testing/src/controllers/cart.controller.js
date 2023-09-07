@@ -1,6 +1,6 @@
 import cartsModel from "../DAOs/models/carts.model.js"
 import CartDto from "../DTOs/CartDto.js";
-import { userRepository } from "../repositories/index.js";
+import { userService } from "../services/index.js";
 
 class CartController {
   // Get
@@ -25,7 +25,7 @@ class CartController {
 
   getCartUserById = async (id) => {
     try {
-      const user = await userRepository.findById(id)
+      const user = await userService.findById(id)
       if (user) {
         delete user.password;
         delete user.age;

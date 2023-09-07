@@ -1,10 +1,8 @@
 import { Router } from "express";
 
 import cartController from "../controllers/cart.controller.js";
-import { userService } from "../services/index.js";
+import { productService, userService } from "../services/index.js";
 import userModel from "../DAOs/models/user.model.js";
-
-import { productRepository, userRepository } from "../repositories/index.js";
 
 const router = Router();
 
@@ -50,7 +48,7 @@ router.post('/:userId/cart', async (req, res) => {
     req.logger.debug("Enter in try")
 
     let user = await userService.getById(userId);
-    let product = await productRepository.getById(productId);
+    let product = await productService.getById(productId);
     req.logger.debug(`User Id: ${userId}`)
 
     req.logger.debug("Check user")
@@ -63,7 +61,6 @@ router.post('/:userId/cart', async (req, res) => {
     req.logger.debug(product)
     req.logger.debug(user)
 
-
     req.logger.debug("Check user email and product owner")
     if(user.email === product.owner) {
       req.logger.warning("You cannot add your own product to the cart!")
@@ -72,14 +69,12 @@ router.post('/:userId/cart', async (req, res) => {
 
     user.cart.push({ productId, quantity });
     user.markModified('cart');
-
+    user.save();
+    
     req.logger.debug("updateUser");
-    await userService.updateUser(user);
 
     req.logger.debug("populate user");
-    user = await userModel.findById(userId).populate('cart.productId');
-
-    const populatedUser = await userService.populateProductCart(userId);
+    await userModel.findById(userId).populate('cart.productId');
 
     req.logger.debug("respond status")
     // Respond with the populated user.
@@ -87,8 +82,9 @@ router.post('/:userId/cart', async (req, res) => {
 
 
   } catch (error) {
-    req.logger.error(error)
-    res.status(400).send({ error: error.message });
+    req.logger.error(error);
+    req.logger.error("No se puedo añadir producto al carrito");
+    res.status(400).send({ error: error.message});
   }
 });
 
@@ -114,7 +110,7 @@ router.post('/:userId/:productId', async (req, res) => {
   const { userId, productId } = req.params;
 
   try {
-    const user = await userRepository.getById(userId);
+    const user = await userService.getById(userId);
 
     // Filtra los productos en el carrito para excluir el producto que deseas eliminar
     req.logger.debug("Filtro los productos en el carrito");
@@ -123,13 +119,10 @@ router.post('/:userId/:productId', async (req, res) => {
     // save user
     await user.save();
 
-    const populateUser = await userService.populateProductCart(userId);
+    const populateUser = await userService.findById(userId);
 
     res.status(200).json(populateUser)
-
-    //res.status(204).end();
-
-
+    
   } catch (error) {
     req.logger.error(`Error removing product from cart: ${error}`);
     res.status(500).send(`Internal server error removing product from cart: ${error}`);
@@ -142,7 +135,7 @@ router.post('/:cid/products/delete/:pid', async (req, res) => {
   try {
     const cid = req.params.cid;
     const pid = req.params.pid;
-    const currentCart = await cartController.deleteProductOfCart(cid, pid);
+    const currentCart = await userService.findById(cid, pid);
     res.status(202).json(currentCart);
   } catch (error) {
     req.logger.error(`Error trying to add a product to cart: ${error}`);

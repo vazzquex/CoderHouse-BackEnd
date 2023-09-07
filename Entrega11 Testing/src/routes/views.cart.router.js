@@ -73,7 +73,7 @@ router.post('/:userId', async (req, res) => {
         delete sessionUser.password;
 
 
-        const populatedUser = await userService.populateProductCart(userId);
+        const populatedUser = await userService.findById(userId);
 
         //verify user exists
         if (!populatedUser) {

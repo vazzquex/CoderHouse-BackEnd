@@ -12,41 +12,6 @@ const router = Router();
 router.get('/', productController.getAllProducts);
 router.get('/:pid', productController.getProductById);
 
-// Get by ID
-// router.get("/:pid", async (req, res) => {
-//   const pid = req.params.pid;
-  
-//   req.logger.debug(`Product id: ${pid}`)
-
-//   try {
-//     req.logger.debug(`Entro en el try`)
-
-//     const product = await productController.getProductById(pid);
-//     req.logger.debug(product)
-//     const { user } = req.session;
-//     delete user.password;
-
-//     res.status(200).render('product', {
-//       script: 'products',
-//       style: 'product',
-//       title: `${product.title}`,
-//       product,
-//       user
-
-//     });
-
-//   } catch (error) {
-
-//     CustomErrors.createError(
-//       "error creating products",
-//       ProductErrorInfo(error),
-//       "error creating products",
-//       EErrors.PRODUCT_ERROR
-//     );
-//     req.logger.error(`Error trying to fetch product by id: ${error}`);
-//   };
-// });
-
 
 // Create
 router.post("/", async (req, res) => {
