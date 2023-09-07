@@ -3,6 +3,62 @@ import CartDto from "../DTOs/CartDto.js";
 import { userService } from "../services/index.js";
 
 class CartController {
+
+  addProductToCart = async (req, res) => {
+    const { userId } = req.params;
+    const { productId, quantity } = req.body;
+  
+    try {
+  
+      req.logger.debug("Enter in try")
+  
+      let user = await userService.getById(userId);
+      let product = await productService.getById(productId);
+      req.logger.debug(`User Id: ${userId}`)
+  
+      req.logger.debug("Check user")
+      if (!user) {
+        req.logger.error(`User ${userId} does not exist`);
+        return res.status(404).send({ error: 'User not found' });
+      }
+  
+      req.logger.debug("Check product owner")
+      req.logger.debug(product)
+      req.logger.debug(user)
+  
+      req.logger.debug("Check user email and product owner")
+      if(user.email === product.owner) {
+        req.logger.warning("You cannot add your own product to the cart!")
+        return res.status(400)
+      }
+  
+      user.cart.push({ productId, quantity });
+      user.markModified('cart');
+      user.save();
+      
+      req.logger.debug("updateUser");
+  
+      req.logger.debug("populate user");
+      await userModel.findById(userId).populate('cart.productId');
+  
+      req.logger.debug("respond status")
+      // Respond with the populated user.
+      return res.status(200).send({ message: `Product added successfully: ${product}`});
+  
+  
+    } catch (error) {
+      req.logger.error(error);
+      req.logger.error("No se puedo añadir producto al carrito");
+      res.status(400).send({ error: error.message});
+    }
+  }
+
+
+
+
+  
+
+
   // Get
   getCarts = async () => {
     try{
