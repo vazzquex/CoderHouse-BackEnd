@@ -1,6 +1,11 @@
 import userModel from '../DAOs/models/user.model.js';
+import GenericRepository from './generic.repository.js';
 
-export default class UserRepository {
+export default class UserRepository extends BaseRepository {
+    constructor(dao) {
+        super(dao);
+    }
+
     async findById(userId) {
         return await userModel.findById(userId).populate('cart.productId').lean();
     }
@@ -10,19 +15,15 @@ export default class UserRepository {
         return await user.save();
     }
 
-    async findTokenAndExpiraton (token) {
+    async findTokenAndExpiraton(token) {
         return await userModel.findOne({ resetPasswordToken: token, resetPasswordExpires: { $gt: Date.now() } })
     }
 
     async updateRolToPremium(uid) {
-        return await userModel.updateOne({ _id: uid }, { $set: { rol: 'premium' }});
+        return await userModel.updateOne({ _id: uid }, { $set: { rol: 'premium' } });
     }
-    async updateRolToUser (uid) {
-        return await userModel.updateOne({ _id: uid }, { $set: { rol: 'user' }});
-    } 
-
-    async getAll() {
-        return await userModel.find();
+    async updateRolToUser(uid) {
+        return await userModel.updateOne({ _id: uid }, { $set: { rol: 'user' } });
     }
 
     async getCartUser(userId) {
@@ -33,15 +34,8 @@ export default class UserRepository {
         return await userModel.findOne({ email: email });
     }
 
-    async createUser(userData) {
-        return await userModel.create(userData);
-    }
-
     async getById(id) {
         return await userModel.findById(id);
     }
 
-    async getByAge(age) {
-        return await userModel.findOne({ age: age });
-    }
 }

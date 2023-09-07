@@ -1,12 +1,7 @@
-import ticketsModel from "../DAOs/models/ticket.model.js";
+import BaseRepository from "./base.repository.js";
 
-export default class TicketRepository {
-    async create(ticketData) {
-        const ticket = new ticketsModel(ticketData);
-        return await ticket.save();
-    }
-
-    async getById(id) {
-        return await ticketsModel.findById(id);
+export default class TicketRepository extends BaseRepository {
+    constructor(dao) {
+        super(dao);
     }
 }
