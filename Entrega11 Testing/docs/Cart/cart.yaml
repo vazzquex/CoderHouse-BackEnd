@@ -1,0 +1,134 @@
+openapi: 3.0.1
+info:
+  title: Carts API
+  version: '1.0'
+
+paths:
+  /api/carts/{userId}/cart:
+    get:
+      summary: Get user cart
+      tags:
+        - Carts
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            default: "64f17ec55f29d234296acf34"  # Added default value
+      responses:
+        200:
+          description: Successfully retrieved carts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+        500:
+          description: Internal server error.
+
+    post:
+      summary: Add a product to a cart
+      tags:
+        - Carts
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            default: "64f17ec55f29d234296acf34"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                productId:
+                  type: string
+                  default: "64f3ca252f075416a2dcfcf3"
+                quantity:
+                  type: integer
+                  default: 10
+              required:
+                - productId
+                - quantity
+      responses:
+        200:
+          description: Product added successfully.
+        400:
+          description: Bad request.
+        404:
+          description: not found.
+        500:
+          description: Internal server error.
+
+
+  /api/carts/{userId}/{productId}:
+    post:
+      summary: Delete a product from a cart
+      tags:
+        - Carts
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            default: "64f3ca252f075416a2dcfcf3"  # Added default value for userId
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+
+      responses:
+        200:
+          description: Product deleted successfully.
+        500:
+          description: Internal server error.
+
+
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        age:
+          type: integer
+        rol:
+          type: string
+        cart:
+          type: array
+          items:
+            type: object
+            properties:
+              productId:
+                type: string
+              quantity:
+                type: integer
+        password:
+          type: String
+      
+      example:
+        _id: ObjectId('64f3ca252f075416a2dcfcf3')
+        title: Example Product
+        description: This is a description of the example product
+        price: 100
+        stock: 15
+        category: test
+        owner: admin
+
+
+
+      required:
+        - title
+        - description
+        - price
+        - category

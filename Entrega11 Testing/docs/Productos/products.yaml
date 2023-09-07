@@ -1,0 +1,155 @@
+openapi: 3.0.1
+info:
+  title: Products API
+  version: '1.0'
+
+paths:
+  /api/products/:
+    get:
+      summary: Get all products
+
+      tags:
+        - Products
+      responses:
+        200:
+          description: List of products
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Products"
+        500:
+          description: Server Error
+
+    post:
+      summary: Create a new product
+      tags:
+        - Products
+      requestBody:
+        requiered: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Products"
+              
+      responses:
+        201:
+          description: Product successfully created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Products"
+        400:
+          description: Bad request
+        500:
+          description: Server Error
+
+  /api/products/{pid}:
+    get:
+      summary: Get products by id
+      tags:
+        - Products
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          description: product id
+          schema:
+            type: string
+        
+
+      responses:
+        200:
+          description: Get products by id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Products"
+        404:
+          description: Product not found
+        500:
+          description: Server Error
+
+    delete:
+      summary: Delete product by id
+      tags:
+        - Products
+      parameters:
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          description: The ID of the product to delete
+      responses:
+        200:
+          description: Product successfully deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                example:
+                  message: "Product successfully deleted"
+        404:
+          description: Product not found
+        500:
+          description: Server Error
+
+
+
+
+components:
+  schemas:
+    Products:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id generado con mongo (autogenerado por mongo)
+        title:
+          type: string
+          description: The title of the item
+        description:
+          type: string
+          description: The description of the item
+        price:
+          type: number
+          format: float
+          description: The price of the item
+        status:
+          type: boolean
+          default: true
+          description: The status of the item
+        stock:
+          type: number
+          description: The stock quantity of the item
+        category:
+          type: string
+          description: The category of the item
+        thumbnail:
+          type: string
+          description: The thumbnail URL of the item
+        owner:
+          type: string
+          default: "admin"
+          description: The owner of the item
+
+      required:
+        - title
+        - description
+        - price
+        - stock
+        - category
+
+      example:
+        _id: ObjectId('64f3ca252f075416a2dcfcf3')
+        title: Example Product
+        description: This is a description of the example product
+        price: 100
+        stock: 15
+        category: test
+        thumbnail: examplethumbnail.png
+        owner: admin
+
