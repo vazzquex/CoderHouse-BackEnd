@@ -17,7 +17,7 @@ const createUser = async (req, res) => {
     try {
         req.logger.info('Creating new user');
 
-        const newUser = await userService.create(userData);
+        const newUser = await userService.createUser(userData);
 
         req.logger.info('User created successfully');
 

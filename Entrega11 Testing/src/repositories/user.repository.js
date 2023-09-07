@@ -6,6 +6,10 @@ export default class UserRepository extends BaseRepository {
         super(dao);
     }
 
+    async createUser(userData) {
+        return await userModel.create(userData);
+    }
+
 
     async findById(userId) {
         return await userModel.findById(userId).populate('cart.productId').lean();

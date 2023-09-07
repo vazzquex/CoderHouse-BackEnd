@@ -33,7 +33,6 @@ describe("Test User DAOs", () => {
     })
 
     it("Create new user", async () => {
-
         const newUser = {
             first_name: 'Santiago',
             last_name: 'Vazquez',
@@ -42,10 +41,8 @@ describe("Test User DAOs", () => {
         }
 
         const {statusCode, _body} = await request.post('/api/users/').send(newUser);
-        
 
         userId = _body._id;
-
 
         expect(_body).to.have.property('_id')
         expect(statusCode).to.equal(201)
