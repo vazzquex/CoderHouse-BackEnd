@@ -6,7 +6,7 @@ export default class Users {
         return userModel.findOne(params)
     });
 
-    create = (params => {
+    create = (userData => {
         return userModel.create(userData);
     });
 

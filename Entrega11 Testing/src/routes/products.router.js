@@ -9,52 +9,43 @@ import { ProductErrorInfo } from '../tools/EErrorInfo.js';
 const router = Router();
 
 // Get
-router.get('/', async (req, res) => {
-  try {
-    const { limit, page, sort, query } = req.query;
-
-    const products = await productController.getProducts(limit, page, sort, query);
-    res.status(200).send(products);
-  } catch (error) {
-    req.logger.error(`Error al obtener productos: ${error}`);
-    res.status(500).send(`Error al obtener productos: ${error}`);
-  };
-});
+router.get('/', productController.getAllProducts);
+router.get('/:pid', productController.getProductById);
 
 // Get by ID
-router.get("/:pid", async (req, res) => {
-  const pid = req.params.pid;
+// router.get("/:pid", async (req, res) => {
+//   const pid = req.params.pid;
   
-  req.logger.debug(`Product id: ${pid}`)
+//   req.logger.debug(`Product id: ${pid}`)
 
-  try {
-    req.logger.debug(`Entro en el try`)
+//   try {
+//     req.logger.debug(`Entro en el try`)
 
-    const product = await productController.getProductById(pid);
-    req.logger.debug(product)
-    const { user } = req.session;
-    delete user.password;
+//     const product = await productController.getProductById(pid);
+//     req.logger.debug(product)
+//     const { user } = req.session;
+//     delete user.password;
 
-    res.status(200).render('product', {
-      script: 'products',
-      style: 'product',
-      title: `${product.title}`,
-      product,
-      user
+//     res.status(200).render('product', {
+//       script: 'products',
+//       style: 'product',
+//       title: `${product.title}`,
+//       product,
+//       user
 
-    });
+//     });
 
-  } catch (error) {
+//   } catch (error) {
 
-    CustomErrors.createError(
-      "error creating products",
-      ProductErrorInfo(error),
-      "error creating products",
-      EErrors.PRODUCT_ERROR
-    );
-    req.logger.error(`Error trying to fetch product by id: ${error}`);
-  };
-});
+//     CustomErrors.createError(
+//       "error creating products",
+//       ProductErrorInfo(error),
+//       "error creating products",
+//       EErrors.PRODUCT_ERROR
+//     );
+//     req.logger.error(`Error trying to fetch product by id: ${error}`);
+//   };
+// });
 
 
 // Create

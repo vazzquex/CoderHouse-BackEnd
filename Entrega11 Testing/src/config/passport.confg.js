@@ -1,8 +1,7 @@
 import passport from 'passport';
 import GitHubStrategy from 'passport-github2';
-import userServices from '../services/user.service.js';
+import { userService } from '../services/index.js';
 import config from '../tools/config.js';
-import { userRepository } from '../repositories/index.js';
 
 const clientID = config.clientId;
 const clientSecret = config.clientSecret;
@@ -51,7 +50,7 @@ const incializePassport = () => {
 	});
 
 	passport.deserializeUser(async (id, done) => {
-		const user = await userServices.getById(id);
+		const user = await userService.getById(id);
 		done(null, user);
 	});
 };

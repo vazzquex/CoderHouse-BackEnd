@@ -8,7 +8,7 @@ export default class ProductRepository extends BaseRepository {
     }
 
     async getById(id) {
-        return await this.model.findById(id)
+        return await productModel.findById(id).lean();
     }
 
 }

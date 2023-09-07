@@ -6,6 +6,11 @@ export default class UserRepository extends BaseRepository {
         super(dao);
     }
 
+
+    async populateProductCart(userId) {
+		return await userModel.findById(userId);
+	}
+
     async findById(userId) {
         return await userModel.findById(userId).populate('cart.productId').lean();
     }
@@ -37,5 +42,11 @@ export default class UserRepository extends BaseRepository {
     async getById(id) {
         return await userModel.findById(id);
     }
+
+    async updateUser(user) {
+		await this.repository.save(user);
+		return await this.populateProductCart(user._id);
+	}
+
 
 }

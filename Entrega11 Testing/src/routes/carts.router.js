@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import cartController from "../controllers/cart.controller.js";
-import userService from "../services/user.service.js";
+import { userService } from "../services/index.js";
 import userModel from "../DAOs/models/user.model.js";
 
 import { productRepository, userRepository } from "../repositories/index.js";
@@ -49,8 +49,9 @@ router.post('/:userId/cart', async (req, res) => {
 
     req.logger.debug("Enter in try")
 
-    let user = await userRepository.getById(userId);
+    let user = await userService.getById(userId);
     let product = await productRepository.getById(productId);
+    req.logger.debug(`User Id: ${userId}`)
 
     req.logger.debug("Check user")
     if (!user) {

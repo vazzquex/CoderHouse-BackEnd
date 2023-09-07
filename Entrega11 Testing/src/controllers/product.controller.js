@@ -1,42 +1,102 @@
 import productModel from '../DAOs/models/products.model.js';
 import mongoose from 'mongoose';
 import { productRepository } from '../repositories/index.js';
+import { productService } from '../services/index.js';
+
+// custom errors
+import CustomErrors from '../tools/CustomErrors.js';
+import EErrors from '../tools/EErrors.js';
+import { ProductErrorInfo } from '../tools/EErrorInfo.js';
+
 
 class ProductController {
+
+  getAllProducts = async (req, res) => {
+    try {
+      const { limit, page, sort, query } = req.query;
+
+      const products = await productController.getProducts(limit, page, sort, query);
+      res.status(200).send(products);
+    } catch (error) {
+      req.logger.error(`Error al obtener productos: ${error}`);
+      res.status(500).send(`Error al obtener productos: ${error}`);
+    };
+  }
+
+
+
+
+
 
   // Read
   getProducts = async (limit, page, sort, query) => {
     let formatLimit = limit ? Number(limit) : 4;
     let formatPage = page ? Number(page) : 1;
     let formatQuery = query ? { category: query } : {};
-    
-    let formatSort ;
-    if(sort === "asc"){
+
+    let formatSort;
+    if (sort === "asc") {
       formatSort = "1";
-    }else if(sort === "desc"){
+    } else if (sort === "desc") {
       formatSort = "-1";
-    }else if (sort && sort !== "asc" && sort !== "desc"){
+    } else if (sort && sort !== "asc" && sort !== "desc") {
       throw new Error('Error: Bad Request, just admit asc and desc');
     };
 
     try {
-      const products = await productModel.paginate(formatQuery, {page: formatPage, limit: formatLimit, sort: { price: formatSort }, lean: true})
+      const products = await productModel.paginate(formatQuery, { page: formatPage, limit: formatLimit, sort: { price: formatSort }, lean: true })
       return products;
     } catch (error) {
       console.error(`Error trying to fetch all products: ${error}`);
     };
   };
 
-  getProductById = async (id) => {
-    try {
-      const product = await productModel.findById(id).lean().exec();
-      //const product = await productRepository.getById(id);
 
-      return product;
+  getProductById = async (id) => {
+    const pid = req.params.pid;
+    
+    req.logger.debug(`Product id: ${pid}`)
+  
+    try {
+      req.logger.debug(`Entro en el try`)
+  
+      //const product = await productModel.findById(id).lean().exec();
+      const product = productService.getById(pid);
+      req.logger.debug(product)
+      const { user } = req.session;
+      delete user.password;
+  
+      res.status(200).render('product', {
+        script: 'products',
+        style: 'product',
+        title: `${product.title}`,
+        product,
+        user
+  
+      });
+  
     } catch (error) {
-      console.error(`Error trying to fetch product by id: ${error}`);
+  
+      CustomErrors.createError(
+        "error creating products",
+        ProductErrorInfo(error),
+        "error creating products",
+        EErrors.PRODUCT_ERROR
+      );
+      req.logger.error(`Error trying to fetch product by id: ${error}`);
     };
   };
+
+  // getProductById = async (id) => {
+  //   try {
+  //     const product = await productModel.findById(id).lean().exec();
+  //     //const product = await productRepository.getById(id);
+
+  //     return product;
+  //   } catch (error) {
+  //     console.error(`Error trying to fetch product by id: ${error}`);
+  //   };
+  // };
 
   // Create
   addProduct = async (product) => {
@@ -61,7 +121,7 @@ class ProductController {
       thumbnail: thumbnail,
     };
 
-    try{
+    try {
       const newProduct = new productModel(formattedProduct);
       await newProduct.save();
       return newProduct;
@@ -78,10 +138,10 @@ class ProductController {
 
     fieldsToUpdate.forEach((field) => {
       let formattedValue = data[field];
-    
+
       if (field === 'precio' || field === 'stock') {
         formattedValue = Number(formattedValue);
-      } else if (field === 'status'){
+      } else if (field === 'status') {
         formattedValue = Boolean(formattedValue);
       } else {
         // Agregar una comprobación adicional aquí
@@ -89,7 +149,7 @@ class ProductController {
           formattedValue = formattedValue.trim();
         }
       }
-    
+
       // Eliminar valores vacíos ("")
       if (formattedValue !== "") {
         formattedValues[field] = formattedValue;
@@ -97,7 +157,7 @@ class ProductController {
     });
 
     if (Object.keys(formattedValues).length === 0) return;
-    
+
     // Try to update
     try {
       const updatedProduct = await productModel.findByIdAndUpdate(id, formattedValues, { new: true }).exec();

@@ -2,14 +2,10 @@ import { Router } from 'express';
 import nodemailer from 'nodemailer';
 import twilio from 'twilio';
 
-import userService from '../services/user.service.js';
-import ticketService from '../services/tickets.service.js';
+import { userService, ticketService, productService } from "../services/index.js";
 import TicketDTO from '../DTOs/TicketsDto.js'
 
-
 import 'dotenv/config'
-import productService from '../services/products.service.js';
-import { productRepository, userRepository } from '../repositories/index.js';
 
 //twilio info
 const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID
