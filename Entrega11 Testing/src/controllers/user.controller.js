@@ -82,11 +82,11 @@ const updateRol = async (req, res) => {
 
     try {
         req.logger.info('Updating rol...');
-        const user = await userRepository.findById(uid);
+        const user = await userService.getById(uid);
 
         if (user.rol == 'premium') {
 
-            await userRepository.updateRolToUser(uid);
+            await userService.updateRolToUser(uid);
             req.logger.info('User update to user');
 
             // Actualiza el objeto de usuario en la sesión
@@ -105,7 +105,7 @@ const updateRol = async (req, res) => {
 
         if (user.rol == 'user') {
 
-            await userRepository.updateRolToPremium(uid);
+            await userService.updateRolToPremium(uid);
             req.logger.info('User update to premium');
 
             // Actualiza el objeto de usuario en la sesión

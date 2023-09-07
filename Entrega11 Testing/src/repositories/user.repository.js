@@ -1,5 +1,5 @@
 import userModel from '../DAOs/models/user.model.js';
-import GenericRepository from './generic.repository.js';
+import BaseRepository from './base.repository.js';
 
 export default class UserRepository extends BaseRepository {
     constructor(dao) {
