@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import { userService } from '../services/index.js';
-import productController from '../controllers/product.controller.js'
 const router = Router();
 //finish purchase
 
@@ -12,7 +11,7 @@ router.get('/purchase/:userId', async (req, res) => {
         const { user: sessionUser } = req.session;
         delete sessionUser.password;
 
-        const populatedUser = await userService.populateProductCart(userId);
+        const populatedUser = await userService.findById(userId);
 
         //verify user exists
         if (!populatedUser) {

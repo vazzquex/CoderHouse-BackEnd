@@ -6,6 +6,7 @@ import { userService, ticketService, productService } from "../services/index.js
 import TicketDTO from '../DTOs/TicketsDto.js'
 
 import 'dotenv/config'
+import productModel from '../DAOs/models/products.model.js';
 
 //twilio info
 const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID
@@ -24,7 +25,7 @@ mailingRoutes.post("/mail", async (req, res) => {
     const { userEmail, products, total } = req.body;
     let productListHTML = '';
 
-    const user = await userRepository.getByEmail(userEmail);
+    const user = await userService.getByEmail(userEmail);
 
     req.logger.info("Getting user Email")
 
@@ -48,7 +49,7 @@ mailingRoutes.post("/mail", async (req, res) => {
         subtotalTotal += productSubtotal; // Suma al subtotal acumulado
 
         // encontrar producto en db
-        let dbproduct = await productRepository.getById(id)
+        let dbproduct = await productModel.findById(id)
 
 
         if (!dbproduct) {
@@ -79,9 +80,9 @@ mailingRoutes.post("/mail", async (req, res) => {
 
         // Guarda el producto
 
-        // dbproduct.markModified('stock');
-        // dbproduct.markModified('status');
-        await dbproduct.save();
+         //dbproduct.markModified('stock');
+         //dbproduct.markModified('status');
+         await dbproduct.save();
 
 
         productListHTML += `
