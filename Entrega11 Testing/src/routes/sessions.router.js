@@ -1,19 +1,11 @@
 import { Router } from 'express';
 import passport from 'passport';
 import { filterCurrent } from '../middleware/current.middleware.js';
-
+import sessionController from '../controllers/session.controller.js'
 
 const sessionsRouter = Router();
 
-sessionsRouter.get('/current', filterCurrent, (req, res) => {
-	if(req.session.user){
-		req.logger.info('Fetching current authenticated user');
-		res.json(req.session.user);
-	} else {
-		req.logger.error('No authenticated user found');
-		res.status(401).json({ messsage: 'No se encontro el usuario autenticado'});
-	}
-});
+sessionsRouter.get('/current', filterCurrent, sessionController.getCurrentUser);
 
 sessionsRouter.get(
 	'/github',

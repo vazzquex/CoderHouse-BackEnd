@@ -24,10 +24,6 @@ class ProductController {
   }
 
 
-
-
-
-
   // Read
   getProducts = async (limit, page, sort, query) => {
     let formatLimit = limit ? Number(limit) : 4;
@@ -52,7 +48,7 @@ class ProductController {
   };
 
 
-  getProductById = async (id) => {
+  getProductById = async (req, res) => {
     const pid = req.params.pid;
     
     req.logger.debug(`Product id: ${pid}`)
@@ -60,20 +56,11 @@ class ProductController {
     try {
       req.logger.debug(`Entro en el try`)
   
-      //const product = await productModel.findById(id).lean().exec();
-      const product = productService.getById(pid);
+      const product = await productService.getById(pid);
+
       req.logger.debug(product)
-      const { user } = req.session;
-      delete user.password;
   
-      res.status(200).render('product', {
-        script: 'products',
-        style: 'product',
-        title: `${product.title}`,
-        product,
-        user
-  
-      });
+      res.status(200).send({ product });
   
     } catch (error) {
   
@@ -87,16 +74,7 @@ class ProductController {
     };
   };
 
-  // getProductById = async (id) => {
-  //   try {
-  //     const product = await productModel.findById(id).lean().exec();
-  //     //const product = await productRepository.getById(id);
 
-  //     return product;
-  //   } catch (error) {
-  //     console.error(`Error trying to fetch product by id: ${error}`);
-  //   };
-  // };
 
   // Create
   addProduct = async (product) => {

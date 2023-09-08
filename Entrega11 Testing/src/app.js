@@ -130,10 +130,10 @@ app.use('/docs', isAdmin,swaggerUi.serve, swaggerUi.setup(spects))
 app.use("/", profileRouters);
 
 // api
-app.use('/api/sessions', sessionsRouter);
-app.use("/api/users", usersRouter)
-app.use("/api/products", productsRouter);
-app.use("/api/carts", cartsRouter);
+app.use('/api/sessions', sessionsRouter);		//Clean code
+app.use("/api/users", usersRouter)				//Clean code
+app.use("/api/products", productsRouter);		
+app.use("/api/carts", cartsRouter);				//Clean code
 
 //app.use(express.static('public'));
 

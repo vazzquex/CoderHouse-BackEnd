@@ -10,6 +10,7 @@ import { ProductErrorInfo } from '../tools/EErrorInfo.js';
 
 //logger
 import logger from '../middleware/logger.middleware.js';
+import { productService } from '../services/index.js';
 
 const realTimeProductsRouter = (socketServer) => {
 
@@ -47,11 +48,11 @@ const realTimeProductsRouter = (socketServer) => {
             try {
                 const { id, email } = productToDelete; // Extraemos el id y el email del objeto recibido
 
-                let product = await productController.getProductById(id); // Utilizamos el id para obtener el producto
-
+                let product = await productService.getById(id); // Utilizamos el id para obtener el producto
 
                 logger.debug(productToDelete)
-                logger.debug(product.owner)
+                logger.debug("Product owner: ", product.owner)
+
                 logger.debug(email)
 
 
