@@ -33,7 +33,7 @@ const authUser = async (req, res) => {
     try {
         req.logger.info('Authenticating user');
 
-        const user = await userRepository.getByEmail(email);
+        const user = await userService.getByEmail(email);
 
         if (email !== admin.email || password !== admin.password) {
 
@@ -123,7 +123,7 @@ const updateRol = async (req, res) => {
         }
 
     } catch (error) {
-        req.logger.panic('Error updating rol:', error);
+        req.logger.error('Error updating rol:', error);
         return res.status(500).send('Error updating user rol');
     }
 };

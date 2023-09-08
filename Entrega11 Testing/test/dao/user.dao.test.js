@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 
 import config from '../../src/tools/config.js';
 
-import UserRepository from '../../src/repositories/user.repository.js';
+import { userService } from '../../src/services/index.js';
 
 const expect = chai.expect;
 const request = supertest('http://localhost:8080');
@@ -25,7 +25,7 @@ describe("Test User DAOs", () => {
         if (userId) {
             try {
                 await mongoose.connection.collection('users').deleteOne({ _id: new mongoose.Types.ObjectId(userId) })
-            } catch (err){
+            } catch (err) {
                 console.error(`Error al eliminar el usuario ${err}`)
             }
 
@@ -40,7 +40,7 @@ describe("Test User DAOs", () => {
             password: '1234'
         }
 
-        const {statusCode, _body} = await request.post('/api/users/').send(newUser);
+        const { statusCode, _body } = await request.post('/api/users/').send(newUser);
 
         userId = _body._id;
 
@@ -49,9 +49,33 @@ describe("Test User DAOs", () => {
 
     })
 
-    it("The DAO must be able to obtain a user by email",async () => {
+    it("It must be possible to change the role of a user to premium and to premium to user correctly", async () => {
+
+        const mockUser = {
+            first_name: 'Santiago',
+            last_name: 'Vazquez',
+            email: 'santiago@example.com',
+            password: '1234',
+            rol: 'user'
+        }
+
+        // create user
+        let user = await userService.createUser(mockUser);
+        expect(user.rol).to.be.equal('user');
+        userId = user._id;
 
 
+        //change role premium
+        await request.post(`/api/users/premium/${userId.toString()}`);
+        user = await userService.getById(userId.toString());
+
+        expect(user.rol).to.be.equal('premium');
+
+        //change role user
+        await request.post(`/api/users/premium/${userId.toString()}`);
+        user = await userService.getById(userId.toString());
+
+        expect(user.rol).to.be.equal('user');
 
     })
 
