@@ -14,6 +14,8 @@ class ProductController {
   createProduct = async (req, res) => {
     if (!req.body) return;
 
+    req.logger.debug(req.body)
+
     try {
       req.logger.debug('Entro en el try');
 
@@ -111,7 +113,7 @@ class ProductController {
     const status = product.status ?? true;
     const stock = product.stock ? Number(product.stock) : 0;
     const owner = product.email || 'admin';
-    const thumbnail = product.thumbnail || '';
+    const thumbnail = product.thumbnail;
 
 
     const formattedProduct = {

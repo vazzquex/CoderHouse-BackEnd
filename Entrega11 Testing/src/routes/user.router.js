@@ -8,5 +8,6 @@ usersRouter.post('/', userController.createUser)
 usersRouter.post('/premium/:uid', userController.updateRol);
 usersRouter.post('/auth', userController.authUser);
 usersRouter.post('/logout', userController.logOut);
+usersRouter.delete('/:uid', userController.deleteUser);
 
 export default usersRouter;

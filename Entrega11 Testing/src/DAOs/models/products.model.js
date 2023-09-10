@@ -29,6 +29,7 @@ const productSchema = new mongoose.Schema({
   },
   thumbnail: {
     type: String,
+    default: 'https://www.carsaludable.com.ar/wp-content/uploads/2014/03/default-placeholder.png'
     //required: true
   },
   owner: {

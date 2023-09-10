@@ -39,6 +39,7 @@ class CartController {
       req.logger.debug("Enter in try")
 
       let user = await userService.getById(userId);
+      req.logger.debug(`Product Id ${productId}`);
       let product = await productService.getById(productId);
       req.logger.debug(`User Id: ${userId}`)
 

@@ -20,6 +20,10 @@ export default class UserRepository extends BaseRepository {
         return await user.save();
     }
 
+    async deleteUserById(uid) {
+        return await userModel.deleteOne({ _id: uid });
+    }
+
     async findTokenAndExpiraton(token) {
         return await userModel.findOne({ resetPasswordToken: token, resetPasswordExpires: { $gt: Date.now() } })
     }

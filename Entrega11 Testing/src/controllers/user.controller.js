@@ -1,10 +1,11 @@
 import { userService } from "../services/index.js";
 import { encriptPass, comparePass } from "../tools/encrypt.js";
 import config from '../tools/config.js';
+import mongoose from "mongoose";
 
 const admin = {
-	email: config.adminUser,
-	password: config.adminPassword
+    email: config.adminUser,
+    password: config.adminPassword
 }
 
 
@@ -40,12 +41,13 @@ const authUser = async (req, res) => {
             if (!user) throw new Error('Invalid data'); // Comprobo si existe el usuario
             if (!comparePass(user, password)) throw new Error('Invalid data'); // Comprobo si la contraseña coincide
 
-            req.logger.info('User authenticated successfully');
+            req.logger.debug('User authenticated successfully');
 
             // Guardo la session
             req.session.user = user;
 
-            res.redirect('/');
+            res.status(200).redirect('/');
+            //res.redirect('/')
 
 
         } else {
@@ -128,9 +130,29 @@ const updateRol = async (req, res) => {
     }
 };
 
+const deleteUser = async (req, res) => {
+    try {
+        const uid = req.params.uid;
+        console.log(uid)
+
+        if (!mongoose.isValidObjectId(uid)) {
+            res.status(404).send('The user id to be deleted was not found')
+        }
+
+        await userService.deleteUserById(uid);
+
+        req.logger.debug(`User with ID ${uid} deleted successfully`);
+        res.status(200).json({ success: true, message: `User with ID ${uid} delete successfully` });
+    } catch (error) {
+        req.logger.error(`Error deleting user: ${error.message}`);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
 export default {
     createUser,
     authUser,
     logOut,
-    updateRol
+    updateRol,
+    deleteUser,
 }
