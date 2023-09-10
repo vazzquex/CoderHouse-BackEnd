@@ -2,6 +2,20 @@
 
 ## Actualizaciones y Mejoras
 
+Se añadieron módulos de pruebas para la creación de usuarios y productos, así como también para probar el carrito del usuario y las sesiones de los usuarios.
+
+
+### Como usar los test:
+
+Ejecuta los siguientes comandos en la terminal:
+
+```bash
+# Prueba de creación de productos y añadido al carrito
+mocha test/product.cart.js
+
+# Prueba de creación de usuarios y sus sesiones
+mocha test/sessions.test.js
+```
 
 ## 📝 Variables de Entorno
 
