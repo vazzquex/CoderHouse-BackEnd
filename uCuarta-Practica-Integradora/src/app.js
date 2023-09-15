@@ -43,7 +43,7 @@ import usersRouter from './routes/user.router.js';
 import profileRouters from './routes/profile.router.js';
 import mockingRouters from './routes/mocking.router.js';
 import loggerTest from './routes/logger.test.router.js';
-
+import documentationRouter from './routes/documentation.router.js';
 import restoreRouter from './routes/restore.router.js';
 
 // Config
@@ -158,6 +158,7 @@ app.use('/realTimeProducts', realTimeProductsRouter(socketServer));
 app.use("/chat", chatRouter(socketServer));
 app.use("/mockingproducts", mockingRouters);
 app.use("/loggerTest", loggerTest)
+app.use("/documentation", documentationRouter)
 
 app.use("/restore", restoreRouter)
 
