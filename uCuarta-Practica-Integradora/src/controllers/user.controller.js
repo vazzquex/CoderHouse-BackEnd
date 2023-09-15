@@ -149,10 +149,36 @@ const deleteUser = async (req, res) => {
     }
 }
 
+const uploadDocuments = async (req, res) => {
+    const uid = req.params.uid;
+    try {
+        const user = await userService.getById(uid);
+        if(!user) {
+            return res.status(404).json({ error: 'User not found'})
+        }
+        const uploadedDocuments = req.files;
+        req.logger.debug(`Req Files = ${req.files}`)
+
+        //actualizo el status para indicar que se seubieron documentos
+        user.documents = uploadedDocuments.map(doc => ({
+            name: doc.originalname,
+            reference: `../data/documents/${doc.originalname}`,
+        }))
+
+        await user.save();
+        return res.status(200).json({ message: 'Documents uploaded successfully', user})
+    } catch {
+        req.logger.error(`Error uploading documents: ${error.message}`);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+
 export default {
     createUser,
     authUser,
     logOut,
     updateRol,
     deleteUser,
+    uploadDocuments,
 }

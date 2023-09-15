@@ -39,7 +39,9 @@ const userSchema = new mongoose.Schema({
 		reference: String,
 	}],
 
-	last_connection: new Date(),
+	last_connection: {
+		type: Date,
+	},
 
 	resetPasswordToken: String,
 	resetPasswordExpires: Date
