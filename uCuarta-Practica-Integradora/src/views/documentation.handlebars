@@ -1,47 +1,52 @@
 <style>
-.input-group {
-    border: 1px solid #4b4a4a;
-    border-radius: 5px;
-    padding: 5px;
-}
+    .input-group {
+        border: 1px solid #4b4a4a;
+        border-radius: 5px;
+        padding: 5px;
+    }
 
-/* Estilo para el botón "Eliminar" */
-.btn-outline-danger {
-    margin-left: 10px; /* Espacio entre el campo y el botón */
-}
-
-
+    /* Estilo para el botón "Eliminar" */
+    .btn-outline-danger {
+        margin-left: 10px;
+        /* Espacio entre el campo y el botón */
+    }
 </style>
 
-    <div class="container mt-5">
-        <h1 class="text-center">Upload Documents</h1>
-        <form id="upload-form" enctype="multipart/form-data">
-            <div class="mb-3 mx-auto" style="max-width: 800px;">
-                <label for="identification" class="form-label">identification:</label>
-                <div class="input-group">
-                    <input type="file" class="form-control" name="identification" id="identification" accept=".pdf, .jpg, .png">
-                    <button type="button" class="btn btn-outline-danger d-none" id="clear-identification">Eliminar</button>
-                </div>
+<div class="container mt-5">
+    <h1 class="text-center">Upload Documents</h1>
+    <form id="upload-form" enctype="multipart/form-data">
+        <input type="hidden" name="type" value="documents">
+
+        <div class="mb-3 mx-auto" style="max-width: 800px;">
+            <label for="identification" class="form-label">identification:</label>
+            <div class="input-group">
+                <input type="file" class="form-control" name="documents" id="identification"
+                    accept=".pdf, .jpg, .png">
+                <button type="button" class="btn btn-outline-danger d-none" id="clear-identification">Eliminar</button>
             </div>
-            <div class="mb-3 mx-auto" style="max-width: 800px;">
-                <label for="proofOfAddress" class="form-label">Proof of address:</label>
-                <div class="input-group">
-                    <input type="file" class="form-control" name="proofOfAddress" id="proofOfAddress" accept=".pdf, .jpg, .png">
-                    <button type="button" class="btn btn-outline-danger d-none" id="clear-proofOfAddress">Eliminar</button>
-                </div>
+        </div>
+        <div class="mb-3 mx-auto" style="max-width: 800px;">
+            <label for="proofOfAddress" class="form-label">Proof of address:</label>
+            <div class="input-group">
+                <input type="file" class="form-control" name="documents" id="proofOfAddress"
+                    accept=".pdf, .jpg, .png">
+                <button type="button" class="btn btn-outline-danger d-none" id="clear-proofOfAddress">Eliminar</button>
             </div>
-            <div class="mb-3 mx-auto" style="max-width: 800px;" >
-                <label for="bankStatement" class="form-label">Proof of account status:</label>
-                <div class="input-group">
-                    <input type="file" class="form-control" name="bankStatement" id="bankStatement" accept=".pdf, .jpg, .png">
-                    <button type="button" class="btn btn-outline-danger d-none" id="clear-bankStatement">Eliminar</button>
-                </div>
+        </div>
+        <div class="mb-3 mx-auto" style="max-width: 800px;">
+            <label for="bankStatement" class="form-label">Proof of account status:</label>
+            <div class="input-group">
+                <input type="file" class="form-control" name="documents" id="bankStatement"
+                    accept=".pdf, .jpg, .png">
+                <button type="button" class="btn btn-outline-danger d-none" id="clear-bankStatement">Eliminar</button>
             </div>
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary" id="upload-button" disabled>Upload Documents</button>
-            </div>
-        </form>
-    </div>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary" id="upload-button" disabled>Upload Documents</button>
+        </div>
+
+    </form>
+</div>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -52,7 +57,22 @@
 
             const formData = new FormData(uploadForm);
 
+            for (const entry of formData.entries()) {
+                console.log(entry);
+            }
 
+            fetch("/api/users/{{user._id}}/documents", {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+
+
+                })
+                .catch(error => {
+                    console.error('Error to upload files:', error);
+                });
         });
     });
 
@@ -62,58 +82,58 @@
 
 <script>
 
-document.addEventListener('DOMContentLoaded', () => {
-    const uploadForm = document.getElementById('upload-form');
-    const identificationInput = document.getElementById('identification');
-    const proofOfAddressInput = document.getElementById('proofOfAddress');
-    const bankStatementInput = document.getElementById('bankStatement');
-    const clearIdentificationButton = document.getElementById('clear-identification');
-    const clearProofOfAddressButton = document.getElementById('clear-proofOfAddress');
-    const clearBankStatementButton = document.getElementById('clear-bankStatement');
-    const uploadButton = document.getElementById('upload-button');
+    document.addEventListener('DOMContentLoaded', () => {
+        const uploadForm = document.getElementById('upload-form');
+        const identificationInput = document.getElementById('identification');
+        const proofOfAddressInput = document.getElementById('proofOfAddress');
+        const bankStatementInput = document.getElementById('bankStatement');
+        const clearIdentificationButton = document.getElementById('clear-identification');
+        const clearProofOfAddressButton = document.getElementById('clear-proofOfAddress');
+        const clearBankStatementButton = document.getElementById('clear-bankStatement');
+        const uploadButton = document.getElementById('upload-button');
 
-    function checkUploadButtonState() {
-        // Habilita el botón de carga solo si todos los campos tienen archivos seleccionados.
-        const allInputsHaveFiles =
-            identificationInput.files.length > 0 &&
-            proofOfAddressInput.files.length > 0 &&
-            bankStatementInput.files.length > 0;
+        function checkUploadButtonState() {
+            // Habilita el botón de carga solo si todos los campos tienen archivos seleccionados.
+            const allInputsHaveFiles =
+                identificationInput.files.length > 0 &&
+                proofOfAddressInput.files.length > 0 &&
+                bankStatementInput.files.length > 0;
 
-        uploadButton.disabled = !allInputsHaveFiles;
-    }
+            uploadButton.disabled = !allInputsHaveFiles;
+        }
 
-    identificationInput.addEventListener('change', () => {
-        clearIdentificationButton.classList.toggle('d-none', !identificationInput.files.length);
-        checkUploadButtonState();
+        identificationInput.addEventListener('change', () => {
+            clearIdentificationButton.classList.toggle('d-none', !identificationInput.files.length);
+            checkUploadButtonState();
+        });
+
+        proofOfAddressInput.addEventListener('change', () => {
+            clearProofOfAddressButton.classList.toggle('d-none', !proofOfAddressInput.files.length);
+            checkUploadButtonState();
+        });
+
+        bankStatementInput.addEventListener('change', () => {
+            clearBankStatementButton.classList.toggle('d-none', !bankStatementInput.files.length);
+            checkUploadButtonState();
+        });
+
+        clearIdentificationButton.addEventListener('click', () => {
+            identificationInput.value = '';
+            clearIdentificationButton.classList.add('d-none');
+            checkUploadButtonState();
+        });
+
+        clearProofOfAddressButton.addEventListener('click', () => {
+            proofOfAddressInput.value = '';
+            clearProofOfAddressButton.classList.add('d-none');
+            checkUploadButtonState();
+        });
+
+        clearBankStatementButton.addEventListener('click', () => {
+            bankStatementInput.value = '';
+            clearBankStatementButton.classList.add('d-none');
+            checkUploadButtonState();
+        });
     });
-
-    proofOfAddressInput.addEventListener('change', () => {
-        clearProofOfAddressButton.classList.toggle('d-none', !proofOfAddressInput.files.length);
-        checkUploadButtonState();
-    });
-
-    bankStatementInput.addEventListener('change', () => {
-        clearBankStatementButton.classList.toggle('d-none', !bankStatementInput.files.length);
-        checkUploadButtonState();
-    });
-
-    clearIdentificationButton.addEventListener('click', () => {
-        identificationInput.value = '';
-        clearIdentificationButton.classList.add('d-none');
-        checkUploadButtonState();
-    });
-
-    clearProofOfAddressButton.addEventListener('click', () => {
-        proofOfAddressInput.value = '';
-        clearProofOfAddressButton.classList.add('d-none');
-        checkUploadButtonState();
-    });
-
-    clearBankStatementButton.addEventListener('click', () => {
-        bankStatementInput.value = '';
-        clearBankStatementButton.classList.add('d-none');
-        checkUploadButtonState();
-    });
-});
 
 </script>

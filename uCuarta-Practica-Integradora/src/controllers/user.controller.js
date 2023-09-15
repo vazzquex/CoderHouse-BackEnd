@@ -167,7 +167,7 @@ const uploadDocuments = async (req, res) => {
 
         await user.save();
         return res.status(200).json({ message: 'Documents uploaded successfully', user})
-    } catch {
+    } catch (error) {
         req.logger.error(`Error uploading documents: ${error.message}`);
         return res.status(500).json({ error: 'Internal Server Error' });
     }
