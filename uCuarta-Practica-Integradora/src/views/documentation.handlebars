@@ -5,10 +5,8 @@
         padding: 5px;
     }
 
-    /* Estilo para el botón "Eliminar" */
     .btn-outline-danger {
         margin-left: 10px;
-        /* Espacio entre el campo y el botón */
     }
 </style>
 
@@ -20,25 +18,22 @@
         <div class="mb-3 mx-auto" style="max-width: 800px;">
             <label for="identification" class="form-label">identification:</label>
             <div class="input-group">
-                <input type="file" class="form-control" name="documents" id="identification"
-                    accept=".pdf, .jpg, .png">
-                <button type="button" class="btn btn-outline-danger d-none" id="clear-identification">Eliminar</button>
+                <input type="file" class="form-control" name="documents" id="identification" accept=".pdf, .jpg, .png">
+                <button type="button" class="btn btn-outline-danger d-none" id="clear-identification">Remove</button>
             </div>
         </div>
         <div class="mb-3 mx-auto" style="max-width: 800px;">
             <label for="proofOfAddress" class="form-label">Proof of address:</label>
             <div class="input-group">
-                <input type="file" class="form-control" name="documents" id="proofOfAddress"
-                    accept=".pdf, .jpg, .png">
-                <button type="button" class="btn btn-outline-danger d-none" id="clear-proofOfAddress">Eliminar</button>
+                <input type="file" class="form-control" name="documents" id="proofOfAddress" accept=".pdf, .jpg, .png">
+                <button type="button" class="btn btn-outline-danger d-none" id="clear-proofOfAddress">Remove</button>
             </div>
         </div>
         <div class="mb-3 mx-auto" style="max-width: 800px;">
             <label for="bankStatement" class="form-label">Proof of account status:</label>
             <div class="input-group">
-                <input type="file" class="form-control" name="documents" id="bankStatement"
-                    accept=".pdf, .jpg, .png">
-                <button type="button" class="btn btn-outline-danger d-none" id="clear-bankStatement">Eliminar</button>
+                <input type="file" class="form-control" name="documents" id="bankStatement" accept=".pdf, .jpg, .png">
+                <button type="button" class="btn btn-outline-danger d-none" id="clear-bankStatement">Remove</button>
             </div>
         </div>
         <div class="text-center">
@@ -47,6 +42,8 @@
 
     </form>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -57,10 +54,6 @@
 
             const formData = new FormData(uploadForm);
 
-            for (const entry of formData.entries()) {
-                console.log(entry);
-            }
-
             fetch("/api/users/{{user._id}}/documents", {
                 method: 'POST',
                 body: formData
@@ -68,6 +61,31 @@
                 .then(response => response.json())
                 .then(data => {
 
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Sent',
+                        text: 'Data loaded successfully!',
+                    })
+                        .then(() => {
+                            e.preventDefault();
+                            fetch("/api/users/premium/{{user._id}}", {
+                                method: 'POST',
+
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Premium',
+                                        text: 'User updated to premium!',
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            window.location.href = '/';
+                                        }
+                                    })
+                                })
+
+                        })
 
                 })
                 .catch(error => {

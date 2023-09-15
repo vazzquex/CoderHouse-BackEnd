@@ -86,6 +86,10 @@ const updateRol = async (req, res) => {
         req.logger.info('Updating rol...');
         const user = await userService.getById(uid);
 
+        if (user.documents.length < 3) {
+            res.status(400).json({ message: "missing data" });
+        }
+
         if (user.rol == 'premium') {
 
             await userService.updateRolToUser(uid);
@@ -95,13 +99,9 @@ const updateRol = async (req, res) => {
             req.session.user.rol = 'user';
 
             // Guarda los cambios en la sesión
-            req.session.save(err => {
-                if (err) {
-                    req.logger.error("Error in save session")
-                } else {
-                    res.redirect('/');
-                }
-            });
+            await user.save();
+            await req.session.save()
+            res.redirect('/');
 
         }
 
@@ -112,15 +112,16 @@ const updateRol = async (req, res) => {
 
             // Actualiza el objeto de usuario en la sesión
             req.session.user.rol = 'premium';
+            req.session.user.documents = true
 
             // Guarda los cambios en la sesión
-            req.session.save(err => {
-                if (err) {
-                    req.logger.error("Error in save session")
-                } else {
-                    res.redirect('/');
-                }
-            });
+            await req.session.save()
+            await user.save();
+
+            //res.redirect('/');
+            res.status(200).json({ message: "User updated to premium" });
+
+
 
         }
 
@@ -153,8 +154,8 @@ const uploadDocuments = async (req, res) => {
     const uid = req.params.uid;
     try {
         const user = await userService.getById(uid);
-        if(!user) {
-            return res.status(404).json({ error: 'User not found'})
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' })
         }
         const uploadedDocuments = req.files;
         req.logger.debug(`Req Files = ${req.files}`)
@@ -165,8 +166,11 @@ const uploadDocuments = async (req, res) => {
             reference: `../data/documents/${doc.originalname}`,
         }))
 
+        await req.session.save();
         await user.save();
-        return res.status(200).json({ message: 'Documents uploaded successfully', user})
+
+
+        return res.status(200).json({ message: 'Documents uploaded successfully', user })
     } catch (error) {
         req.logger.error(`Error uploading documents: ${error.message}`);
         return res.status(500).json({ error: 'Internal Server Error' });
