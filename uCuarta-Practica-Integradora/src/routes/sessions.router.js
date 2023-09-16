@@ -26,7 +26,7 @@ sessionsRouter.get(
 
 			const user = await userService.getById(req.user._id)
 
-			user.last_connection = new Date();
+			user.last_connection = new Date.now();
 			user.save();
 
 		} else {
