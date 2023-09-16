@@ -110,6 +110,12 @@
         const clearBankStatementButton = document.getElementById('clear-bankStatement');
         const uploadButton = document.getElementById('upload-button');
 
+        Swal.fire({
+            icon: 'info',
+            title: 'Upload Documentation',
+            text: 'You need to upload the following data to continue!',
+        })
+
         function checkUploadButtonState() {
             // Habilita el botón de carga solo si todos los campos tienen archivos seleccionados.
             const allInputsHaveFiles =

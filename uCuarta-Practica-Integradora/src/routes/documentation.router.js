@@ -14,7 +14,6 @@ documentationRouter.get('/', async (req, res) => {
 
     try {
 
-        //if (user.documents.length == 3) {
         if (req.session.user.documents == true ){
             req.logger.debug('User have 3 documents uploaded!!!');
 
