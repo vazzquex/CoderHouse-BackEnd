@@ -73,6 +73,11 @@ const authUser = async (req, res) => {
 const logOut = async (req, res) => {
     req.logger.info('User logged out');
 
+
+    const user = await userService.getById(req.session.user._id);
+    user.last_connection = Date.now();
+    user.save();
+
     req.session.destroy();
 
     res.redirect('/login');
