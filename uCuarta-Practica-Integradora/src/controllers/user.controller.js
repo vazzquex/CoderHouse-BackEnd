@@ -45,6 +45,9 @@ const authUser = async (req, res) => {
 
             // Guardo la session
             req.session.user = user;
+            user.last_connection = Date.now();
+            await user.save();
+            
 
             res.status(200).redirect('/');
             //res.redirect('/')

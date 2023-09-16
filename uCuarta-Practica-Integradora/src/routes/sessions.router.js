@@ -24,6 +24,11 @@ sessionsRouter.get(
 			req.logger.info('GitHub authentication successful');
 			req.session.user = req.user;
 
+			const user = await userService.getById(req.user._id)
+
+			user.last_connection = new Date();
+			user.save();
+
 		} else {
 			req.logger.warning('GitHub authentication failed');
 		}
