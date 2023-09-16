@@ -2,7 +2,14 @@
 
 ## Actualizaciones y Mejoras
 
-Se añadieron módulos de pruebas para la creación de usuarios y productos, así como también para probar el carrito del usuario y las sesiones de los usuarios.
+Se ha añadido una nueva propiedad llamada "documents" al modelo de usuario, la cual permite a los usuarios cargar documentos para fines de autenticación y otorgarles el rol de premium, lo que les permite crear otros usuarios.
+
+También se ha incorporado la propiedad "last_connection", la cual muestra la fecha y hora de la última conexión del usuario cada vez que realiza un proceso de inicio de sesión y cierre de sesión.
+
+Además, se ha creado una nueva vista en "/documents" que permite a los usuarios cargar sus documentos. Esta vista se comunica con la ruta "api/users/:uid/documents".
+
+El middleware de Multer cuenta con un parámetro llamado "type", el cual permite especificar entre las opciones "documents", "products" y "profiles". Dependiendo de la elección, el archivo se almacenará en la carpeta correspondiente dentro de "/data".
+
 
 
 ### Como usar los test:
