@@ -2,9 +2,9 @@ import supertest from 'supertest';
 import chai from 'chai';
 import mongoose from 'mongoose';
 
-import config from '../../src/tools/config.js';
+import config from '../src/tools/config.js';
 
-import { userService } from '../../src/services/index.js';
+import { userService } from '../src/services/index.js';
 
 const expect = chai.expect;
 const request = supertest('http://localhost:8080');
@@ -34,8 +34,8 @@ describe("Test User DAOs", () => {
 
         if (productId) {
             try {
-                await mongoose.connection.collection('products').deleteOne({ _id: new mongoose.Types.ObjectId(productId)})
-            }catch {
+                await mongoose.connection.collection('products').deleteOne({ _id: new mongoose.Types.ObjectId(productId) })
+            } catch {
                 console.error(`Error to delete product ${err}`)
             }
         }
@@ -48,7 +48,21 @@ describe("Test User DAOs", () => {
             first_name: 'Santiago',
             last_name: 'Vazquez',
             email: 'santiago@example.com',
-            password: '1234'
+            password: '1234',
+            documents: [
+                {
+                    name: '20230711_104338.jpg',
+                    reference: '../data/documents/20230711_104338.jpg',
+                },
+                {
+                    name: '20230711_104823.jpg',
+                    reference: '../data/documents/20230711_104823.jpg',
+                },
+                {
+                    name: '20230711_104316.jpg',
+                    reference: '../data/documents/20230711_104316.jpg',
+                }
+            ]
         }
 
         const { statusCode, _body } = await request.post('/api/users/').send(newUser);
