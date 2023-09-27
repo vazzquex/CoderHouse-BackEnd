@@ -47,5 +47,9 @@ export default class UserRepository extends BaseRepository {
         return await userModel.findById(id);
     }
 
+    async getAllUsers(){
+        return await userModel.find().select('first_name').select('last_name').select('email').select('rol');
+    }
+
 
 }

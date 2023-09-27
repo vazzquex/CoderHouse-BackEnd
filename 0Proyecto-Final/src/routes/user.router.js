@@ -6,6 +6,12 @@ import { upload } from '../middleware/multer.middleware.js';
 
 const usersRouter = Router();
 
+//Requisitos entrega final
+usersRouter.get('/', userController.getAllUsers)
+
+//Delete users who had no connection in the last 2 days
+//usersRouter.delete('/', userController.deleteInactiveUsers);
+
 usersRouter.post('/', userController.createUser)
 usersRouter.post('/premium/:uid', userController.updateRol);
 usersRouter.post('/auth', userController.authUser);

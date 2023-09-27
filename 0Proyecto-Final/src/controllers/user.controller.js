@@ -185,8 +185,20 @@ const uploadDocuments = async (req, res) => {
     }
 }
 
+const getAllUsers = async (req, res) => {
+    try{ 
+        const users = await userService.getAllUsers()
+
+        res.status(201).json(users)
+    } catch (err) {
+        req.logger.error(`Rrror getting users ${err}`)
+        res.status(500).send(`Rrror getting users ${err}`)
+    }
+}
+
 
 export default {
+    getAllUsers,
     createUser,
     authUser,
     logOut,
