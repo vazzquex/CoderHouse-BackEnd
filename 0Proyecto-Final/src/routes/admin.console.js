@@ -8,8 +8,6 @@ adminConsoleRouter.get('/', async (req, res) => {
         let users = []
         let allUsers = await userService.getAllUsers();
 
-        req.logger.debug(allUsers);
-
         res.status(201).render('admin-console', {
             title: "Admin Console",
             user,

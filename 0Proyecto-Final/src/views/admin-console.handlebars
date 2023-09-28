@@ -19,14 +19,14 @@
         padding: 20px;
         margin: 10px;
         border-radius: 10px;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         transition: box-shadow 0.3s;
         max-width: 600px;
         text-align: center;
     }
 
     .user-box:hover {
-        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
     }
 
     .user {
@@ -44,21 +44,20 @@
         cursor: pointer;
     }
 
-    .btn-delete {
-        background-color: #ff4444;
+    .btn-delete,
+    .btn-change-role {
         color: white;
         border: none;
+    }
+
+    .btn-delete {
+        background-color: #ff4444;
         margin-right: 10px;
     }
 
     .btn-change-role {
         background-color: #33b5e5;
-        color: white;
-        border: none;
     }
-
-
-
 </style>
 
 <div class="text-center">
@@ -72,13 +71,90 @@
     {{#each allUsers}}
     <div class="user-box">
         <h4 class="user-name mb-4">User Name: {{ this.first_name }} {{ this.last_name }}</h4>
-        <h4 class="user-email user">User Email: {{ this.email }}</h4> 
-        <h4 class="user-rol user">User Role: {{ this.rol }}</h4> 
-        <h4 class="user-last-connection user mt-4">Last Connection: {{ this.last_connection }}</h4> 
+        <h4 class="user-email user">User Email: {{ this.email }}</h4>
+        <h4 class="user-rol user">User Role: {{ this.rol }}</h4>
+        <h4 class="user-last-connection user mt-4">Last Connection: {{ this.last_connection }}</h4>
         <div class="btn-container">
-            <button class="btn btn-delete">Delete</button> 
+            <button class="btn btn-delete">Delete</button>
             <button class="btn btn-change-role">Change Role</button>
         </div>
     </div>
     {{/each}}
 </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+        // Sample data for demonstration
+        const allUsers = [
+            {
+                first_name: "John",
+                last_name: "Doe",
+                email: "john@example.com",
+                rol: "user",
+                last_connection: "2023-09-28"
+            },
+            {
+                first_name: "Jane",
+                last_name: "Smith",
+                email: "jane@example.com",
+                rol: "premium",
+                last_connection: "2023-09-27"
+            }
+            // Add more user data as needed
+        ];
+
+        // Function to change user role
+        function changeUserRole(userIndex, newRole) {
+            allUsers[userIndex].rol = newRole;
+        }
+
+        // Function to delete a user
+        function deleteUser(userIndex) {
+            allUsers.splice(userIndex, 1);
+        }
+
+        // Event listener for change role buttons
+        document.querySelectorAll(".btn-change-role").forEach((button, index) => {
+            button.addEventListener("click", () => {
+                Swal.fire({
+                    title: "Change User Role",
+                    text: "Are you sure you want to change the user's role?",
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const user = allUsers[index];
+                        const currentRole = user.rol;
+                        const newRole = currentRole === "user" ? "premium" : "user";
+                        changeUserRole(index, newRole);
+
+                        Swal.fire("Role Changed!", `The user's role is now ${newRole}.`, "success");
+                    }
+                });
+            });
+        });
+
+        // Event listener for delete buttons
+        document.querySelectorAll(".btn-delete").forEach((button, index) => {
+            button.addEventListener("click", () => {
+                Swal.fire({
+                    title: "Delete User",
+                    text: "Are you sure you want to delete this user and their email?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, delete",
+                    cancelButtonText: "No, cancel",
+                    dangerMode: true,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        deleteUser(index);
+
+                        Swal.fire("User Deleted!", "The user and their email have been deleted.", "success");
+                    }
+                });
+            });
+        });
+    </script>
