@@ -46,6 +46,8 @@ import loggerTest from './routes/logger.test.router.js';
 import documentationRouter from './routes/documentation.router.js';
 import restoreRouter from './routes/restore.router.js';
 
+import adminConsoleRouter from './routes/admin.console.js';
+
 // Config
 import config from './tools/config.js';
 import mailingRoutes from './routes/mailing.js';
@@ -135,8 +137,6 @@ app.use("/api/users", usersRouter)
 app.use("/api/products", productsRouter);		
 app.use("/api/carts", cartsRouter);				
 
-//app.use(express.static('public'));
-
 //insert product data
 
 // try {
@@ -159,8 +159,8 @@ app.use("/chat", chatRouter(socketServer));
 app.use("/mockingproducts", mockingRouters);
 app.use("/loggerTest", loggerTest)
 app.use("/documentation", documentationRouter)
-
 app.use("/restore", restoreRouter)
+app.use("/admin-console", isAdmin, adminConsoleRouter)
 
 //mailing
 app.use('/api/sending', mailingRoutes)

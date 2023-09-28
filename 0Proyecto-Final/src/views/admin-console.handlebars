@@ -1,0 +1,84 @@
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .text-center {
+        margin-top: 100px;
+        text-align: center;
+    }
+
+    .user-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .user-box {
+        border: 1px solid #ccc;
+        padding: 20px;
+        margin: 10px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        transition: box-shadow 0.3s;
+        max-width: 600px;
+        text-align: center;
+    }
+
+    .user-box:hover {
+        box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .user {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .btn-container {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+    .btn-delete {
+        background-color: #ff4444;
+        color: white;
+        border: none;
+        margin-right: 10px;
+    }
+
+    .btn-change-role {
+        background-color: #33b5e5;
+        color: white;
+        border: none;
+    }
+
+
+
+</style>
+
+<div class="text-center">
+    <h1>{{ title }}</h1>
+    <div class="mb-2">
+        <button type="button" class="btn btn-delete btn-lg">Delete Inactive Users</button>
+    </div>
+</div>
+
+<div class="user-container">
+    {{#each allUsers}}
+    <div class="user-box">
+        <h4 class="user-name mb-4">User Name: {{ this.first_name }} {{ this.last_name }}</h4>
+        <h4 class="user-email user">User Email: {{ this.email }}</h4> 
+        <h4 class="user-rol user">User Role: {{ this.rol }}</h4> 
+        <h4 class="user-last-connection user mt-4">Last Connection: {{ this.last_connection }}</h4> 
+        <div class="btn-container">
+            <button class="btn btn-delete">Delete</button> 
+            <button class="btn btn-change-role">Change Role</button>
+        </div>
+    </div>
+    {{/each}}
+</div>

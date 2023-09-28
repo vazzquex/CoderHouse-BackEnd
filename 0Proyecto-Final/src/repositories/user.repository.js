@@ -52,7 +52,7 @@ export default class UserRepository extends BaseRepository {
     }
 
     async getAllUsers(){
-        return await userModel.find().select('first_name').select('last_name').select('email').select('rol');
+        return await userModel.find().select('first_name').select('last_name').select('email').select('rol').select('last_connection').lean();
     }
 
 
