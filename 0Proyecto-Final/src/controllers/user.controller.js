@@ -19,6 +19,8 @@ const createUser = async (req, res) => {
         req.logger.info('Creating new user');
 
         const newUser = await userService.createUser(userData);
+        newUser.last_connection = new Date();
+        newUser.save();
 
         req.logger.info('User created successfully');
 
@@ -45,9 +47,9 @@ const authUser = async (req, res) => {
 
             // Guardo la session
             req.session.user = user;
-            user.last_connection = Date.now();
+            user.last_connection = new Date();
             await user.save();
-            
+
 
             res.status(200).redirect('/');
             //res.redirect('/')
@@ -78,7 +80,7 @@ const logOut = async (req, res) => {
 
 
     const user = await userService.getById(req.session.user._id);
-    user.last_connection = Date.now();
+    user.last_connection = new Date();
     user.save();
 
     req.session.destroy();
@@ -186,7 +188,7 @@ const uploadDocuments = async (req, res) => {
 }
 
 const getAllUsers = async (req, res) => {
-    try{ 
+    try {
         const users = await userService.getAllUsers()
 
         res.status(201).json(users)
@@ -196,8 +198,39 @@ const getAllUsers = async (req, res) => {
     }
 }
 
+const deleteInactiveUsers = async (req, res) => {
+    const userCleanupIntervalInSeconds = process.env.USER_CLEANUP_INTERVAL;
+    let countUserDeleted = 0;
+    
+    try {
+        const inactiveUser = await userService.getInactiveUsers();
+        const actualDate = new Date();
+    
+        for (const user of inactiveUser) {
+            const userLastConnectionDate = new Date(user.last_connection);
+    
+            // Eliminar el usuario si está inactivo durante más de "userCleanupIntervalInSeconds" segundos
+            const timeDifferenceInSeconds = (actualDate - userLastConnectionDate) / 1000;
+            if (timeDifferenceInSeconds > userCleanupIntervalInSeconds) {
+                await userService.deleteUserById(user._id);
+                req.logger.debug(`The user ${user._id} was deleted because it has been inactive for more than ${userCleanupIntervalInSeconds} seconds.`);
+                countUserDeleted++;
+            }
+        }
+    
+        res.status(200).json({ message: `Deleted inactivity users: ${countUserDeleted}` });
+    
+    } catch (err) {
+        req.logger.error(`Error getting inactive users: ${err}`);
+        res.status(500).send(`Error getting inactive users: ${err}`);
+    }
+    
+    countUserDeleted = 0;
+};
+
 
 export default {
+    deleteInactiveUsers,
     getAllUsers,
     createUser,
     authUser,

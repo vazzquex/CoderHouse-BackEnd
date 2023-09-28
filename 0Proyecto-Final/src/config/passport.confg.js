@@ -32,7 +32,7 @@ const incializePassport = () => {
 							password: '',
 							img: profile._json.avatar_url,
 						};
-						user = await userRepository.createUser(newUser);
+						user = await userService.createUser(newUser);
 
 						done(null, user);
 					} else {

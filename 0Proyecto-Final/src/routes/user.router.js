@@ -10,7 +10,7 @@ const usersRouter = Router();
 usersRouter.get('/', userController.getAllUsers)
 
 //Delete users who had no connection in the last 2 days
-//usersRouter.delete('/', userController.deleteInactiveUsers);
+usersRouter.delete('/', userController.deleteInactiveUsers);
 
 usersRouter.post('/', userController.createUser)
 usersRouter.post('/premium/:uid', userController.updateRol);

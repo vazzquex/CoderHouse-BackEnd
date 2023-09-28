@@ -6,6 +6,10 @@ export default class UserRepository extends BaseRepository {
         super(dao);
     }
 
+    async getInactiveUsers(){
+        return await userModel.find({}, {_id: 1, last_connection: 1})
+    }
+
     async createUser(userData) {
         return await userModel.create(userData);
     }
