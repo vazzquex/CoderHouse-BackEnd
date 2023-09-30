@@ -107,12 +107,17 @@ const updateRol = async (req, res) => {
             req.logger.info('User update to user');
 
             // Actualiza el objeto de usuario en la sesión
-            req.session.user.rol = 'user';
+            if (!req.session.admin) {
+                req.session.user.rol = 'user';
 
-            // Guarda los cambios en la sesión
-            await user.save();
-            await req.session.save()
-            res.redirect('/');
+                // Guarda los cambios en la sesión
+                await user.save();
+                await req.session.save()
+                res.redirect('/');
+
+            }
+
+
 
         }
 
@@ -122,18 +127,18 @@ const updateRol = async (req, res) => {
             req.logger.info('User update to premium');
 
             // Actualiza el objeto de usuario en la sesión
-            req.session.user.rol = 'premium';
-            req.session.user.documents = true
-
-            // Guarda los cambios en la sesión
-            await req.session.save()
-            await user.save();
-
-            //res.redirect('/');
-            res.status(200).json({ message: "User updated to premium" });
+            if (!req.session.admin) {
+                req.session.user.rol = 'premium';
+                req.session.user.documents = true
 
 
+                // Guarda los cambios en la sesión
+                await req.session.save()
+                await user.save();
 
+                res.status(200).json({ message: "User updated to premium" });
+
+            }
         }
 
     } catch (error) {
