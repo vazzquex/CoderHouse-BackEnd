@@ -9,7 +9,7 @@ const usersRouter = Router();
 //Requisitos entrega final
 usersRouter.get('/', userController.getAllUsers)
 
-//Delete users who had no connection in the last 2 days
+//Delete users who had no connection in the last days
 usersRouter.delete('/', userController.deleteInactiveUsers);
 
 usersRouter.post('/', userController.createUser)

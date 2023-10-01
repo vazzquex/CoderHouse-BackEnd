@@ -222,6 +222,7 @@ const deleteInactiveUsers = async (req, res) => {
                 req.logger.debug(`The user ${user._id} was deleted because it has been inactive for more than ${userCleanupIntervalInSeconds} seconds.`);
                 countUserDeleted++;
             }
+
         }
 
         res.status(200).json({ message: `Deleted inactivity users: ${countUserDeleted}` });
